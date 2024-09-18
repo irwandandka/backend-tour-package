@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class City extends Model
+class Country extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'code', 'country_id', 'region_id', 'postal_code', 'latitude', 'longitude'];
+    protected $fillable = ['name', 'iso_code', 'phone_code', 'region_id'];
 
     public $incrementing = false;  // Disable auto-incrementing
 
