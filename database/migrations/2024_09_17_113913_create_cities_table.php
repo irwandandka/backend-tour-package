@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('postal_code')->unique()->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->timestamps();
 
             $table->foreign('country_id')->references('id')->on('countries')->onUpdate('cascade')->onDelete('cascade');

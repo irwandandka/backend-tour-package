@@ -10,7 +10,7 @@ class City extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'code', 'country_id', 'region_id', 'postal_code', 'latitude', 'longitude'];
+    protected $fillable = ['name', 'country_id', 'region_id', 'postal_code', 'latitude', 'longitude'];
 
     public $incrementing = false;  // Disable auto-incrementing
 
