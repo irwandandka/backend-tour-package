@@ -6,10 +6,36 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Automatically generate UUID for new users
+        static::creating(function ($model) {
+            if (empty($model->id)) {
+                $model->id = (string) Str::uuid();
+            }
+        });
+    }
+
+    // Helper method to check if the access token is expired
+    public function isAccessTokenExpired()
+    {
+        return $this->token_expires_at->isPast();
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +46,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'refresh_token',
+        'token_expires_at',
     ];
 
     /**
