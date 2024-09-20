@@ -18,9 +18,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->text('access_token')->nullable();  // Store JWT token
-            $table->text('refresh_token')->nullable(); // Store refresh token
-            $table->timestamp('token_expires_at')->nullable();  // Expiration time for access token
             $table->timestamps();
         });
 

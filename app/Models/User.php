@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * Indicates if the model should be timestamped.
@@ -46,8 +47,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'refresh_token',
-        'token_expires_at',
     ];
 
     /**
