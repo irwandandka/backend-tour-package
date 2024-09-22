@@ -27,4 +27,9 @@ class Region extends Model
             }
         });
     }
+
+    public function countries()
+    {
+        return $this->hasMany(Country::class);
+    }
 }
