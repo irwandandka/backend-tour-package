@@ -22,4 +22,18 @@ class CityController extends Controller
 
         return ApiResponseClass::sendResponse(new CityResource($city), '');
     }
+
+    public function delete(City $city)
+    {
+        $city->delete();
+
+        return ApiResponseClass::sendResponse([], 'Deleted Successfully!');
+    }
+
+    public function getDeleted()
+    {
+        $deletedCities = City::onlyTrashed()->get();
+
+        return ApiResponseClass::sendResponse(CityResource::collection($deletedCities), '');
+    }
 }

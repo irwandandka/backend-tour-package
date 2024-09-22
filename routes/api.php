@@ -27,7 +27,9 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::prefix('/city')->group(function () {
-        Route::get('/', [CityController::class, 'list']);
+        Route::get('/deleted', [CityController::class, 'getDeleted']);
         Route::get('/{city}', [CityController::class, 'show']);
+        Route::get('/', [CityController::class, 'list']);
+        Route::delete('/{city}', [CityController::class, 'delete']);
     });
 });
