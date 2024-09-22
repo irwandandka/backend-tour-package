@@ -2,11 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\JsonResourceTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CountryResource extends JsonResource
 {
+
+    use JsonResourceTrait;
+
     /**
      * Transform the resource into an array.
      *
@@ -44,16 +48,5 @@ class CountryResource extends JsonResource
         }
 
         return $response;
-    }
-
-    /**
-     * Format the created_at date.
-     *
-     * @param  string|null  $date
-     * @return string|null
-     */
-    private function formatCreatedAt($date): ?string
-    {
-        return $date ? date('d M Y', strtotime($date)) : null;
     }
 }

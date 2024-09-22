@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
-use App\Traits\JsonResourceTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Traits\JsonResourceTrait;
 
-class RegionResource extends JsonResource
+class CityResource extends JsonResource
 {
 
     use JsonResourceTrait;
@@ -19,8 +19,8 @@ class RegionResource extends JsonResource
     public function toArray(Request $request): array
     {
         // Define allowed fields and relations
-        $allowedFields = ['id', 'name', 'code', 'created_at'];
-        $allowedRelations = ['countries'];
+        $allowedFields = ['id', 'name', 'postal_code', 'latitude', 'longitude'];
+        $allowedRelations = ['country', 'region'];
 
         // Get fields and relations from the request
         $fields = explode(',', $request->query('fields', ''));
@@ -43,7 +43,19 @@ class RegionResource extends JsonResource
         // Include allowed relations
         foreach ($allowedRelations as $relation) {
             if (in_array($relation, $relations) || empty($relations)) {
-                $response[$relation] = CountryResource::collection($this->whenLoaded($relation));
+                // Dynamically determine whether the relation is one-to-many or belongsTo
+                $resourceClassName = 'App\Http\Resources\\' . ucwords($relation) . 'Resource';
+
+                if ($this->relationLoaded($relation)) {
+                    // Check the type of relationship dynamically
+                    if (method_exists($this->$relation(), 'getForeignKeyName')) {
+                        // If it has a foreign key, it's a belongsTo or one-to-one relation
+                        $response[$relation] = new $resourceClassName($this->$relation);
+                    } else {
+                        // Otherwise, it's a collection (e.g., hasMany or belongsToMany)
+                        $response[$relation] = $resourceClassName::collection($this->$relation);
+                    }
+                }
             }
         }
 

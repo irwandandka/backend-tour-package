@@ -27,4 +27,14 @@ class City extends Model
             }
         });
     }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }
