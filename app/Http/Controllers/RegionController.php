@@ -20,6 +20,7 @@ class RegionController extends Controller
 
     public function show(Region $region)
     {
+        $region->load('countries');
         return ApiResponseClass::sendResponse(new RegionResource($region), '');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\RegionController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,10 @@ Route::prefix('v1')->group(function () {
             Route::get('/', [RegionController::class, 'list']);
             Route::get('/{region}', [RegionController::class, 'show']);
         });
+    });
+
+    Route::prefix('/country')->group(function () {
+        Route::get('/', [CountryController::class, 'list']);
+        Route::get('/{country}', [CountryController::class, 'show']);
     });
 });
