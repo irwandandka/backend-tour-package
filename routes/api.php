@@ -32,4 +32,6 @@ Route::prefix('v1')->group(function () {
         Route::get('/', [CityController::class, 'list']);
         Route::delete('/{city}', [CityController::class, 'delete']);
     });
+
+    // Test branch
 });
