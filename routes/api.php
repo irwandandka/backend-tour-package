@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RegionController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,7 @@ Route::prefix('v1')->group(function () {
         Route::delete('/{city}', [CityController::class, 'delete']);
     });
 
-    // Test branch
-    // Test deployment dev 2nd
+    Route::prefix('/notification')->group(function () {
+        Route::post('/telegram', [NotificationController::class, 'notifyUser']);
+    });
 });
