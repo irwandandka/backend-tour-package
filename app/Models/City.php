@@ -11,7 +11,14 @@ class City extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'country_id', 'region_id', 'postal_code', 'latitude', 'longitude'];
+    protected $fillable = [
+        'name',
+        'country_id',
+        'region_id',
+        'postal_code',
+        'latitude',
+        'longitude'
+    ];
 
     public $incrementing = false;  // Disable auto-incrementing
 
@@ -37,5 +44,10 @@ class City extends Model
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }
