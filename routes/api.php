@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegionController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,11 @@ Route::prefix('v1')->group(function () {
         Route::get('/{city}', [CityController::class, 'show']);
         Route::get('/list', [CityController::class, 'list']);
         Route::delete('/{city}', [CityController::class, 'delete']);
+    });
+
+    Route::prefix('/product')->group(function () {
+        Route::get('/list', [ProductController::class, 'list']);
+        Route::get('/{slug}', [ProductController::class, 'show']);
     });
 
     Route::prefix('/notification')->group(function () {
