@@ -4,12 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+// use App\Services\GoogleServices;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    // protected $googleService;
+
+    // public function __construct(GoogleService $googleService)
+    // {
+    //     $this->googleService = $googleService;
+    // }
+
+
     // Register a new user
     public function register(Request $request)
     {
@@ -56,5 +65,13 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'Bearer',
         ]);
+    }
+
+    public function handleGoogleCallback(Request $request)
+    {
+        $code = $request->get('code');
+        $userInfo = $this->googleService->getUserInfo($code);
+
+        return response()->json($userInfo);
     }
 }
