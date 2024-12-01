@@ -25,9 +25,9 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('/city')->group(function () {
         Route::get('/list', [CityController::class, 'list']);
-        Route::get('/deleted', [CityController::class, 'getDeleted']);
         Route::get('/{city}', [CityController::class, 'show']);
         Route::delete('/{city}', [CityController::class, 'delete']);
+        Route::get('/deleted', [CityController::class, 'getDeleted']);
     });
 
     Route::prefix('/product')->group(function () {
