@@ -39,3 +39,5 @@ Route::prefix('v1')->group(function () {
         Route::post('/telegram', [NotificationController::class, 'notifyUser']);
     });
 });
+
+Route::get('capek-sekali', [CityController::class, 'capekSekali']);
