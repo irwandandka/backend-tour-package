@@ -36,4 +36,9 @@ class CityController extends Controller
 
         return ApiResponseClass::sendResponse(CityResource::collection($deletedCities), '');
     }
+
+    public function capekSekali()
+    {
+        return response()->json('terkutuk kau taylor otwell');
+    }
 }

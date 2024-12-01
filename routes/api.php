@@ -1,10 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CityController;
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\RegionController;
+use App\Http\Controllers\{AuthController, CityController, CountryController, NotificationController, ProductController, RegionController, TestingController};
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,31 +11,33 @@ Route::prefix('v1')->group(function () {
         Route::post('/login', [AuthController::class, 'login']);
     });
 
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::prefix('/region')->group(function () {
-            Route::get('/', [RegionController::class, 'list']);
-            Route::get('/{region}', [RegionController::class, 'show']);
-        });
+    Route::prefix('/city')->group(function () {
+        Route::get('/list', [CityController::class, 'list']);
+        Route::get('/{city}', [CityController::class, 'show']);
+        Route::delete('/{city}', [CityController::class, 'delete']);
+        Route::get('/deleted', [CityController::class, 'getDeleted']);
     });
+
+    // Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('/region')->group(function () {
+        Route::get('/list', [RegionController::class, 'list']);
+        Route::get('/{region}', [RegionController::class, 'show']);
+    });
+    // });
 
     Route::prefix('/country')->group(function () {
         Route::get('/list', [CountryController::class, 'list']);
         Route::get('/{country}', [CountryController::class, 'show']);
     });
 
-    Route::prefix('/region')->group(function () {
-        Route::get('/list', [RegionController::class, 'list']);
-        Route::get('/{region}', [RegionController::class, 'show']);
-    });
-
-    Route::prefix('/city')->group(function () {
-        Route::get('/deleted', [CityController::class, 'getDeleted']);
-        Route::get('/{city}', [CityController::class, 'show']);
-        Route::get('/list', [CityController::class, 'list']);
-        Route::delete('/{city}', [CityController::class, 'delete']);
+    Route::prefix('/product')->group(function () {
+        Route::get('/list', [ProductController::class, 'list']);
+        Route::get('/{slug}', [ProductController::class, 'show']);
     });
 
     Route::get('lorem', function () {
         return response()->json('123123');
     });
 });
+
+Route::get('capek-sekali', [CityController::class, 'capekSekali']);
