@@ -18,8 +18,8 @@ Route::prefix('v1')->group(function () {
     });
     // });
 
-    Route::get('/laravel-kontol-babi-anjing', function () {
-        return response()->json('KONTOLLLLLLLL');
+    Route::get('lorem', function () {
+        return response()->json('123123');
     });
 
     Route::prefix('/country')->group(function () {
