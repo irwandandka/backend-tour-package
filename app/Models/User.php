@@ -13,6 +13,9 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     /**
      * Indicates if the model should be timestamped.
      *

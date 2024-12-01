@@ -21,6 +21,42 @@ class StatusSeeder extends Seeder
             [
                 'name' => 'Inactive',
                 'code' => 'inactive'
+            ],
+            [
+                'name' => 'Pending',
+                'code' => 'pending'
+            ],
+            [
+                'name' => 'Confirmed',
+                'code' => 'confirm'
+            ],
+            [
+                'name' => 'Paid',
+                'code' => 'paid'
+            ],
+            [
+                'name' => 'Cancelled',
+                'code' => 'cancel'
+            ],
+            [
+                'name' => 'Expired',
+                'code' => 'expire'
+            ],
+            [
+                'name' => 'Available',
+                'code' => 'available'
+            ],
+            [
+                'name' => 'Unavailable',
+                'code' => 'unavailable'
+            ],
+            [
+                'name' => 'Failed',
+                'code' => 'fail'
+            ],
+            [
+                'name' => 'Refunded',
+                'code' => 'refund'
             ]
         ];
 
