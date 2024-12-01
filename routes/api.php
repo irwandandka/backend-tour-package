@@ -18,6 +18,10 @@ Route::prefix('v1')->group(function () {
     });
     // });
 
+    Route::get('/laravel-kontol-babi-anjing', function () {
+        return response()->json('KONTOLLLLLLLL');
+    });
+
     Route::prefix('/country')->group(function () {
         Route::get('/list', [CountryController::class, 'list']);
         Route::get('/{country}', [CountryController::class, 'show']);
