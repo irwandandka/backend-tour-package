@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RegionController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,12 +23,23 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::prefix('/country')->group(function () {
-        Route::get('/', [CountryController::class, 'list']);
+        Route::get('/list', [CountryController::class, 'list']);
         Route::get('/{country}', [CountryController::class, 'show']);
     });
 
+    Route::prefix('/region')->group(function () {
+        Route::get('/list', [RegionController::class, 'list']);
+        Route::get('/{region}', [RegionController::class, 'show']);
+    });
+
     Route::prefix('/city')->group(function () {
-        Route::get('/', [CityController::class, 'list']);
+        Route::get('/deleted', [CityController::class, 'getDeleted']);
         Route::get('/{city}', [CityController::class, 'show']);
+        Route::get('/list', [CityController::class, 'list']);
+        Route::delete('/{city}', [CityController::class, 'delete']);
+    });
+
+    Route::get('lorem', function () {
+        return response()->json('123123');
     });
 });
