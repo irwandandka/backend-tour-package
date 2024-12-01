@@ -39,7 +39,7 @@ Route::prefix('v1')->group(function () {
         Route::delete('/{city}', [CityController::class, 'delete']);
     });
 
-    Route::prefix('/notification')->group(function () {
-        Route::post('/telegram', [NotificationController::class, 'notifyUser']);
+    Route::get('lorem', function () {
+        return response()->json('123123');
     });
 });
