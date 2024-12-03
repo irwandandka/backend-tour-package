@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\GoogleService;
 use Illuminate\Http\Request;
-// use App\Services\GoogleServices;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    // protected $googleService;
+    protected $googleService;
 
-    // public function __construct(GoogleService $googleService)
-    // {
-    //     $this->googleService = $googleService;
-    // }
-
+    public function __construct(GoogleService $googleService)
+    {
+        $this->googleService = $googleService;
+    }
 
     // Register a new user
     public function register(Request $request)
@@ -67,11 +66,36 @@ class AuthController extends Controller
         ]);
     }
 
+    public function redirectToGoogle()
+    {
+        $authUrl = $this->googleService->getAuthUrl();
+        return response()->json(['url' => $authUrl]);
+    }
+
     public function handleGoogleCallback(Request $request)
     {
-        $code = $request->get('code');
-        $userInfo = $this->googleService->getUserInfo($code);
+        try {
+            $userData = $this->googleService->getUserData($request->input('code'));
 
-        return response()->json($userInfo);
+            // Cari atau buat pengguna di database
+            $user = User::updateOrCreate(
+                ['email' => $userData['email']],
+                [
+                    'name' => $userData['name'],
+                    'google_id' => $userData['id'],
+                    'avatar' => $userData['avatar']
+                ]
+            );
+
+            // Login pengguna
+            Auth::login($user);
+
+            // Generate token untuk klien
+            $token = $user->createToken('authToken')->plainTextToken;
+
+            return response()->json(['token' => $token, 'user' => $user]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
