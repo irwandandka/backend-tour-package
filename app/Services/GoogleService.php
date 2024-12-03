@@ -2,46 +2,49 @@
 
 namespace App\Services;
 
-use Google_Client;
-use Google_Service_Oauth2;
+use Google\Client as GoogleClient;
+use Google\Service\Oauth2;
 use App\Models\User;
 
 class GoogleService
 {
-    protected $client;
+    private $client;
 
     public function __construct()
     {
-        $this->client = new Google\Client();
-        $this->client->setClientId(env('GOOGLE_CLIENT_ID')); // Ambil dari .env
-        $this->client->setClientSecret(env('GOOGLE_CLIENT_SECRET')); // Ambil dari .env
-        $this->client->setRedirectUri(env('GOOGLE_REDIRECT_URI')); // Redirect URL Anda
-        $this->client->addScope('email');
-        $this->client->addScope('profile');
+        $this->client = new GoogleClient();
+        $this->client->setClientId(config('services.google.client_id'));
+        $this->client->setClientSecret(config('services.google.client_secret'));
+        $this->client->setRedirectUri(config('services.google.redirect_uri'));
+        $this->client->addScope('https://www.googleapis.com/auth/userinfo.email');
+        $this->client->addScope('https://www.googleapis.com/auth/userinfo.profile');
     }
 
-    /**
-     * Mendapatkan URL untuk redirect ke Google
-     */
-    public function getGoogleAuthUrl()
+    public function getAuthUrl(): string
     {
         return $this->client->createAuthUrl();
     }
 
-    /**
-     * Mengambil data user dari Google menggunakan kode authorization
-     */
-    public function getUserInfo($code)
+    public function getUserData(string $code): array
     {
-        // Ambil access token
-        $this->client->fetchAccessTokenWithAuthCode($code);
+        // Exchange authorization code for access token
+        $accessToken = $this->client->fetchAccessTokenWithAuthCode($code);
 
-        // Buat instance Google_Service_Oauth2
-        $oauthService = new Google\Service\Oauth2($this->client);
+        if (isset($accessToken['error'])) {
+            throw new \Exception('Error fetching access token: ' . $accessToken['error_description']);
+        }
 
-        // Ambil informasi user
-        $userInfo = $oauthService->userinfo->get();
+        $this->client->setAccessToken($accessToken);
 
-        return $userInfo;
+        // Retrieve user info
+        $oauth2 = new Oauth2($this->client);
+        $googleUser = $oauth2->userinfo->get();
+
+        return [
+            'id' => $googleUser->id,
+            'name' => $googleUser->name,
+            'email' => $googleUser->email,
+            'avatar' => $googleUser->picture,
+        ];
     }
 }

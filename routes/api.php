@@ -9,6 +9,10 @@ Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
+
+        // Google OAuth
+        Route::get('/google', [AuthController::class, 'redirectToGoogle']);
+        Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback']);
     });
 
     Route::prefix('/city')->group(function () {
@@ -34,10 +38,4 @@ Route::prefix('v1')->group(function () {
         Route::get('/list', [ProductController::class, 'list']);
         Route::get('/{slug}', [ProductController::class, 'show']);
     });
-
-    Route::get('lorem', function () {
-        return response()->json('123123');
-    });
 });
-
-Route::get('capek-sekali', [CityController::class, 'capekSekali']);
