@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\HasApiTokens;
 
 class AuthController extends Controller
 {
@@ -86,9 +87,6 @@ class AuthController extends Controller
                     'avatar' => $userData['avatar']
                 ]
             );
-
-            // Login pengguna
-            Auth::login($user);
 
             // Generate token untuk klien
             $token = $user->createToken('authToken')->plainTextToken;
