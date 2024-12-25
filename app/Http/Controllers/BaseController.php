@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use App\Services\ErrorHandler;
+use App\Models\Currency;
 
 class BaseController extends Controller
 {
@@ -34,7 +35,31 @@ class BaseController extends Controller
                 'data' => $languages
             ]);
         } catch (Exception $e) {
-            $this->errorHandler->handleError($e);
+            return $this->errorHandler->handleError($e);
+        }
+    }
+
+    public function currencies(Request $request)
+    {
+        try {
+            $currencies = Currency::where('is_active', true)
+                ->get()
+                ->map(function ($currency) {
+                    return [
+                        'id' => $currency->id,
+                        'name' => $currency->name,
+                        'code' => $currency->code,
+                        'symbol' => $currency->symbol,
+                        'exchange_rate' => $currency->exchange_rate,
+                    ];
+                });
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $currencies,
+            ]);
+        } catch (Exception $e) {
+            return $this->errorHandler->handleError($e);
         }
     }
 }

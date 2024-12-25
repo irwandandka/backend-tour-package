@@ -48,5 +48,6 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('/base')->group(function () {
         Route::get('/languages', [BaseController::class, 'languages']);
+        Route::get('/currencies', [BaseController::class, 'currencies']);
     });
 });
