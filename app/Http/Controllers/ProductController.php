@@ -28,12 +28,51 @@ class ProductController extends Controller
 
     public function show(Request $request, $slug)
     {
-        $product = Product::where('slug', $slug)->first();
+        try {
+            $product = Product::with(['city', 'city.country', 'reviews', 'product_details', 'reviews.user'])
+                ->where('slug', $slug)
+                ->first();
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $product
-        ]);
+            $resultProduct = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'image' => $product->image,
+                'duration' => $product->duration,
+                'city' => $product->city->name,
+                'country' => $product->city->country->name,
+                'price' => $product->price,
+                'rating' => round($product->reviews->avg('rating'), 1),
+                'reviews' => $product->reviews->map(function ($review) {
+                    return [
+                        'id' => $review->id,
+                        'user' => $review->user->name,
+                        'rating' => $review->rating,
+                        'comment' => $review->comment,
+                        'review_date' => $review->review_date
+                    ];
+                }),
+                'product_details' => $product->product_details->map(function ($productDetail) {
+                    return [
+                        'id' => $productDetail->id,
+                        'day' => $productDetail->day,
+                        'title' => $productDetail->title,
+                        'schedule_time' => $productDetail->schedule_time,
+                        'image' => $productDetail->activity_image,
+                        'description' => $productDetail->description,
+                        'latitude' => $productDetail->latitude,
+                        'longitude' => $productDetail->longitude,
+                    ];
+                }),
+            ];
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $resultProduct
+            ]);
+        } catch (Exception $e) {
+            return $this->errorHandler->handleError($e);
+        }
     }
 
     public function popularDestination(Request $request)
@@ -58,7 +97,7 @@ class ProductController extends Controller
                 'data' => $popularDestinations,
             ]);
         } catch (Exception $e) {
-            $this->errorHandler->handleError($e);
+            return $this->errorHandler->handleError($e);
         }
     }
 
@@ -98,7 +137,7 @@ class ProductController extends Controller
                 'data' => $cities,
             ]);
         } catch (Exception $e) {
-            $this->errorHandler->handleError($e);
+            return $this->errorHandler->handleError($e);
         }
     }
 }

@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
+use Spatie\Translatable\HasTranslations;
 
 class Product extends Model
 {
     use HasFactory, Searchable;
+    // use HasTranslations
 
     public function toSearchableArray()
     {
@@ -18,6 +20,8 @@ class Product extends Model
             'description' => $this->description,
         ];
     }
+
+    // public $translatable = ['name'];
 
     protected $fillable = [
         'name',
@@ -73,5 +77,10 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function product_details()
+    {
+        return $this->hasMany(ProductDetail::class);
     }
 }
