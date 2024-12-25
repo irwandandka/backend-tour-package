@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuthController, CityController, CountryController, NotificationController, ProductController, RegionController, SearchController, TestingController};
+use App\Http\Controllers\{AuthController, BaseController, CityController, CountryController, NotificationController, ProductController, RegionController, SearchController, TestingController};
 use Illuminate\Support\Facades\Route;
 
 
@@ -44,5 +44,9 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('/search')->group(function () {
         Route::get('/', [SearchController::class, 'globalSearch']);
+    });
+
+    Route::prefix('/base')->group(function () {
+        Route::get('/languages', [BaseController::class, 'languages']);
     });
 });
