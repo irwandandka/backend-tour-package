@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuthController, CityController, CountryController, NotificationController, ProductController, RegionController, TestingController};
+use App\Http\Controllers\{AuthController, CityController, CountryController, NotificationController, ProductController, RegionController, SearchController, TestingController};
 use Illuminate\Support\Facades\Route;
 
 
@@ -38,5 +38,9 @@ Route::prefix('v1')->group(function () {
     Route::prefix('/product')->group(function () {
         Route::get('/list', [ProductController::class, 'list']);
         Route::get('/{slug}', [ProductController::class, 'show']);
+    });
+
+    Route::prefix('/search')->group(function () {
+        Route::get('/', [SearchController::class, 'globalSearch']);
     });
 });
