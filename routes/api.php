@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuthController, BaseController, CityController, CountryController, NotificationController, ProductController, RegionController, SearchController, TestingController};
+use App\Http\Controllers\{AuthController, BaseController, CityController, CountryController, NotificationController, ProductController, RegionController, SearchController, TestingController, UserController};
 use Illuminate\Support\Facades\Route;
 
 
@@ -49,5 +49,11 @@ Route::prefix('v1')->group(function () {
     Route::prefix('/base')->group(function () {
         Route::get('/languages', [BaseController::class, 'languages']);
         Route::get('/currencies', [BaseController::class, 'currencies']);
+    });
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::prefix('/user')->group(function () {
+            Route::get('/profile', [UserController::class, 'profile']);
+        });
     });
 });
