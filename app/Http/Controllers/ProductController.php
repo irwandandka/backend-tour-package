@@ -6,7 +6,7 @@ use App\Classes\ApiResponseClass;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\City;
-use Exception;
+use Throwable;
 use Illuminate\Http\Request;
 use App\Services\ErrorHandler;
 
@@ -21,9 +21,13 @@ class ProductController extends Controller
 
     public function list(Request $request)
     {
-        $products = Product::with(['city', 'user', 'status', 'category'])->get();
+        try {
+            $products = Product::with(['city', 'user', 'status', 'category'])->get();
 
-        return ApiResponseClass::sendResponse(ProductResource::collection($products), '');
+            return ApiResponseClass::sendResponse(ProductResource::collection($products), '');
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
+        }
     }
 
     public function show(Request $request, $slug)
@@ -70,8 +74,8 @@ class ProductController extends Controller
                 'status' => 'success',
                 'data' => $resultProduct
             ]);
-        } catch (Exception $e) {
-            return $this->errorHandler->handleError($e);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
         }
     }
 
@@ -96,8 +100,8 @@ class ProductController extends Controller
                 'status' => 'success',
                 'data' => $popularDestinations,
             ]);
-        } catch (Exception $e) {
-            return $this->errorHandler->handleError($e);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
         }
     }
 
@@ -136,8 +140,8 @@ class ProductController extends Controller
                 'status' => 'success',
                 'data' => $cities,
             ]);
-        } catch (Exception $e) {
-            return $this->errorHandler->handleError($e);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
         }
     }
 }

@@ -2,42 +2,79 @@
 
 namespace App\Services;
 
-use Exception;
+use Illuminate\Http\Response;
+use Throwable;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class ErrorHandler
 {
     /**
-     * General function to handle errors and return consistent responses.
+     * Handle the exception and return the appropriate response.
+     *
+     * @param  Throwable  $e
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function handleError(Exception $exception)
+    public function handle(Throwable $e)
     {
-        // Log the error (optional)
-        Log::channel('system-error')->error($exception->getMessage());
-        Log::channel('system-error')->error("File " . $exception->getFile());
-        Log::channel('system-error')->error("Line " . $exception->getLine());
+        // Log the error
+        $this->logError($e);
 
-        // Check the type of exception and return an appropriate response
-        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
-            // Handle ModelNotFoundException (e.g., 404 errors)
-            return response()->json([
-                'error' => 'Resource not found.',
-                'message' => $exception->getMessage(),
-            ], 404);
+        // Jika ini adalah exception validasi
+        if ($e instanceof ValidationException) {
+            return $this->handleValidationException($e);
         }
 
-        // For validation errors (422 Unprocessable Entity)
-        if ($exception instanceof \Illuminate\Validation\ValidationException) {
-            return response()->json([
-                'error' => 'Validation error.',
-                'message' => $exception->errors(),
-            ], 422);
+        // Jika ini adalah error umum
+        if ($e instanceof \Error) {
+            return $this->handleGeneralError($e);
         }
 
-        // For generic exceptions (500 Internal Server Error)
+        // Tangani exception lainnya (seperti QueryException, ModelNotFoundException, dll)
+        return $this->handleGeneralError($e);
+    }
+
+    /**
+     * Handle ValidationException.
+     *
+     * @param ValidationException $e
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function handleValidationException(ValidationException $e)
+    {
         return response()->json([
-            'error' => 'Server error.',
-            'message' => 'Something went wrong. Please try again later.',
-        ], 500);
+            'message' => 'Validation Error',
+            'errors' => $e->errors(),
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * Handle general errors.
+     *
+     * @param Throwable $e
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function handleGeneralError(Throwable $e)
+    {
+        return response()->json([
+            'message' => 'An error occurred',
+            'error' => $e->getMessage(),
+            'trace' => env('APP_DEBUG') ? $e->getTraceAsString() : null,
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    private function logError(Throwable $throwable)
+    {
+        $origin = request()->header('origin') ?? request()->header('host');
+
+        if ($origin) {
+            if (str_contains($origin, 'localhost') || str_contains($origin, '127.0.0.1')) {
+                dd($throwable);
+            }
+        }
+
+        Log::channel('system-error')->error($throwable->getMessage());
+        Log::channel('system-error')->error("File " . $throwable->getFile());
+        Log::channel('system-error')->error("Line " . $throwable->getLine());
     }
 }

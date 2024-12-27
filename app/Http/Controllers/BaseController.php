@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Services\ErrorHandler;
 use App\Models\Currency;
+use Throwable;
 
 class BaseController extends Controller
 {
@@ -30,12 +31,14 @@ class BaseController extends Controller
                 ],
             ];
 
+            throw new Exception('Test Dulu Bang');
+
             return response()->json([
                 'status' => 'success',
                 'data' => $languages
             ]);
-        } catch (Exception $e) {
-            return $this->errorHandler->handleError($e);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
         }
     }
 
@@ -58,8 +61,8 @@ class BaseController extends Controller
                 'status' => 'success',
                 'data' => $currencies,
             ]);
-        } catch (Exception $e) {
-            return $this->errorHandler->handleError($e);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
         }
     }
 }

@@ -6,7 +6,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\Product;
 use App\Models\Region;
-use Exception;
+use Throwable;
 use Illuminate\Http\Request;
 use App\Services\ErrorHandler;
 
@@ -69,8 +69,8 @@ class SearchController extends Controller
                 ->merge($regions);
 
             return response()->json($searchResult);
-        } catch (Exception $e) {
-            return $this->errorHandler->handleError($e);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
         }
     }
 }

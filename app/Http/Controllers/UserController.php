@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\ErrorHandler;
-use Exception;
+use Throwable;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -34,8 +34,8 @@ class UserController extends Controller
                 'status' => 'success',
                 'data' => $userProfile
             ]);
-        } catch (Exception $e) {
-            return $this->errorHandler->handleError($e);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
         }
     }
 }

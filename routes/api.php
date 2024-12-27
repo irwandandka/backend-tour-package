@@ -23,12 +23,10 @@ Route::prefix('v1')->group(function () {
         Route::get('/deleted', [CityController::class, 'getDeleted']);
     });
 
-    // Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/region')->group(function () {
         Route::get('/list', [RegionController::class, 'list']);
         Route::get('/{region}', [RegionController::class, 'show']);
     });
-    // });
 
     Route::prefix('/country')->group(function () {
         Route::get('/list', [CountryController::class, 'list']);
@@ -54,6 +52,8 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('/user')->group(function () {
             Route::get('/profile', [UserController::class, 'profile']);
+
+            Route::post('/review-product/{slug}', [ProductController::class]);
         });
     });
 });
