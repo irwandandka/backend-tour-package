@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('booking_date');
             $table->string('notes');
             $table->timestamps();
+            $table->softDeletes();
 
             $table
                 ->foreign('user_id')

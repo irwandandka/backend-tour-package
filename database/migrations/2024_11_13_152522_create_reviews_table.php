@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('comment');
             $table->dateTime('review_date');
             $table->timestamps();
+            $table->softDeletes();
 
             $table
                 ->foreign('product_id')

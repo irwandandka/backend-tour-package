@@ -16,6 +16,7 @@ return new class extends Migration
             $table->tinyText('url');
             $table->string('object_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

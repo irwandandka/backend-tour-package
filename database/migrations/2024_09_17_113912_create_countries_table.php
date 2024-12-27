@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone_code')->nullable();
             $table->uuid('region_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('region_id')->references('id')->on('regions')->onUpdate('cascade')->onDelete('cascade');
         });

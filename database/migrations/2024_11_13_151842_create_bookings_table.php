@@ -19,6 +19,7 @@ return new class extends Migration
             $table->uuid('status_id');
             $table->integer('quantity');
             $table->timestamps();
+            $table->softDeletes();
 
             $table
                 ->foreign('product_id')

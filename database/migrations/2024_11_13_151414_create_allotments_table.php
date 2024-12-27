@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('total_allotment');
             $table->integer('available_allotment');
             $table->timestamps();
+            $table->softDeletes();
 
             $table
                 ->foreign('product_id')
