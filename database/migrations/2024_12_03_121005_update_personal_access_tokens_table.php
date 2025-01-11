@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('regions', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('code')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->uuid('tokenable_id')->change(); // Ubah menjadi UUID
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('regions');
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->unsignedBigInteger('tokenable_id')->change(); // Kembali ke integer
+        });
     }
 };

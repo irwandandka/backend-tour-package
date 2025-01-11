@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class City extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
         'name',
@@ -19,6 +20,14 @@ class City extends Model
         'latitude',
         'longitude'
     ];
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'postal_code' => $this->postal_code,
+        ];
+    }
 
     public $incrementing = false;  // Disable auto-incrementing
 

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('payment_reference');
             $table->text('notes');
             $table->timestamps();
+            $table->softDeletes();
 
             $table
                 ->foreign('transaction_id')

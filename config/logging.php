@@ -1,5 +1,6 @@
 <?php
 
+use Google\Service\Storage;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -47,6 +48,42 @@ return [
     |
     | Available drivers: "single", "daily", "slack", "syslog",
     |                    "errorlog", "monolog", "custom", "stack"
+    | 
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | Log Notes
+    |--------------------------------------------------------------------------
+    | 
+    | Log Driver:
+    | - single: Logs will be written to a single log file (e.g., `laravel.log`).
+    |   This is the default and does not rotate logs, meaning everything will
+    |   be written to the same file indefinitely.
+    | - daily: Creates a new log file each day (e.g., `laravel-YYYY-MM-DD.log`).
+    |   Useful for log rotation, where logs are split by date and old logs are archived.
+    | - slack: Sends log messages to a Slack channel. Requires a Slack webhook URL.
+    | - syslog: Logs are sent to the system's syslog, which may be viewed via system 
+    |   utilities like `journalctl` on Linux.
+    | - errorlog: Logs are sent to the PHP error log, which is typically the system’s 
+    |   default error log file (e.g., `/var/log/apache2/error.log`).
+    | - custom: Allows you to define your own custom logging behavior using a custom 
+    |   log class that implements the `Log` interface.
+    | 
+    | Log Level:
+    | - debug: Logs all messages, including detailed debugging information, 
+    |   as well as higher severity levels (info, warning, error, etc.).
+    | - info: Logs informational messages, typically for general progress updates.
+    | - notice: Logs normal but significant events that are not errors.
+    | - warning: Logs potential problems or minor issues that don’t stop execution.
+    | - error: Logs errors that occur but don’t prevent the application from running.
+    | - critical: Logs critical issues that may cause the application to stop working.
+    | - alert: Logs issues requiring immediate action.
+    | - emergency: Logs the highest severity, indicating a system-wide failure.
+    | 
+    | Example:
+    | - 'level' => 'debug': Captures all messages, including detailed debug information.
+    | - 'level' => 'warning': Only logs warnings, errors, and more critical messages.
     |
     */
 
@@ -113,6 +150,7 @@ return [
             'replace_placeholders' => true,
         ],
 
+        // will send into server log file eg: /var/log/nginx/error.log
         'errorlog' => [
             'driver' => 'errorlog',
             'level' => env('LOG_LEVEL', 'debug'),
@@ -133,8 +171,14 @@ return [
             'path' => storage_path('logs/testing.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
-        ]
+        ],
 
+        'system-error' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/system-error.log'),
+            'level' => 'error',
+            'replace_placeholders' => true,
+        ],
     ],
 
 ];

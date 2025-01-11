@@ -4,13 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Region extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable, SoftDeletes;
 
     protected $fillable = ['name', 'code'];
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'code' => $this->code,
+        ];
+    }
 
     public $incrementing = false;  // Disable auto-incrementing
 

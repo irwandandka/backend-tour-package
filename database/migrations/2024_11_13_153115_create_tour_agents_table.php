@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('address');
             $table->uuid('status_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table
                 ->foreign('status_id')

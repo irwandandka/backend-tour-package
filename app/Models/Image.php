@@ -7,17 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Allotment extends Model
+class Image extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'product_id',
-        'status_id',
-        'date',
-        'total_allotment',
-        'available_allotment'
-    ];
+    protected $fillable = ['url', 'object_id'];
 
     public $incrementing = false;
 
@@ -32,15 +26,5 @@ class Allotment extends Model
                 $model->{$model->getKeyName()} = (string) Str::uuid();
             }
         });
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
-
-    public function status()
-    {
-        return $this->belongsTo(Status::class);
     }
 }

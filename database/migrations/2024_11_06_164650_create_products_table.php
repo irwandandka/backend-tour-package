@@ -26,6 +26,7 @@ return new class extends Migration
             $table->uuid('status_id');
             $table->uuid('category_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table
                 ->foreign('user_id')

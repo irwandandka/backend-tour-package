@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('exchange_rate');
             $table->boolean('is_active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

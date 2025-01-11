@@ -18,9 +18,11 @@ return new class extends Migration
             $table->string('title');
             $table->string('schedule_time');
             $table->string('activity_image');
-            $table->string('location');
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);
             $table->text('description');
             $table->timestamps();
+            $table->softDeletes();
 
             $table
                 ->foreign('product_id')

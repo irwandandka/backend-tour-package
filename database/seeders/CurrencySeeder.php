@@ -16,39 +16,74 @@ class CurrencySeeder extends Seeder
     {
         $currencies = [
             [
-                'name' => 'US Dollar',
                 'code' => 'USD',
-                'exchange_rate' => 1.000000,
                 'symbol' => '$',
-                'is_active' => true
+                'name' => 'United States Dollar',
+                'exchange_rate' => 1.00, // Base rate
+                'is_active' => true,
             ],
             [
-                'name' => 'Euro',
                 'code' => 'EUR',
-                'exchange_rate' => 1.100000,
                 'symbol' => '€',
-                'is_active' => true
+                'name' => 'Euro',
+                'exchange_rate' => 0.85, // Example rate
+                'is_active' => true,
             ],
             [
-                'name' => 'Indonesian Rupiah',
-                'code' => 'IDR',
-                'exchange_rate' => 0.000065,
-                'symbol' => 'Rp',
-                'is_active' => true
+                'code' => 'GBP',
+                'symbol' => '£',
+                'name' => 'British Pound',
+                'exchange_rate' => 0.75,
+                'is_active' => true,
             ],
             [
-                'name' => 'Japanese Yen',
                 'code' => 'JPY',
-                'exchange_rate' => 0.007500,
                 'symbol' => '¥',
-                'is_active' => true
+                'name' => 'Japanese Yen',
+                'exchange_rate' => 110.00,
+                'is_active' => true,
             ],
             [
-                'name' => 'Australian Dollar',
+                'code' => 'IDR',
+                'symbol' => 'Rp',
+                'name' => 'Indonesian Rupiah',
+                'exchange_rate' => 14000.00,
+                'is_active' => true,
+            ],
+            [
                 'code' => 'AUD',
-                'exchange_rate' => 0.750000,
                 'symbol' => 'A$',
-                'is_active' => true
+                'name' => 'Australian Dollar',
+                'exchange_rate' => 1.30,
+                'is_active' => true,
+            ],
+            [
+                'code' => 'CAD',
+                'symbol' => 'C$',
+                'name' => 'Canadian Dollar',
+                'exchange_rate' => 1.25,
+                'is_active' => true,
+            ],
+            [
+                'code' => 'CHF',
+                'symbol' => 'CHF',
+                'name' => 'Swiss Franc',
+                'exchange_rate' => 0.92,
+                'is_active' => true,
+            ],
+            [
+                'code' => 'CNY',
+                'symbol' => '¥',
+                'name' => 'Chinese Yuan',
+                'exchange_rate' => 6.45,
+                'is_active' => true,
+            ],
+            [
+                'code' => 'INR',
+                'symbol' => '₹',
+                'name' => 'Indian Rupee',
+                'exchange_rate' => 74.00,
+                'is_active' => true,
             ],
         ];
 
