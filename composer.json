@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "aws/aws-sdk-php": "^3.331",
+        "darkaonline/l5-swagger": "^8.6",
         "google/apiclient": "^2.18",
         "guzzlehttp/guzzle": "^7.9",
         "laravel-notification-channels/telegram": "^5.0",
@@ -16,6 +17,7 @@
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.29",
         "meilisearch/meilisearch-php": "^1.12",
+        "spatie/laravel-translatable": "^6.9",
         "tymon/jwt-auth": "^2.1",
         "xendit/xendit-php": "^6.0"
     },
