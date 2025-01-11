@@ -12,15 +12,25 @@
         },
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "https://apilaravel.irwandandka.my.id",
+            "description": "Production server for the API"
+        },
+        {
+            "url": "http://localhost:8000",
+            "description": "Local development server"
+        }
+    ],
     "paths": {
-        "/products": {
+        "/api/v1/product/list": {
             "get": {
                 "tags": [
                     "Product"
                 ],
                 "summary": "Retrieve a list of all tour packages",
                 "description": "Returns a list of available tour packages.",
-                "operationId": "efaa0ac2752be12de9af60343cf051a9",
+                "operationId": "6e9dc3d07f85619fa1cbff5150f7fabf",
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved the list of products",
