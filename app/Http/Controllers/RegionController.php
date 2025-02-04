@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Region;
 use Illuminate\Http\Request;
-use App\Classes\ApiResponseClass;
-use App\Http\Resources\RegionResource;
 use App\Services\ErrorHandler;
 use Throwable;
 
@@ -18,24 +16,59 @@ class RegionController extends Controller
         $this->errorHandler = $errorHandler;
     }
 
+    /**
+     * @see SwaggerInfo::regions()
+     */
     public function list(Request $request)
     {
         try {
-            $userAgent = $request->header('User-Agent');
+            $regions = Region::with(
+                [
+                    'countries'
+                ]
+            )
+                ->get()
+                ->map(function ($region) {
+                    return [
+                        'id' => $region->id,
+                        'name' => $region->name,
+                        'code' => $region->code,
+                    ];
+                });
 
-            $regions = Region::with(['countries'])->get();
-
-            return ApiResponseClass::sendResponse(RegionResource::collection($regions), '');
+            return response()->json([
+                'status' => 'success',
+                'data' => $regions
+            ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
         }
     }
 
+    /**
+     * @see SwaggerInfo::regionShow()
+     */
     public function show(Region $region)
     {
         try {
             $region->load('countries');
-            return ApiResponseClass::sendResponse(new RegionResource($region), '');
+
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'id' => $region->id,
+                    'name' => $region->name,
+                    'code' => $region->code,
+                    'countries' => $region->countries->map(function ($country) {
+                        return [
+                            'id' => $country->id,
+                            'name' => $country->name,
+                            'iso_code' => $country->iso_code,
+                            'phone_code' => $country->phone_code,
+                        ];
+                    }),
+                ]
+            ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
         }

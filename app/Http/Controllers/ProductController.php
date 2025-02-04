@@ -2,42 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\ApiResponseClass;
-use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\City;
 use Throwable;
 use Illuminate\Http\Request;
 use App\Services\ErrorHandler;
-use OpenApi\Annotations as OA;
-
-/**
- * @OA\Info(
- *     title="API Products",
- *     version="1.0.0",
- *     description="API for managing tour package products.",
- *     @OA\Contact(
- *         email="irwndandka@gmail.com"
- *     ),
- *     @OA\License(
- *         name="MIT",
- *         url="https://opensource.org/licenses/MIT"
- *     )
- * )
- * 
- * * @OA\Server(
- *     url="https://apilaravel.irwandandka.my.id",
- *     description="Production server for the API"
- * )
- *
- * @OA\Server(
- *     url="http://localhost:8000",
- *     description="Local development server"
- * )
- */
 
 class ProductController extends Controller
 {
+    /**
+     * @see SwaggerInfo::init()
+     */
+
     protected $errorHandler;
 
     public function __construct(ErrorHandler $errorHandler)
@@ -46,95 +22,7 @@ class ProductController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *     path="/api/v1/product/list",
-     *     tags={"Product"},
-     *     summary="Retrieve a list of all tour packages",
-     *     description="Returns a list of available tour packages.",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successfully retrieved the list of products",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                 property="success",
-     *                 type="boolean",
-     *                 example=true,
-     *                 description="Indicates whether the request was successful."
-     *             ),
-     *             @OA\Property(
-     *                 property="data",
-     *                 type="array",
-     *                 description="List of tour packages.",
-     *                 @OA\Items(
-     *                     type="object",
-     *                     @OA\Property(
-     *                         property="id",
-     *                         type="string",
-     *                         format="uuid",
-     *                         example="0c40bf88-ba9f-11ef-95b1-525400d81c3e",
-     *                         description="Unique identifier for the tour package."
-     *                     ),
-     *                     @OA\Property(
-     *                         property="name",
-     *                         type="string",
-     *                         example="Paris Art & Culture",
-     *                         description="The name of the tour package."
-     *                     ),
-     *                     @OA\Property(
-     *                         property="slug",
-     *                         type="string",
-     *                         example="paris-art-&-culture",
-     *                         description="URL-friendly version of the package name."
-     *                     ),
-     *                     @OA\Property(
-     *                         property="duration",
-     *                         type="string",
-     *                         example="2 days",
-     *                         description="Duration of the tour package."
-     *                     ),
-     *                     @OA\Property(
-     *                         property="description",
-     *                         type="string",
-     *                         example="Dive into the artistic and cultural history of Paris.",
-     *                         description="Description of the tour package."
-     *                     ),
-     *                     @OA\Property(
-     *                         property="price",
-     *                         type="integer",
-     *                         example=5000000,
-     *                         description="Price of the tour package in the smallest currency unit."
-     *                     ),
-     *                     @OA\Property(
-     *                         property="capacity",
-     *                         type="integer",
-     *                         nullable=true,
-     *                         example=null,
-     *                         description="Maximum number of participants. Can be null if not specified."
-     *                     ),
-     *                     @OA\Property(
-     *                         property="date_from",
-     *                         type="string",
-     *                         format="date",
-     *                         example="2024-12-12",
-     *                         description="Start date of the tour package."
-     *                     ),
-     *                     @OA\Property(
-     *                         property="date_until",
-     *                         type="string",
-     *                         format="date",
-     *                         example="2025-03-12",
-     *                         description="End date of the tour package."
-     *                     )
-     *                 )
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Internal server error."
-     *     )
-     * )
+     * @see SwaggerInfo::list()
      */
     public function list(Request $request)
     {
@@ -173,10 +61,21 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * @see SwaggerInfo::show()
+     */
     public function show(Request $request, $slug)
     {
         try {
-            $product = Product::with(['city', 'city.country', 'reviews', 'product_details', 'reviews.user'])
+            $product = Product::with(
+                [
+                    'city',
+                    'city.country',
+                    'reviews',
+                    'product_details',
+                    'reviews.user'
+                ]
+            )
                 ->where('slug', $slug)
                 ->first();
 
@@ -222,6 +121,9 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * @see SwaggerInfo::popularDestination()
+     */
     public function popularDestination(Request $request)
     {
         try {
@@ -248,6 +150,9 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * @see SwaggerInfo::exploreNow()
+     */
     public function exploreNow(Request $request)
     {
         try {

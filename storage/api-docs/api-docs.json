@@ -23,6 +23,732 @@
         }
     ],
     "paths": {
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register a new user",
+                "operationId": "049ee25ee08a5eedaa42d2255aecc1c5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "\n     *                  [email protected]"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User registered successfully!"
+                                        },
+                                        "user": {
+                                            "type": "object"
+                                        },
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "description": "Login",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "Login",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "\n     *                      [email protected]"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "Bearer token"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid login credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid login credentials"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/profile": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user profile",
+                "description": "Get user profile",
+                "operationId": "profile",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/auth/google": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Redirect to Google OAuth",
+                "description": "Redirect to Google OAuth",
+                "operationId": "redirectToGoogle",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "url": {
+                                            "type": "string",
+                                            "example": "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=1234567890&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fauth%2Fgoogle%2Fcallback&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&access_type=offline&approval_prompt=force"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/google/callback": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Google OAuth Callback",
+                "description": "Google OAuth Callback",
+                "operationId": "handleGoogleCallback",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "Google OAuth Code",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "2|3d4f5g6h7j8k9l0"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "irwandandka@gmail.com"
+                                                },
+                                                "avatar": {
+                                                    "type": "string",
+                                                    "example": "https://lh3.googleusercontent.com/a-/AOh14Gj3z4z5"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout",
+                "description": "Logout",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logged out successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/base/languages": {
+            "get": {
+                "tags": [
+                    "Base"
+                ],
+                "summary": "Get languages",
+                "description": "Get languages",
+                "operationId": "languages",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "English"
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "en"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/base/currencies": {
+            "get": {
+                "tags": [
+                    "Base"
+                ],
+                "summary": "Get currencies",
+                "description": "Get currencies",
+                "operationId": "currencies",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "US Dollar"
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "USD"
+                                                    },
+                                                    "symbol": {
+                                                        "type": "string",
+                                                        "example": "$"
+                                                    },
+                                                    "exchange_rate": {
+                                                        "type": "number",
+                                                        "example": 1
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/cities": {
+            "get": {
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "List all cities",
+                "description": "List all cities",
+                "operationId": "listCities",
+                "responses": {
+                    "200": {
+                        "description": "List of cities",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "country": {
+                                                "type": "string"
+                                            },
+                                            "region": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cities/{city}": {
+            "get": {
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Get city by ID",
+                "description": "Get city by ID",
+                "operationId": "showCity",
+                "parameters": [
+                    {
+                        "name": "city",
+                        "in": "path",
+                        "description": "City ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "City detail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "country": {
+                                            "type": "string"
+                                        },
+                                        "region": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Delete city by ID",
+                "description": "Delete city by ID",
+                "operationId": "deleteCity",
+                "parameters": [
+                    {
+                        "name": "city",
+                        "in": "path",
+                        "description": "City ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "City deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cities/deleted": {
+            "get": {
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "List all deleted cities",
+                "description": "List all deleted cities",
+                "operationId": "getDeletedCities",
+                "responses": {
+                    "200": {
+                        "description": "List of deleted cities",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "country": {
+                                                "type": "string"
+                                            },
+                                            "region": {
+                                                "type": "string"
+                                            },
+                                            "deleted_at": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/regions": {
+            "get": {
+                "tags": [
+                    "Regions"
+                ],
+                "summary": "List all regions",
+                "description": "List all regions",
+                "operationId": "list",
+                "responses": {
+                    "200": {
+                        "description": "List of regions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": "1"
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Asia"
+                                            },
+                                            "code": {
+                                                "type": "string",
+                                                "example": "AS"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/regions/{region}": {
+            "get": {
+                "tags": [
+                    "Regions"
+                ],
+                "summary": "Show region",
+                "description": "Show region",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "region",
+                        "in": "path",
+                        "description": "Region ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Region detail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Asia"
+                                        },
+                                        "code": {
+                                            "type": "string",
+                                            "example": "AS"
+                                        },
+                                        "countries": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Indonesia"
+                                                    },
+                                                    "iso_code": {
+                                                        "type": "string",
+                                                        "example": "ID"
+                                                    },
+                                                    "phone_code": {
+                                                        "type": "string",
+                                                        "example": "62"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/product/explore-now": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Retrieve a list of cities.",
+                "description": "Returns a list of cities which has the highest reviews of their tour packages.",
+                "operationId": "a989efb3f95c2c56ababed45fe269a03",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the list of cities",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/product/list": {
             "get": {
                 "tags": [
@@ -30,7 +756,7 @@
                 ],
                 "summary": "Retrieve a list of all tour packages",
                 "description": "Returns a list of available tour packages.",
-                "operationId": "6e9dc3d07f85619fa1cbff5150f7fabf",
+                "operationId": "15c78986ee5d8dedc1a5f995aabe241e",
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved the list of products",
@@ -112,9 +838,323 @@
                     }
                 }
             }
+        },
+        "/api/v1/product/{slug}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get a single tour package by slug",
+                "description": "Retrieve detailed information about a specific tour package using the package's slug.",
+                "operationId": "9df542153ffa07198fe4ea4a29cc496d",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "The slug of the tour package",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "tokyo-highlights"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the product details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "description": "Response status.",
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "description": "The detailed information about the tour package.",
+                                            "properties": {
+                                                "id": {
+                                                    "description": "The unique identifier of the product.",
+                                                    "type": "string",
+                                                    "format": "uuid",
+                                                    "example": "6060c477-ba9e-11ef-95b1-525400d81c3e"
+                                                },
+                                                "name": {
+                                                    "description": "The name of the tour package.",
+                                                    "type": "string",
+                                                    "example": "Tokyo Highlights"
+                                                },
+                                                "description": {
+                                                    "description": "A description of the tour package.",
+                                                    "type": "string",
+                                                    "example": "Experience the top attractions and activities in Tokyo."
+                                                },
+                                                "image": {
+                                                    "description": "The URL of the tour package's image. Can be null if no image is available.",
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "duration": {
+                                                    "description": "Duration of the tour package.",
+                                                    "type": "string",
+                                                    "example": "3 days"
+                                                },
+                                                "city": {
+                                                    "description": "City where the tour takes place.",
+                                                    "type": "string",
+                                                    "example": "Tokyo"
+                                                },
+                                                "country": {
+                                                    "description": "Country where the tour takes place.",
+                                                    "type": "string",
+                                                    "example": "Japan"
+                                                },
+                                                "price": {
+                                                    "description": "Price of the tour package in the smallest currency unit.",
+                                                    "type": "integer",
+                                                    "example": 6000000
+                                                },
+                                                "rating": {
+                                                    "description": "Rating of the tour package.",
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 4.7
+                                                },
+                                                "reviews": {
+                                                    "description": "List of reviews for the tour package.",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Review identifier.",
+                                                                "type": "string",
+                                                                "format": "uuid",
+                                                                "example": "46aab2c9-a2ff-45a3-a970-038fd65b3484"
+                                                            },
+                                                            "user": {
+                                                                "description": "Name of the reviewer.",
+                                                                "type": "string",
+                                                                "example": "Irwanda Andika Putra"
+                                                            },
+                                                            "rating": {
+                                                                "description": "Rating given by the reviewer.",
+                                                                "type": "integer",
+                                                                "example": 5
+                                                            },
+                                                            "comment": {
+                                                                "description": "Comment provided by the reviewer.",
+                                                                "type": "string",
+                                                                "example": "Absolutely loved it! The mix of traditional and modern Tokyo was amazing. Would definitely book again."
+                                                            },
+                                                            "review_date": {
+                                                                "description": "Date when the review was posted.",
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2024-02-07 04:26:58"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "product_details": {
+                                                    "description": "List of product details for each day of the tour.",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "Product detail identifier.",
+                                                                "type": "string",
+                                                                "format": "uuid",
+                                                                "example": "1d54cd38-baab-11ef-95b1-525400d81c3e"
+                                                            },
+                                                            "day": {
+                                                                "description": "The day of the tour.",
+                                                                "type": "string",
+                                                                "example": "Day 1"
+                                                            },
+                                                            "title": {
+                                                                "description": "Title of the activity on this day.",
+                                                                "type": "string",
+                                                                "example": "Landmark Exploration"
+                                                            },
+                                                            "schedule_time": {
+                                                                "description": "Time scheduled for the activity.",
+                                                                "type": "string",
+                                                                "example": "09:00"
+                                                            },
+                                                            "image": {
+                                                                "description": "Image URL for the activity. Can be null.",
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "description": {
+                                                                "description": "Description of the activity.",
+                                                                "type": "string",
+                                                                "example": "Visit iconic landmarks including the Tokyo Tower."
+                                                            },
+                                                            "latitude": {
+                                                                "description": "Latitude of the activity's location.",
+                                                                "type": "string",
+                                                                "example": "35.65860000"
+                                                            },
+                                                            "longitude": {
+                                                                "description": "Longitude of the activity's location.",
+                                                                "type": "string",
+                                                                "example": "139.74540000"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found."
+                    },
+                    "500": {
+                        "description": "Internal server error."
+                    }
+                }
+            }
+        },
+        "/product/popular-destination": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get popular destinations",
+                "operationId": "33ed3d36e2b99c15d4885d0f4959ffc9",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Bali"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string",
+                                                        "example": "bali"
+                                                    },
+                                                    "price": {
+                                                        "type": "integer",
+                                                        "example": 1000000
+                                                    },
+                                                    "rating": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 4.5
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "400": {
+                "description": "Bad request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "email": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "password": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Unauthenticated",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unauthenticated."
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
         }
     },
     "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "User",
+            "description": "User"
+        },
+        {
+            "name": "Base",
+            "description": "Base"
+        },
+        {
+            "name": "Cities",
+            "description": "Cities"
+        },
+        {
+            "name": "Regions",
+            "description": "Regions"
+        },
         {
             "name": "Product",
             "description": "Product"

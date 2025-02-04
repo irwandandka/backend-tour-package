@@ -23,7 +23,9 @@ class AuthController extends Controller
         $this->errorHandler = $errorHandler;
     }
 
-    // Register a new user
+    /**
+     * @see SwaggerInfo::register()
+     */
     public function register(Request $request)
     {
         try {
@@ -55,19 +57,21 @@ class AuthController extends Controller
         }
     }
 
-    // Login and generate token
+    /**
+     * @see SwaggerInfo::login()
+     */
     public function login(Request $request)
     {
         try {
             $credentials = $request->only('email', 'password');
 
             // Check if the credentials are valid
-            if (!Auth::attempt($credentials)) {
+            $user = User::where('email', $credentials['email'])->first();
+            if (!$user || !Hash::check($credentials['password'], $user->password)) {
                 return response()->json(['message' => 'Invalid login credentials'], 401);
             }
 
             // If successful, generate a token
-            $user = User::find(auth()->user()->id);
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
@@ -79,6 +83,24 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @see SwaggerInfo::profile()
+     */
+    public function profile(Request $request)
+    {
+        try {
+            return response()->json([
+                'status' => 'success',
+                'data' => $request->user(),
+            ]);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
+        }
+    }
+
+    /**
+     * @see SwaggerInfo::redirectToGoogle()
+     */
     public function redirectToGoogle()
     {
         try {
@@ -90,6 +112,9 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @see SwaggerInfo::handleGoogleCallback()
+     */
     public function handleGoogleCallback(Request $request)
     {
         try {
@@ -114,6 +139,9 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @see SwaggerInfo::logout()
+     */
     public function logout(Request $request)
     {
         try {
