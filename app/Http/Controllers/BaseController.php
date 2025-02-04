@@ -17,6 +17,9 @@ class BaseController extends Controller
         $this->errorHandler = $errorHandler;
     }
 
+    /**
+     * @see SwaggerInfo::languages()
+     */
     public function languages(Request $request)
     {
         try {
@@ -31,8 +34,6 @@ class BaseController extends Controller
                 ],
             ];
 
-            throw new Exception('Test Dulu Bang');
-
             return response()->json([
                 'status' => 'success',
                 'data' => $languages
@@ -42,6 +43,9 @@ class BaseController extends Controller
         }
     }
 
+    /**
+     * @see SwaggerInfo::currencies()
+     */
     public function currencies(Request $request)
     {
         try {

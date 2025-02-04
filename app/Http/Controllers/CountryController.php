@@ -20,9 +20,25 @@ class CountryController extends Controller
     public function list(Request $request)
     {
         try {
-            $regions = Country::with(['cities'])->get();
+            $countries = Country::with(
+                [
+                    'cities'
+                ]
+            )
+                ->get()
+                ->map(function ($country) {
+                    return [
+                        'id' => $country->id,
+                        'name' => $country->name,
+                        'iso_code' => $country->iso_code,
+                        'phone_code' => $country->phone_code,
+                    ];
+                });
 
-            return ApiResponseClass::sendResponse(CountryResource::collection($regions), '');
+            return response()->json([
+                'status' => 'success',
+                'data' => $countries
+            ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
         }
@@ -32,7 +48,24 @@ class CountryController extends Controller
     {
         try {
             $country->load('cities');
-            return ApiResponseClass::sendResponse(new CountryResource($country), '');
+
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'id' => $country->id,
+                    'name' => $country->name,
+                    'iso_code' => $country->iso_code,
+                    'phone_code' => $country->phone_code,
+                    'cities' => $country->cities->map(function ($city) {
+                        return [
+                            'id' => $city->id,
+                            'name' => $city->name,
+                            'latitude' => $city->latitude,
+                            'longitude' => $city->longitude,
+                        ];
+                    }),
+                ]
+            ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
         }
