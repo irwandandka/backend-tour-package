@@ -2,21 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Currency extends Model
+class ExchangeRate extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
-        'name',
-        'code',
-        'symbol',
+        'base_currency_id',
+        'target_currency_id',
         'exchange_rate',
-        'is_active',
+        'timestamp',
     ];
 
     public $incrementing = false;
@@ -34,13 +32,13 @@ class Currency extends Model
         });
     }
 
-    public function baseExchangeRates()
+    public function baseCurrency()
     {
-        return $this->hasMany(ExchangeRate::class, 'base_currency_id');
+        return $this->belongsTo(Currency::class, 'base_currency_id');
     }
 
-    public function targetExchangeRates()
+    public function targetCurrency()
     {
-        return $this->hasMany(ExchangeRate::class, 'target_currency_id');
+        return $this->belongsTo(Currency::class, 'target_currency_id');
     }
 }
