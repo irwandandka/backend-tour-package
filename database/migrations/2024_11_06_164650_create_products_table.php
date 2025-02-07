@@ -25,6 +25,8 @@ return new class extends Migration
             $table->uuid('city_id');
             $table->uuid('status_id');
             $table->uuid('category_id');
+            $table->uuid('purchase_currency_id');
+            $table->uuid('sales_currency_id');
             $table->timestamps();
             $table->softDeletes();
 
@@ -53,6 +55,20 @@ return new class extends Migration
                 ->foreign('category_id')
                 ->references('id')
                 ->on('categories')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table
+                ->foreign('purchase_currency_id')
+                ->references('id')
+                ->on('currencies')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table
+                ->foreign('sales_currency_id')
+                ->references('id')
+                ->on('currencies')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

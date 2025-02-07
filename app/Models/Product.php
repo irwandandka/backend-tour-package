@@ -37,7 +37,9 @@ class Product extends Model
         'user_id',
         'city_id',
         'status_id',
-        'category_id'
+        'category_id',
+        'purchase_currency_id',
+        'sales_currency_id',
     ];
 
     public $incrementing = false;
@@ -83,5 +85,30 @@ class Product extends Model
     public function product_details()
     {
         return $this->hasMany(ProductDetail::class);
+    }
+
+    public function discounts()
+    {
+        return $this->hasMany(Discount::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function product_prices()
+    {
+        return $this->hasMany(ProductPrice::class);
+    }
+
+    public function purchase_currency()
+    {
+        return $this->belongsTo(Currency::class, 'purchase_currency_id');
+    }
+
+    public function sales_currency()
+    {
+        return $this->belongsTo(Currency::class, 'sales_currency_id');
     }
 }

@@ -2,24 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class ProductDetail extends Model
+class ProductPrice extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
-        'day',
-        'title',
-        'schedule_time',
-        'activity_image',
-        'latitude',
-        'longitude',
-        'description',
-        'product_id'
+        'product_id',
+        'level',
+        'purchase_adult',
+        'sales_adult',
+        'purchase_child',
+        'sales_child',
+        'purchase_infant',
+        'sales_infant',
+        'purchase_senior',
+        'sales_senior',
     ];
 
     public $incrementing = false;
@@ -35,6 +36,11 @@ class ProductDetail extends Model
                 $model->{$model->getKeyName()} = (string) Str::uuid();
             }
         });
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 
     public function product()
