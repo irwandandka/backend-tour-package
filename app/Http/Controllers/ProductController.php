@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\City;
-use Throwable;
+use App\Models\{Product, City, Currency};
+use App\Services\{ErrorHandler, PricingService};
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use App\Services\ErrorHandler;
+use Carbon\Carbon;
+use Throwable;
 
 class ProductController extends Controller
 {
@@ -14,11 +15,15 @@ class ProductController extends Controller
      * @see SwaggerInfo::init()
      */
 
-    protected $errorHandler;
+    use ValidatesRequests;
 
-    public function __construct(ErrorHandler $errorHandler)
+    protected $errorHandler;
+    protected $pricingService;
+
+    public function __construct()
     {
-        $this->errorHandler = $errorHandler;
+        $this->errorHandler = new ErrorHandler;
+        $this->pricingService = new PricingService;
     }
 
     /**
@@ -27,26 +32,43 @@ class ProductController extends Controller
     public function list(Request $request)
     {
         try {
+            $validated = $this->validate($request, [
+                'lang' => 'required',
+                'currency' => 'required',
+            ]);
+
+            $targetCurrency = Currency::where('code', $validated['currency'])->first();
+
             $products = Product::with(
                 [
                     'city',
-                    'user',
-                    'status',
-                    'category'
+                    'city.country',
+                    'product_prices',
+                    'purchase_currency',
+                    'purchase_currency.baseExchangeRates',
+                    'sales_currency',
+                    'sales_currency.baseExchangeRates',
                 ]
             )
                 ->get()
-                ->map(function ($product) {
+                ->map(function ($product) use ($validated, $targetCurrency) {
+                    $price = $this->pricingService->getPricing(
+                        $product,
+                        $validated,
+                        $targetCurrency
+                    );
+
                     return [
                         'id' => $product->id,
                         'slug' => $product->slug,
                         'name' => $product->name,
                         'description' => $product->description,
                         'duration' => $product->duration,
-                        'date_from' => $product->date_from,
-                        'date_until' => $product->date_until,
-                        'price' => $product->price,
+                        'date_from' => Carbon::parse($product->date_from)->format('l, jS F Y'),
+                        'date_until' => Carbon::parse($product->date_until)->format('l, jS F Y'),
+                        'price' => formatCurrency($price, $validated['currency']),
                         'capacity' => $product->capacity,
+                        'location' => $product->city->name . ', ' . $product->city->country->name,
                     ];
                 });
 
@@ -54,8 +76,6 @@ class ProductController extends Controller
                 'status' => 'success',
                 'data' => $products
             ]);
-
-            // return ApiResponseClass::sendResponse(ProductResource::collection($products), '');
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
         }
@@ -67,28 +87,46 @@ class ProductController extends Controller
     public function show(Request $request, $slug)
     {
         try {
+            $validated = $this->validate($request, [
+                'lang' => 'required',
+                'currency' => 'required',
+            ]);
+
             $product = Product::with(
                 [
                     'city',
                     'city.country',
                     'reviews',
                     'product_details',
-                    'reviews.user'
+                    'reviews.user',
+                    'product_prices',
+                    'purchase_currency',
+                    'purchase_currency.baseExchangeRates',
+                    'sales_currency',
+                    'sales_currency.baseExchangeRates',
                 ]
             )
                 ->where('slug', $slug)
                 ->first();
 
+            $targetCurrency = Currency::where('code', $validated['currency'])->first();
+
+            $price = $this->pricingService->getPricing(
+                $product,
+                $validated,
+                $targetCurrency
+            );
+
             $resultProduct = [
                 'id' => $product->id,
                 'name' => $product->name,
+                'slug' => $product->slug,
                 'description' => $product->description,
-                'image' => $product->image,
+                'image' => $product->thumbnail_image,
                 'duration' => $product->duration,
-                'city' => $product->city->name,
-                'country' => $product->city->country->name,
-                'price' => $product->price,
+                'price' => formatCurrency($price, $validated['currency']),
                 'rating' => round($product->reviews->avg('rating'), 1),
+                'location' => $product->city->name . ', ' . $product->city->country->name,
                 'reviews' => $product->reviews->map(function ($review) {
                     return [
                         'id' => $review->id,
