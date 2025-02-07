@@ -179,6 +179,13 @@ return [
             'level' => 'error',
             'replace_placeholders' => true,
         ],
+
+        'crawling' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/crawling.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'replace_placeholders' => true,
+        ],
     ],
 
 ];
