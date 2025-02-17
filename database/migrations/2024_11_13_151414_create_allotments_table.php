@@ -14,10 +14,40 @@ return new class extends Migration
         Schema::create('allotments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('product_id');
-            $table->uuid('status_id');
-            $table->date('date');
-            $table->integer('total_allotment');
-            $table->integer('available_allotment');
+            $table->uuid('transaction_id');
+            $table->string('period', 10);
+            $table->string('code', 50);
+            $table->smallInteger('day1')->default(0);
+            $table->smallInteger('day2')->default(0);
+            $table->smallInteger('day3')->default(0);
+            $table->smallInteger('day4')->default(0);
+            $table->smallInteger('day5')->default(0);
+            $table->smallInteger('day6')->default(0);
+            $table->smallInteger('day7')->default(0);
+            $table->smallInteger('day8')->default(0);
+            $table->smallInteger('day9')->default(0);
+            $table->smallInteger('day10')->default(0);
+            $table->smallInteger('day11')->default(0);
+            $table->smallInteger('day12')->default(0);
+            $table->smallInteger('day13')->default(0);
+            $table->smallInteger('day14')->default(0);
+            $table->smallInteger('day15')->default(0);
+            $table->smallInteger('day16')->default(0);
+            $table->smallInteger('day17')->default(0);
+            $table->smallInteger('day18')->default(0);
+            $table->smallInteger('day19')->default(0);
+            $table->smallInteger('day20')->default(0);
+            $table->smallInteger('day21')->default(0);
+            $table->smallInteger('day22')->default(0);
+            $table->smallInteger('day23')->default(0);
+            $table->smallInteger('day24')->default(0);
+            $table->smallInteger('day25')->default(0);
+            $table->smallInteger('day26')->default(0);
+            $table->smallInteger('day27')->default(0);
+            $table->smallInteger('day28')->default(0);
+            $table->smallInteger('day29')->default(0);
+            $table->smallInteger('day30')->default(0);
+            $table->smallInteger('day31')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
@@ -29,9 +59,9 @@ return new class extends Migration
                 ->onDelete('cascade');
 
             $table
-                ->foreign('status_id')
+                ->foreign('transaction_id')
                 ->references('id')
-                ->on('statuses')
+                ->on('transactions')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
