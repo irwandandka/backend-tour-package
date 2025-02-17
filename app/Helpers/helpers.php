@@ -7,3 +7,14 @@ if (!function_exists('formatCurrency')) {
         return $formatter->formatCurrency($amount, $currencyCode);
     }
 }
+
+if (!function_exists('generateTransactionCode')) {
+    function generateTransactionCode(): string
+    {
+        $prefix = "ACE";
+        $date = date('ym');
+        $random = strtoupper(substr(bin2hex(random_bytes(2)), 0, 4));
+
+        return "{$prefix}-{$date}{$random}";
+    }
+}
