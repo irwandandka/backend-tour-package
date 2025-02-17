@@ -7,6 +7,7 @@ use App\Services\{ErrorHandler, PricingService};
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Google\Service\CloudIdentity\Group;
 use Throwable;
 
 class ProductController extends Controller
@@ -225,6 +226,123 @@ class ProductController extends Controller
             return response()->json([
                 'status' => 'success',
                 'data' => $cities,
+            ]);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
+        }
+    }
+
+    /**
+     * @see SwaggerInfo::availableDate()
+     */
+    public function availableDate(Request $request, $slug)
+    {
+        try {
+            $validated = $this->validate($request, [
+                'lang' => 'required',
+                'currency' => 'required',
+            ]);
+
+            $targetCurrency = Currency::where('code', $validated['currency'])->first();
+
+            $product = Product::with(
+                [
+                    'Allotments',
+                ]
+            )
+                ->where('slug', $request->slug)->first();
+
+            $tripLength = $product->trip_length;
+
+            $allotments = $product
+                ->allotments
+                ->where('period', '>=', Carbon::now())
+                ->values();
+
+            $now = Carbon::now();
+            $dateStart = Carbon::parse($product->date_from);
+            $dateEnd = Carbon::parse($product->date_until);
+            if ($now < $dateStart) {
+                $now = $dateStart;
+            }
+
+            $price = $this->pricingService->getPricing(
+                $product,
+                $validated,
+                $targetCurrency
+            );
+
+            $result = [];
+            for ($currentDate = $dateStart; $currentDate <= $dateEnd; $currentDate->addDay()) {
+                $day = $currentDate->day;
+
+                if ($allotments->sum('day' . $day) > 0) {
+                    $result[] = [
+                        'date_start' => $currentDate->format('l, jS F Y'),
+                        'date_end' => $currentDate->addDays($tripLength - 1)->format('l, jS F Y'),
+                        'date_start_iso' => $currentDate->format('Y-m-d'),
+                        'date_end_iso' => $currentDate->addDays($tripLength - 1)->format('Y-m-d'),
+                        'allotment' => $allotments->sum('day' . $day),
+                        'price' => formatCurrency($price, $validated['currency']),
+                    ];
+                }
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $result,
+            ]);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
+        }
+    }
+
+    public function availablePeriod(Request $request, $slug)
+    {
+        try {
+            $validated = $this->validate($request, [
+                'lang' => 'required',
+                'currency' => 'required',
+            ]);
+
+            $product = Product::with(
+                [
+                    'Allotments',
+                ]
+            )
+                ->where('slug', $request->slug)
+                ->first();
+
+            $availablePeriod = $product
+                ->allotments
+                ->where('period', '>=', Carbon::now())
+                ->groupBy('period')
+                ->mapWithKeys(function ($allotments, $period) {
+                    $allotments->sum(function ($allotment) {
+                        return
+                            $allotment->day1 + $allotment->day2 + $allotment->day3 + $allotment->day4 + $allotment->day5 +
+                            $allotment->day6 + $allotment->day7 + $allotment->day8 + $allotment->day9 + $allotment->day10 +
+                            $allotment->day11 + $allotment->day12 + $allotment->day13 + $allotment->day14 + $allotment->day15 +
+                            $allotment->day16 + $allotment->day17 + $allotment->day18 + $allotment->day19 + $allotment->day20 +
+                            $allotment->day21 + $allotment->day22 + $allotment->day23 + $allotment->day24 + $allotment->day25 +
+                            $allotment->day26 + $allotment->day27 + $allotment->day28 + $allotment->day29 + $allotment->day30 +
+                            $allotment->day31;
+                    });
+
+                    return [$period];
+                })
+                ->map(function ($period) {
+                    $periodFormat = Carbon::createFromFormat('Ym', $period);
+
+                    return [
+                        'id' => $period,
+                        'name' => $periodFormat->translatedFormat('F Y'),
+                    ];
+                });
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $availablePeriod,
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
