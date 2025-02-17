@@ -32,6 +32,7 @@ class Product extends Model
         'price',
         'thumbnail_image',
         'capacity',
+        'trip_length',
         'date_from',
         'date_until',
         'user_id',
@@ -110,5 +111,10 @@ class Product extends Model
     public function sales_currency()
     {
         return $this->belongsTo(Currency::class, 'sales_currency_id');
+    }
+
+    public function allotments()
+    {
+        return $this->hasMany(Allotment::class);
     }
 }

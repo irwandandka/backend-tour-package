@@ -17,9 +17,15 @@ class Transaction extends Model
         'status_id',
         'code',
         'quantity',
-        'total_price',
+        'customer_name',
+        'customer_email',
+        'customer_phone',
+        'address',
+        'postal_code',
+        'total_amount',
+        'total_amount_base',
         'booking_date',
-        'notes'
+        'notes',
     ];
 
     public $incrementing = false;
@@ -50,5 +56,10 @@ class Transaction extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function transactionDetails()
+    {
+        return $this->hasMany(TransactionDetail::class);
     }
 }
