@@ -6,6 +6,7 @@ use App\Models\Currency;
 use App\Models\Status;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CurrencySeeder extends Seeder
 {
@@ -14,81 +15,15 @@ class CurrencySeeder extends Seeder
      */
     public function run(): void
     {
-        $currencies = [
-            [
-                'code' => 'USD',
-                'symbol' => '$',
-                'name' => 'United States Dollar',
-                'exchange_rate' => 1.00, // Base rate
-                'is_active' => true,
-            ],
-            [
-                'code' => 'EUR',
-                'symbol' => '€',
-                'name' => 'Euro',
-                'exchange_rate' => 0.85, // Example rate
-                'is_active' => true,
-            ],
-            [
-                'code' => 'GBP',
-                'symbol' => '£',
-                'name' => 'British Pound',
-                'exchange_rate' => 0.75,
-                'is_active' => true,
-            ],
-            [
-                'code' => 'JPY',
-                'symbol' => '¥',
-                'name' => 'Japanese Yen',
-                'exchange_rate' => 110.00,
-                'is_active' => true,
-            ],
-            [
-                'code' => 'IDR',
-                'symbol' => 'Rp',
-                'name' => 'Indonesian Rupiah',
-                'exchange_rate' => 14000.00,
-                'is_active' => true,
-            ],
-            [
-                'code' => 'AUD',
-                'symbol' => 'A$',
-                'name' => 'Australian Dollar',
-                'exchange_rate' => 1.30,
-                'is_active' => true,
-            ],
-            [
-                'code' => 'CAD',
-                'symbol' => 'C$',
-                'name' => 'Canadian Dollar',
-                'exchange_rate' => 1.25,
-                'is_active' => true,
-            ],
-            [
-                'code' => 'CHF',
-                'symbol' => 'CHF',
-                'name' => 'Swiss Franc',
-                'exchange_rate' => 0.92,
-                'is_active' => true,
-            ],
-            [
-                'code' => 'CNY',
-                'symbol' => '¥',
-                'name' => 'Chinese Yuan',
-                'exchange_rate' => 6.45,
-                'is_active' => true,
-            ],
-            [
-                'code' => 'INR',
-                'symbol' => '₹',
-                'name' => 'Indian Rupee',
-                'exchange_rate' => 74.00,
-                'is_active' => true,
-            ],
-        ];
+        $currencyCodes =  ["AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL", "BSD", "BTC", "BTN", "BWP", "BYN", "BZD", "CAD", "CDF", "CHF", "CLF", "CLP", "CNH", "CNY", "COP", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP", "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IMP", "INR", "IQD", "IRR", "ISK", "JEP", "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR", "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STD", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "UYU", "UZS", "VES", "VND", "VUV", "WST", "XAF", "XAG", "XAU", "XCD", "XDR", "XOF", "XPD", "XPF", "XPT", "YER", "ZAR", "ZMW", "ZWL"];
 
-        foreach ($currencies as $currency) {
-            Currency::create($currency);
-        }
+        DB::transaction(function () use ($currencyCodes) {
+            foreach ($currencyCodes as $currencyCode) {
+                Currency::create([
+                    'code' => $currencyCode,
+                    'is_active' => true,
+                ]);
+            }
+        });
     }
 }
