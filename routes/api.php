@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuthController, BaseController, CityController, CountryController, CrawlingController, NotificationController, ProductController, RegionController, SearchController, UserController};
+use App\Http\Controllers\{AuthController, BaseController, BookingController, CityController, CountryController, CrawlingController, NotificationController, PaymentController, ProductController, RegionController, SearchController, TestingController, UserController};
 use Illuminate\Support\Facades\Route;
 
 
@@ -38,6 +38,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/popular-destination', [ProductController::class, 'popularDestination']);
         Route::get('/explore-now', [ProductController::class, 'exploreNow']);
         Route::get('/{slug}', [ProductController::class, 'show']);
+        Route::get('/{slug}/available-date', [ProductController::class, 'availableDate']);
+        Route::get('/{slug}/available-period', [ProductController::class, 'availablePeriod']);
     });
 
     Route::prefix('/search')->group(function () {
@@ -53,11 +55,26 @@ Route::prefix('v1')->group(function () {
         Route::get('/currency-rates', [CrawlingController::class, 'getCurrencyRates']);
     });
 
+    Route::prefix('/testing')->group(function () {
+        Route::get('/test-redis', [TestingController::class, 'testRedis']);
+    });
+
     Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('/user')->group(function () {
             Route::get('/profile', [UserController::class, 'profile']);
-
             Route::post('/review-product/{slug}', [ProductController::class]);
+        });
+
+        Route::prefix('/booking')->group(function () {
+            Route::post('/', [BookingController::class, 'store']);
+            Route::get('/{id}', [BookingController::class, 'show']);
+            Route::post('{id}/cancel', [BookingController::class, 'cancel']);
+            Route::post('/{id}/update', [BookingController::class, 'update']);
+        });
+
+        Route::prefix('/payment')->group(function () {
+            Route::post('/{id}', [PaymentController::class, 'payment']);
+            Route::post('/midtrans/notification', [PaymentController::class, 'handleNotification']);
         });
     });
 });
