@@ -11,31 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('discounts', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('user_id');
+            $table->string('code')->unique();
             $table->uuid('product_id');
             $table->uuid('status_id');
-            $table->string('code');
-            $table->smallInteger('quantity')->default(0);
-            $table->double('total_amount')->default(0);
-            $table->double('total_amount_base')->default(0);
-            $table->date('booking_date');
-            $table->string('customer_name');
-            $table->string('customer_email');
-            $table->string('customer_phone');
-            $table->string('address');
-            $table->string('postal_code');
-            $table->string('notes')->nullable();
+            $table->string('method');
+            $table->double('discount_amount');
+            $table->smallInteger('quota');
+            $table->date('valid_from');
+            $table->date('valid_to');
             $table->timestamps();
             $table->softDeletes();
-
-            $table
-                ->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
 
             $table
                 ->foreign('product_id')
@@ -58,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('discounts');
     }
 };

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->double('price')->nullable();
             $table->string('thumbnail_image')->nullable();
+            $table->smallInteger('trip_length')->default(0);
             $table->date('date_from');
             $table->date('date_until');
             $table->uuid('user_id');
