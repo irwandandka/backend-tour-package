@@ -26,8 +26,28 @@ class CurrencyService
 
     public function convert($amount, $fromCurrency, $toCurrency)
     {
-        $rate = $this->getCurrencyRate($fromCurrency, $toCurrency);
+        // Jika mata uang asal dan tujuan sama, tidak perlu konversi
+        if ($fromCurrency->id === $toCurrency->id) {
+            return $amount;
+        }
 
-        return $amount * $rate;
+        // Coba ambil kurs langsung
+        $directRate = $this->getCurrencyRate($fromCurrency, $toCurrency);
+        if ($directRate) {
+            return $amount * $directRate;
+        }
+
+
+        // Jika kurs langsung tidak ada, cek apakah bisa melewati SGD
+        $rateToSGD = $this->getCurrencyRate($fromCurrency, 'SGD');
+        $rateFromSGD = $this->getCurrencyRate('SGD', $toCurrency);
+
+        if ($rateToSGD && $rateFromSGD) {
+            // Konversi melewati SGD
+            return $amount * $rateToSGD * $rateFromSGD;
+        }
+
+        // Jika tidak ada kurs langsung dan tidak bisa melewati SGD, lempar error
+        throw new Exception("Exchange rate not available for conversion.");
     }
 }
