@@ -42,7 +42,7 @@ class ProductSeeder extends Seeder
                 'thumbnail_image' => 'https://example.com/images/bali-thumbnail.jpg',
                 'status_id' => $status->id,
                 'city_id' => $city->id,
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db'
+                'user_id' => $user->id
             ],
             [
                 'name' => 'Lombok Tour Package - 5 Days',
@@ -56,7 +56,7 @@ class ProductSeeder extends Seeder
                 'thumbnail_image' => 'https://example.com/images/lombok-thumbnail.jpg',
                 'status_id' => $status->id,
                 'city_id' => $city->id,
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db'
+                'user_id' => $user->id
             ],
             [
                 'name' => 'Jakarta City Tour - 2 Days',
@@ -70,7 +70,7 @@ class ProductSeeder extends Seeder
                 'thumbnail_image' => 'https://example.com/images/jakarta-thumbnail.jpg',
                 'status_id' => $status->id,
                 'city_id' => $city->id,
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db'
+                'user_id' => $user->id
             ],
             [
                 'name' => 'Yogyakarta Cultural Tour - 4 Days',
@@ -84,7 +84,7 @@ class ProductSeeder extends Seeder
                 'thumbnail_image' => 'https://example.com/images/yogyakarta-thumbnail.jpg',
                 'status_id' => $status->id,
                 'city_id' => $city->id,
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db'
+                'user_id' => $user->id
             ],
             [
                 'name' => 'Mount Bromo Adventure - 3 Days',
@@ -98,7 +98,7 @@ class ProductSeeder extends Seeder
                 'thumbnail_image' => 'https://example.com/images/bromo-thumbnail.jpg',
                 'status_id' => $status->id,
                 'city_id' => $city->id,
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db'
+                'user_id' => $user->id
             ],
             [
                 'name' => 'Labuan Bajo Sailing Trip - 4 Days',
@@ -112,7 +112,7 @@ class ProductSeeder extends Seeder
                 'thumbnail_image' => 'https://example.com/images/labuan-thumbnail.jpg',
                 'status_id' => $status->id,
                 'city_id' => $city->id,
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db'
+                'user_id' => $user->id
             ],
             [
                 'name' => 'Bandung Nature and Culinary Tour - 3 Days',
@@ -126,7 +126,7 @@ class ProductSeeder extends Seeder
                 'thumbnail_image' => 'https://example.com/images/bandung-thumbnail.jpg',
                 'status_id' => $status->id,
                 'city_id' => $city->id,
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db'
+                'user_id' => $user->id
             ],
             [
                 'name' => 'Makassar Historical Tour - 3 Days',
@@ -140,7 +140,7 @@ class ProductSeeder extends Seeder
                 'thumbnail_image' => 'https://example.com/images/makassar-thumbnail.jpg',
                 'status_id' => $status->id,
                 'city_id' => $city->id,
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db'
+                'user_id' => $user->id
             ],
             [
                 'name' => 'Malang and Batu Adventure - 4 Days',
@@ -154,7 +154,7 @@ class ProductSeeder extends Seeder
                 'thumbnail_image' => 'https://example.com/images/malang-thumbnail.jpg',
                 'status_id' => $status->id,
                 'city_id' => $city->id,
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db'
+                'user_id' => $user->id
             ],
             [
                 'name' => 'Raja Ampat Diving Experience - 5 Days',
@@ -168,7 +168,7 @@ class ProductSeeder extends Seeder
                 'thumbnail_image' => 'https://example.com/images/raja-ampat-thumbnail.jpg',
                 'status_id' => $status->id,
                 'city_id' => $city->id,
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db'
+                'user_id' => $user->id
             ],
         ];
 
