@@ -31,6 +31,9 @@ jobs:
       - name: Generate Application Key
         run: php artisan key:generate
 
+      - name: Reset Database
+        run: php artisan migrate:fresh --seed
+
       - name: Setup database
         run: |
           sudo systemctl start mysql
