@@ -1,0 +1,63 @@
+name: Laravel CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          extensions: ctype, curl, dom, fileinfo, filter, hash, intl, json, libxml, mbstring, openssl, pcre, phar, session, tokenizer, xml
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: Copy .env
+        run: cp .env.ci .env  # Pastikan file `.env.ci` sudah ada di repo
+
+      - name: Generate Application Key
+        run: php artisan key:generate
+
+      - name: Setup database
+        run: |
+          sudo systemctl start mysql
+          mysql -u root -proot -e "CREATE DATABASE testing_db;"
+          php artisan migrate --seed --env=testing
+
+      - name: Run Tests
+        run: php artisan test --coverage-text
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Deploy hanya jika di branch main
+    steps:
+      - name: Deploy ke Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/irwandandka-laravel-live  # Sesuaikan dengan path proyek di server
+            git pull origin main
+            composer install --no-dev --prefer-dist --no-interaction
+            php artisan migrate --force
+            php artisan cache:clear
+            php artisan config:clear
+            php artisan route:clear
+            php artisan queue:restart
+            sudo systemctl restart nginx php8.3-fpm
