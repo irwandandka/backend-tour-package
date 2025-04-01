@@ -60,13 +60,6 @@ return new class extends Migration
                 ->onDelete('cascade');
 
             $table
-                ->foreign('product_detail_id')
-                ->references('id')
-                ->on('product_details')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table
                 ->foreign('discount_id')
                 ->references('id')
                 ->on('discounts')
