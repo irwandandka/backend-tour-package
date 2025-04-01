@@ -2,17 +2,16 @@
 
 namespace App\Providers\Filament;
 
-use Filament\Http\Middleware\Authenticate;
-use Filament\Http\Middleware\AuthenticateSession;
-use Filament\Http\Middleware\DisableBladeIconComponents;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
-use Filament\Panel;
-use Filament\PanelProvider;
+use App\Filament\Acetours\Resources\CityResource;
+use App\Filament\Acetours\Resources\CountryResource;
+use App\Filament\Acetours\Resources\PermissionResource;
+use App\Filament\Acetours\Resources\ProductResource;
+use App\Filament\Acetours\Resources\RoleResource;
+use App\Filament\Resources\UserResource;
+use Filament\Http\Middleware\{Authenticate, AuthenticateSession, DisableBladeIconComponents, DispatchServingFilamentEvent};
+use Filament\{Pages, Panel, PanelProvider, Widgets};
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Cookie\Middleware\{AddQueuedCookiesToResponse, EncryptCookies};
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
@@ -25,6 +24,16 @@ class AcetoursPanelProvider extends PanelProvider
         return $panel
             ->id('acetours')
             ->path('acetours')
+            // ->viteTheme('resources/css/filament-custom.css')
+            ->login()
+            ->resources([
+                UserResource::class,
+                // RoleResource::class,
+                // PermissionResource::class,
+                CityResource::class,
+                CountryResource::class,
+                ProductResource::class,
+            ])
             ->colors([
                 'primary' => Color::Amber,
             ])
