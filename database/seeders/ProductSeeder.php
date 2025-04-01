@@ -28,7 +28,6 @@ class ProductSeeder extends Seeder
 
         $products = [
             [
-                'id' => Str::uuid(),
                 'name' => 'Bali Tour Package - 3 Days',
                 'slug' => 'bali-tour-package-3-days',
                 'description' => 'Enjoy a 3-day tour of Bali with various exciting destinations.',
@@ -43,7 +42,6 @@ class ProductSeeder extends Seeder
                 'user_id' => $user->id
             ],
             [
-                'id' => Str::uuid(),
                 'name' => 'Lombok Tour Package - 5 Days',
                 'slug' => 'lombok-tour-package-5-days',
                 'description' => 'Complete 5-day tour of Lombok with exotic destinations.',
@@ -58,7 +56,6 @@ class ProductSeeder extends Seeder
                 'user_id' => $user->id
             ],
             [
-                'id' => Str::uuid(),
                 'name' => 'Jakarta City Tour - 2 Days',
                 'slug' => 'jakarta-city-tour-2-days',
                 'description' => 'Explore the bustling city of Jakarta with guided tours.',
