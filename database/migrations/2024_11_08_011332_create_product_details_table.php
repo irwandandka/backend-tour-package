@@ -14,13 +14,18 @@ return new class extends Migration
         Schema::create('product_details', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('product_id');
-            $table->string('day');
-            $table->string('title');
-            $table->string('schedule_time');
+            $table->string('name_en');
+            $table->string('name_id')->nullable();
+            $table->string('name_zh')->nullable();
             $table->string('activity_image');
-            $table->decimal('latitude', 10, 8);
-            $table->decimal('longitude', 11, 8);
-            $table->text('description');
+            $table->integer('max_pax')->default(0);
+            $table->integer('min_pax')->default(0);
+            $table->integer('max_child')->default(0);
+            $table->integer('max_adult')->default(0);
+            $table->date('date_from')->nullable();
+            $table->date('date_until')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->boolean('is_featured')->default(false);
             $table->timestamps();
             $table->softDeletes();
 

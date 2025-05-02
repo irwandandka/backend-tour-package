@@ -12,13 +12,17 @@ class ProductDetail extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'day',
-        'title',
-        'schedule_time',
+        'name_en',
+        'name_id',
+        'name_zh',
+        'max_pax',
+        'min_adult',
+        'max_adult',
+        'date_from',
+        'date_until',
+        'is_active',
+        'is_featured',
         'activity_image',
-        'latitude',
-        'longitude',
-        'description',
         'product_id'
     ];
 

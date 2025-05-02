@@ -27,11 +27,8 @@ class Product extends Model
     protected $fillable = [
         'name',
         'slug',
-        'duration',
         'description',
-        'price',
         'thumbnail_image',
-        'capacity',
         'trip_length',
         'date_from',
         'date_until',

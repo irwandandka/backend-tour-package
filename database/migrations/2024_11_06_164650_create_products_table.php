@@ -15,9 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->string('duration')->nullable();
             $table->text('description')->nullable();
-            $table->double('price')->nullable();
             $table->string('thumbnail_image')->nullable();
             $table->smallInteger('trip_length')->default(0);
             $table->date('date_from');
