@@ -15,14 +15,180 @@ class CurrencySeeder extends Seeder
      */
     public function run(): void
     {
-        $currencyCodes =  ["AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL", "BSD", "BTC", "BTN", "BWP", "BYN", "BZD", "CAD", "CDF", "CHF", "CLF", "CLP", "CNH", "CNY", "COP", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP", "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IMP", "INR", "IQD", "IRR", "ISK", "JEP", "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR", "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STD", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "UYU", "UZS", "VES", "VND", "VUV", "WST", "XAF", "XAG", "XAU", "XCD", "XDR", "XOF", "XPD", "XPF", "XPT", "YER", "ZAR", "ZMW", "ZWL"];
+        $currencies =  [
+            [
+                'name' => 'Indonesian Rupiah',
+                'code' => 'IDR',
+                'symbol' => 'Rp',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'United States Dollar',
+                'code' => 'USD',
+                'symbol' => '$',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Euro',
+                'code' => 'EUR',
+                'symbol' => '€',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Japanese Yen',
+                'code' => 'JPY',
+                'symbol' => '¥',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'South Korean Won',
+                'code' => 'KRW',
+                'symbol' => '₩',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Chinese Yuan',
+                'code' => 'CNY',
+                'symbol' => '¥',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Singapore Dollar',
+                'code' => 'SGD',
+                'symbol' => 'S$',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Thai Baht',
+                'code' => 'THB',
+                'symbol' => '฿',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Vietnamese Dong',
+                'code' => 'VND',
+                'symbol' => '₫',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Malaysian Ringgit',
+                'code' => 'MYR',
+                'symbol' => 'RM',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'British Pound Sterling',
+                'code' => 'GBP',
+                'symbol' => '£',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Australian Dollar',
+                'code' => 'AUD',
+                'symbol' => 'A$',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Canadian Dollar',
+                'code' => 'CAD',
+                'symbol' => 'C$',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Swiss Franc',
+                'code' => 'CHF',
+                'symbol' => 'CHF',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'New Zealand Dollar',
+                'code' => 'NZD',
+                'symbol' => 'NZ$',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Hong Kong Dollar',
+                'code' => 'HKD',
+                'symbol' => 'HK$',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Mexican Peso',
+                'code' => 'MXN',
+                'symbol' => '$',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Brazilian Real',
+                'code' => 'BRL',
+                'symbol' => 'R$',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'South African Rand',
+                'code' => 'ZAR',
+                'symbol' => 'R',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Russian Ruble',
+                'code' => 'RUB',
+                'symbol' => '₽',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Indian Rupee',
+                'code' => 'INR',
+                'symbol' => '₹',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Turkish Lira',
+                'code' => 'TRY',
+                'symbol' => '₺',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Saudi Riyal',
+                'code' => 'SAR',
+                'symbol' => 'ر.س',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'United Arab Emirates Dirham',
+                'code' => 'AED',
+                'symbol' => 'د.إ',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Philippine Peso',
+                'code' => 'PHP',
+                'symbol' => '₱',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Bangladeshi Taka',
+                'code' => 'BDT',
+                'symbol' => '৳',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Pakistani Rupee',
+                'code' => 'PKR',
+                'symbol' => '₨',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Egyptian Pound',
+                'code' => 'EGP',
+                'symbol' => 'ج.م',
+                'is_active' => true,
+            ],
+        ];
 
-        DB::transaction(function () use ($currencyCodes) {
-            foreach ($currencyCodes as $currencyCode) {
-                Currency::create([
-                    'code' => $currencyCode,
-                    'is_active' => true,
-                ]);
+        DB::transaction(function () use ($currencies) {
+            foreach ($currencies as $currency) {
+                Currency::create($currency);
             }
         });
     }

@@ -13,6 +13,38 @@ class RegionSeeder extends Seeder
      */
     public function run(): void
     {
-        Region::factory()->count(3)->create();
+        $regions = [
+            [
+                'name' => 'North America',
+                'code' => 'na'
+            ],
+            [
+                'name' => 'South America',
+                'code' => 'sa'
+            ],
+            [
+                'name' => 'Europe',
+                'code' => 'eu'
+            ],
+            [
+                'name' => 'Asia',
+                'code' => 'as'
+            ],
+            [
+                'name' => 'Africa',
+                'code' => 'af'
+            ],
+            [
+                'name' => 'Middle East',
+                'code' => 'me'
+            ],
+            [
+                'name' => 'Southeast Asia',
+                'code' => 'sea'
+            ],
+        ];
+        foreach ($regions as $region) {
+            Region::create($region);
+        }
     }
 }
