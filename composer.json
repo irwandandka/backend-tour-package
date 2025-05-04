@@ -20,6 +20,7 @@
         "meilisearch/meilisearch-php": "^1.12",
         "midtrans/midtrans-php": "^2.6",
         "predis/predis": "^2.3",
+        "sentry/sentry-laravel": "^4.13",
         "spatie/laravel-prometheus": "^1.2",
         "spatie/laravel-translatable": "^6.9",
         "tymon/jwt-auth": "^2.1",
