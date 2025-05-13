@@ -15,11 +15,34 @@ return new class extends Migration
             $table->uuid('id')->primary();  // Use UUID instead of auto-incrementing ID
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('username', 15)->unique()->nullable();
+            $table->string('phone', 20)->unique()->nullable();
+            $table->string('profile_picture_url', 150)->nullable();
+            $table->string('address', 100)->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('gender', 10)->nullable();
+            $table->uuid('country_id')->nullable();
+            $table->uuid('city_id')->nullable();
+            $table->boolean('is_testing')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+
+            $table
+                ->foreign('country_id')
+                ->references('id')
+                ->on('countries')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table
+                ->foreign('city_id')
+                ->references('id')
+                ->on('cities')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
