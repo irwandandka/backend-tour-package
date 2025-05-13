@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('allotments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('product_id');
-            $table->uuid('transaction_id');
+            $table->uuid('product_detail_id');
+            $table->uuid('transaction_id')->nullable();
             $table->string('period', 10);
             $table->string('code', 50);
             $table->smallInteger('day1')->default(0);
@@ -52,9 +52,9 @@ return new class extends Migration
             $table->softDeletes();
 
             $table
-                ->foreign('product_id')
+                ->foreign('product_detail_id')
                 ->references('id')
-                ->on('products')
+                ->on('product_details')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 

@@ -45,4 +45,14 @@ class ProductDetail extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function product_prices()
+    {
+        return $this->hasMany(ProductPrice::class);
+    }
+
+    public function allotments()
+    {
+        return $this->hasMany(Allotment::class);
+    }
 }

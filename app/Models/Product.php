@@ -95,11 +95,6 @@ class Product extends Model
         return $this->hasMany(Transaction::class);
     }
 
-    public function product_prices()
-    {
-        return $this->hasMany(ProductPrice::class);
-    }
-
     public function purchase_currency()
     {
         return $this->belongsTo(Currency::class, 'purchase_currency_id');
@@ -108,10 +103,5 @@ class Product extends Model
     public function sales_currency()
     {
         return $this->belongsTo(Currency::class, 'sales_currency_id');
-    }
-
-    public function allotments()
-    {
-        return $this->hasMany(Allotment::class);
     }
 }

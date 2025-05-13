@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_prices', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('product_id');
+            $table->uuid('product_detail_id');
             $table->smallInteger('level');
             $table->double('purchase_adult')->default(0);
             $table->double('sales_adult')->default(0);
@@ -25,6 +25,13 @@ return new class extends Migration
             $table->double('sales_senior')->default(0);
             $table->timestamps();
             $table->softDeletes();
+
+            $table
+                ->foreign('product_detail_id')
+                ->references('id')
+                ->on('product_details')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

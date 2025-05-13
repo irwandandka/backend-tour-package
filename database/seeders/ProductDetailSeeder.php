@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ProductDetail;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProductDetailSeeder extends Seeder
 {
@@ -15,50 +16,65 @@ class ProductDetailSeeder extends Seeder
     public function run(): void
     {
         // Retrieve all products to assign details
-        $products = Product::all();
+        $products = Product::whereIn('slug', [
+            'tokyo-city-highlights',
+            'busan-beach-escape',
+            'yogyakarta-heritage-journey',
+            'bangkok-city-temple-tour',
+            'ho-chi-minh-mekong-delta-explorer',
+            'rome-ancient-wonders',
+            'lisbon-city-highlights',
+        ])->get();
 
         $productDetails = [
             [
-                'day' => 'Day 1',
-                'title' => 'Airport Pickup and Transfer to Hotel',
-                'description' => 'Pickup from airport and transport to hotel for check-in.',
-                'schedule_time' => '09:00 AM',
-                'location' => 'Ngurah Rai Airport, Bali',
-                'activity_image' => 'https://example.com/images/activity1.jpg',
+                'name_en' => 'Standard Room',
+                'name_id' => 'Kamar Standar',
+                'name_zh' => '标准房',
+                'max_pax' => 2,
+                'min_adult' => 1,
+                'max_adult' => 2,
+                'date_from' => '2025-04-01',
+                'date_until' => '2025-12-31',
+                'is_active' => 1,
+                'is_featured' => 1,
+                'activity_image' => 'https://pub-cfc04ba1c45649688f85c3bdd738f319.r2.dev/standard-room.jpg',
             ],
             [
-                'day' => 'Day 2',
-                'title' => 'Beach Tour',
-                'description' => 'A guided tour of Bali’s famous beaches.',
-                'schedule_time' => '10:00 AM',
-                'location' => 'Kuta Beach, Bali',
-                'activity_image' => 'https://example.com/images/activity2.jpg',
+                'name_en' => 'Deluxe Room',
+                'name_id' => 'Kamar Deluxe',
+                'name_zh' => '豪华房',
+                'max_pax' => 2,
+                'min_adult' => 1,
+                'max_adult' => 2,
+                'date_from' => '2025-04-01',
+                'date_until' => '2025-12-31',
+                'is_active' => 1,
+                'is_featured' => 1,
+                'activity_image' => 'https://pub-cfc04ba1c45649688f85c3bdd738f319.r2.dev/deluxe-room.jpg',
             ],
             [
-                'day' => 'Day 3',
-                'title' => 'City Tour and Shopping',
-                'description' => 'Explore Bali’s city attractions and shopping spots.',
-                'schedule_time' => '01:00 PM',
-                'location' => 'Denpasar, Bali',
-                'activity_image' => 'https://example.com/images/activity3.jpg',
+                'name_en' => 'Family Room',
+                'name_id' => 'Kamar Keluarga',
+                'name_zh' => '家庭房',
+                'max_pax' => 4,
+                'min_adult' => 2,
+                'max_adult' => 4,
+                'date_from' => '2025-04-01',
+                'date_until' => '2025-12-31',
+                'is_active' => 1,
+                'is_featured' => 1,
+                'activity_image' => 'https://pub-cfc04ba1c45649688f85c3bdd738f319.r2.dev/family-room.jpg',
             ],
             // Add more details as needed
         ];
 
-        foreach ($products as $product) {
-            foreach ($productDetails as $detail) {
-                ProductDetail::create([
-                    'product_id' => $product->id,
-                    'day' => $detail['day'],
-                    'title' => $detail['title'],
-                    'description' => $detail['description'],
-                    'schedule_time' => $detail['schedule_time'],
-                    'location' => $detail['location'],
-                    'activity_image' => $detail['activity_image'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
+        DB::transaction(function () use ($products, $productDetails) {
+            foreach ($products as $product) {
+                foreach ($productDetails as $detail) {
+                    ProductDetail::create(array_merge($detail, ['product_id' => $product->id]));
+                }
             }
-        }
+        });
     }
 }

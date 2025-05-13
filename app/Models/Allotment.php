@@ -12,7 +12,7 @@ class Allotment extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'product_id',
+        'product_detail_id',
         'transaction_id',
         'code',
         'period',
@@ -64,9 +64,9 @@ class Allotment extends Model
         });
     }
 
-    public function product()
+    public function productDetail()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(ProductDetail::class);
     }
 
     public function status()
