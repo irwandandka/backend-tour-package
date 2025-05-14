@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('country_id');
             $table->uuid('region_id');
             $table->string('name');
+            $table->string('image', 150)->nullable();
             $table->string('postal_code')->unique()->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
