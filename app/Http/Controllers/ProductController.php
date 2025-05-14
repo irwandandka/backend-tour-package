@@ -198,6 +198,73 @@ class ProductController extends Controller
         }
     }
 
+    public function roomType(Request $request, $slug)
+    {
+        try {
+            $validated = $this->validate($request, [
+                'lang' => 'required|string',
+                'currency' => 'required|string',
+                'date_start' => 'required|date_format:Y-m-d',
+                'date_end' => 'required|date_format:Y-m-d',
+            ]);
+
+            $dateStart = Carbon::createFromFormat('Y-m-d', $validated['date_start']);
+            $dateEnd = Carbon::createFromFormat('Y-m-d', $validated['date_end']);
+            $dateNow = Carbon::now();
+
+            $targetCurrency = Currency::where('code', $validated['currency'])->first();
+
+            $product = Product::with(
+                [
+                    'product_details',
+                    'product_details.allotments',
+                    'product_details.product_prices',
+                    'product_details.product.purchase_currency',
+                    'product_details.product.sales_currency',
+                ]
+            )
+                ->where('slug', $slug)
+                ->first();
+
+            $availableItems = $this
+                ->packageService
+                ->getAvailableProductDetail($product, $dateStart, true, false)
+                ->map(function ($room) use (
+                    $targetCurrency,
+                    $validated,
+                    $dateStart,
+                ) {
+                    $roomName = $room->{"name_" . strtolower($validated['lang'])} ?? $room->name_en;
+
+                    $priceList = $this->pricingService->getListPricing(
+                        $room,
+                        $validated,
+                        $targetCurrency
+                    );
+
+                    $allotments = $this->allotmentService->getAllotment($room, $dateStart);
+
+                    return [
+                        "id" => $room->id,
+                        "name" => $roomName,
+                        "image" => $room->activity_image,
+                        "min_adult" => $room->min_adult,
+                        "max_adult" => $room->max_adult,
+                        "max_pax" => $room->max_pax,
+                        "allotment" => $allotments,
+                        "pricing" => $priceList,
+                    ];
+                });
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $availableItems,
+            ]);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
+        }
+    }
+
     /**
      * @see SwaggerInfo::popularDestination()
      */

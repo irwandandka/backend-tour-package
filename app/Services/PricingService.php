@@ -51,6 +51,65 @@ class PricingService
         return $purchasePrice + $salesPrice;
     }
 
+    public function getListPricing(ProductDetail $productDetail, $params, Currency $targetCurrency)
+    {
+        $purchaseCurrency = $productDetail->product->purchase_currency;
+        $salesCurrency = $productDetail->product->sales_currency;
+
+        $purchasePrice = $salesPrice = 0;
+
+        $productPrices = $productDetail
+            ->product_prices
+            ->sortBy('level')
+            ->values();
+
+        if (!$productPrices) return [];
+
+        $productPrices = $productPrices
+            ->map(function ($productPrice) use (
+                $purchaseCurrency,
+                $salesCurrency,
+                $targetCurrency,
+                $params
+            ) {
+                $types = ['adult', 'child', 'infant', 'senior'];
+
+                $pricePerTypes = [];
+
+                foreach ($types as $type) {
+                    $purchasePrice = $salesPrice = 0;
+
+                    if ($purchaseCurrency->code === $params['currency']) {
+                        $purchasePrice = $productPrice->{"purchase_$type"};
+                    } else {
+                        $purchasePrice = $this->currencyService->convert(
+                            $productPrice->{"purchase_$type"},
+                            $purchaseCurrency,
+                            $targetCurrency
+                        );
+                    }
+
+                    if ($salesCurrency->code === $params['currency']) {
+                        $salesPrice = $productPrice->{"sales_$type"};
+                    } else {
+                        $salesPrice = $this->currencyService->convert(
+                            $productPrice->{"sales_$type"},
+                            $salesCurrency,
+                            $targetCurrency
+                        );
+                    }
+
+                    $pricePerTypes[$type] = $purchasePrice + $salesPrice;
+                }
+
+                $pricePerTypes['level'] = $productPrice->level;
+
+                return $pricePerTypes;
+            });
+
+        return $productPrices;
+    }
+
     public function calculatePricing($productId, Currency $currency, $params)
     {
         $product = Product::with(

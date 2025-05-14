@@ -40,6 +40,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/{slug}', [ProductController::class, 'show']);
         Route::get('/{slug}/available-date', [ProductController::class, 'availableDate']);
         Route::get('/{slug}/available-period', [ProductController::class, 'availablePeriod']);
+        Route::get('/{slug}/room-type', [ProductController::class, 'roomType']);
     });
 
     Route::prefix('/search')->group(function () {
@@ -53,10 +54,6 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('/crawling')->group(function () {
         Route::get('/currency-rates', [CrawlingController::class, 'getCurrencyRates']);
-    });
-
-    Route::prefix('/testing')->group(function () {
-        Route::get('/test-redis', [TestingController::class, 'testRedis']);
     });
 
     Route::middleware('auth:sanctum')->group(function () {
