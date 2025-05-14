@@ -6,6 +6,7 @@ use App\Models\Review;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 
 class ReviewSeeder extends Seeder
@@ -23,303 +24,179 @@ class ReviewSeeder extends Seeder
 
         $reviews = [
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '6060c477-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Incredible tour! The guide was very knowledgeable, and we got to see all the key sights in Tokyo in one day. Highly recommend!',
+                // 'user_name' => 'Emily Johnson',
+                'rating' => 5,
                 'review_date' => $randomDate,
+                'product_id' => '4bdb2a2a-181b-40a3-918b-e97d4212a350',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'An unforgettable introduction to Tokyo! From the busy streets of Shibuya to the peaceful Senso-ji Temple, every stop was amazing. The Skytree view was breathtaking. Highly recommend!',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '6060c477-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'Great experience, but the schedule felt a bit rushed. Still, the places we visited were fantastic!',
-                'review_date' => $randomDate
+                // 'user_name' => 'Michael Smith',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => '4bdb2a2a-181b-40a3-918b-e97d4212a350',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'A great way to see the highlights of Tokyo in a day. The guide was knowledgeable and friendly. I loved the mix of modern and traditional sights.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '6060c477-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Absolutely loved it! The mix of traditional and modern Tokyo was amazing. Would definitely book again.',
-                'review_date' => $randomDate
+                // 'user_name' => 'Sarah Brown',
+                'rating' => 5,
+                'review_date' => $randomDate,
+                'product_id' => '4bdb2a2a-181b-40a3-918b-e97d4212a350',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'This tour was fantastic! The cherry blossoms were in full bloom, and the guide shared so much interesting history. I would do it again in a heartbeat!',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '5206c939-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => 'Kobe is beautiful, and this cultural tour gave us a great introduction. The food was also delicious!',
-                'review_date' => $randomDate
+                // 'user_name' => 'Daniel Kim',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => '48466356-f6ca-4228-ab43-e399acf54b16',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'Loved the mix of beach time and cultural exploration. The Korean BBQ dinner was delicious, and the spa experience was so relaxing!',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '5206c939-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 3.5,
-                'comment' => 'The tour was good, but I expected more cultural activities. Still, the guide was friendly and informative.',
-                'review_date' => $randomDate
+                // 'user_name' => 'Jessica Lee',
+                'rating' => 5,
+                'review_date' => $randomDate,
+                'product_id' => '48466356-f6ca-4228-ab43-e399acf54b16',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'Busan is beautiful! The beaches were stunning, and the tour guide was very friendly. I especially loved the visit to the Gamcheon Culture Village.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '5206c939-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Wonderful experience! The traditional tea ceremony and the visit to the temples were highlights.',
-                'review_date' => $randomDate
+                // 'user_name' => 'David Wilson',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => '48466356-f6ca-4228-ab43-e399acf54b16',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'A great way to explore Busan! The beach time was perfect, and the cultural sites were fascinating. I would recommend this tour to anyone visiting Korea.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '3a519045-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'The food was outstanding! I got to try some of the best Kobe beef and other local delicacies.',
-                'review_date' => $randomDate
+                // 'user_name' => 'Sophia Lee',
+                'rating' => 5,
+                'review_date' => $randomDate,
+                'product_id' => '88045c2e-8192-4f10-9c0b-4c500dbdfbd6',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'Truly immersive! The temples were awe-inspiring and the Ramayana Ballet was a magical experience. I learned so much about Javanese culture.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '3a519045-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'Great food, but the tour could have included more variety. Still, I loved the local vibe.',
-                'review_date' => $randomDate
+                // 'user_name' => 'James Smith',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => '88045c2e-8192-4f10-9c0b-4c500dbdfbd6',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'A well-organized tour with a great balance of sightseeing and cultural experiences. The Borobudur Temple was a highlight for me.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '3a519045-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Amazing tour! Every stop was better than the last. Highly recommend if you\'re a foodie!',
-                'review_date' => $randomDate
+                // 'user_name' => 'Olivia Brown',
+                'rating' => 5,
+                'review_date' => $randomDate,
+                'product_id' => '88045c2e-8192-4f10-9c0b-4c500dbdfbd6',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'An unforgettable experience! The temples were stunning, and the local guide was very knowledgeable. I loved every moment of this tour.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '2419997f-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => 'Great tour! Ayutthaya is stunning, and the guide was excellent at explaining the history.',
-                'review_date' => $randomDate
+                // 'user_name' => 'Michael Tan',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => 'd537c18a-7b15-4df4-958f-5343f67cb0b5',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'The temples were stunning and the river cruise was very peaceful. The street food in Chinatown was a highlight! Great tour overall.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '2419997f-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'This was one of my favorite tours. The temples were breathtaking, and the boat ride was a nice touch.',
-                'review_date' => $randomDate
+                // 'user_name' => 'Emma Wong',
+                'rating' => 5,
+                'review_date' => $randomDate,
+                'product_id' => 'd537c18a-7b15-4df4-958f-5343f67cb0b5',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'A fantastic way to explore Bangkok! The temples were beautiful, and the local guide was very informative. I loved the boat ride on the Chao Phraya River.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '2419997f-ba9e-11ef-95b1-525400d81c3e',
-                'rating' => 3.5,
-                'comment' => 'The ruins were beautiful, but I felt the tour could be longer to really enjoy everything.',
-                'review_date' => $randomDate
+                // 'user_name' => 'Liam Johnson',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => 'd537c18a-7b15-4df4-958f-5343f67cb0b5',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'A great introduction to Bangkok! The temples were stunning, and the street food was delicious. I would recommend this tour to anyone visiting Thailand.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'de701bc3-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => "The heritage sites in Ayutthaya were fascinating, and the guide’s knowledge made the experience memorable.",
-                'review_date' => $randomDate
+                // 'user_name' => 'Rachel Nguyen',
+                'rating' => 5,
+                'review_date' => $randomDate,
+                'product_id' => 'c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'Fantastic experience! The Cu Chi Tunnels were so interesting, and the Mekong Delta boat ride was serene. Loved the local village lunch too.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'de701bc3-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'Beautiful sites and great information, but the tour felt a bit short. Would love to see more!',
-                'review_date' => $randomDate
+                // 'user_name' => 'Ethan Tran',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => 'c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'A great way to see the Mekong Delta! The boat ride was relaxing, and the local villages were charming. I enjoyed the lunch at a local home.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'de701bc3-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => 'A must-do tour if you\'re in Thailand! The temples and history were amazing.',
-                'review_date' => $randomDate
+                // 'user_name' => 'Sophia Nguyen',
+                'rating' => 5,
+                'review_date' => $randomDate,
+                'product_id' => 'c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'An amazing tour! The Mekong Delta was beautiful, and the Cu Chi Tunnels were fascinating. The guide was very knowledgeable and friendly.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'ba1d8a1c-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Stunning scenery and well-organized. The boat trip was beautiful, and the islands were breathtaking!',
-                'review_date' => $randomDate
+                // 'user_name' => 'Lucas Pham',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => 'c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'A well-organized tour with a great mix of history and culture. The Mekong Delta boat ride was peaceful, and the local lunch was delicious.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'ba1d8a1c-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => 'Great day trip, but could have used more time on the islands. Still, fantastic experience overall.',
-                'review_date' => $randomDate
+                // 'user_name' => 'David Romano',
+                'rating' => 5,
+                'review_date' => $randomDate,
+                'product_id' => 'bceadb6c-8a57-4e14-9366-286cdec342f3',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'Walking through history! The Colosseum and Vatican were mind-blowing. Our guide was super knowledgeable. A must-do in Rome.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'ba1d8a1c-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'The best part of my vacation! The water was crystal clear, and the beaches were out of this world.',
-                'review_date' => $randomDate
+                // 'user_name' => 'Isabella Rossi',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => 'bceadb6c-8a57-4e14-9366-286cdec342f3',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'A great way to see Rome! The Colosseum was impressive, and the Vatican was breathtaking. The guide was very informative.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'aaa7671b-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'Beautiful beaches and friendly guides. The tour was a little crowded, but still enjoyable.',
-                'review_date' => $randomDate
+                // 'user_name' => 'Isabella Costa',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => '86e14cd4-9a65-4f3e-ad84-10e479ce8338',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'Lisbon is such a charming city. The tram ride was so fun and the historical sites were very impressive. A great mix of past and present!',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'aaa7671b-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Best beach tour ever! The views were amazing, and we had plenty of time to relax on the sand.',
-                'review_date' => $randomDate
+                // 'user_name' => 'Lorenzo Silva',
+                'rating' => 5,
+                'review_date' => $randomDate,
+                'product_id' => '86e14cd4-9a65-4f3e-ad84-10e479ce8338',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'A fantastic tour! The guide was very knowledgeable and the sights were stunning. I loved the visit to Belem Tower and the Jeronimos Monastery.',
             ],
             [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'aaa7671b-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => 'Lovely beaches, great guide, and the seafood lunch was incredible!',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '9b9fb0ab-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'The nightlife in Bangkok is insane! Great bars, great vibes, and a fantastic tour guide.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '9b9fb0ab-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'I enjoyed the tour, but some places felt too touristy. Still, a fun night out!',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '9b9fb0ab-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Fantastic experience! The local bars and food spots were amazing. Definitely a must-do!',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '8c1e29e4-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => "Excellent way to explore Bangkok. Saw some hidden gems and learned a lot about the city’s culture.",
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '8c1e29e4-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Perfect tour to discover Bangkok beyond the tourist spots. I loved the temples and local markets!',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '8c1e29e4-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'The tour was good, but I wished we had more time at each stop. Overall, a great way to explore the city.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '71f48919-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => "Very cool tour! I learned a lot about Surabaya’s history and culture.",
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '71f48919-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'Interesting places, but the tour could have been longer. Would definitely recommend!',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '71f48919-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Hidden gems indeed! Great tour with amazing local spots and fantastic guides.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '55228a41-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Excellent tour! We saw all the key attractions in Surabaya, and the guide was very knowledgeable.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '55228a41-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => 'Great experience! The city is full of history, and the tour was well-paced.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '55228a41-ba9d-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'Nice tour, but I expected more historical sites. Still, Surabaya is a beautiful city.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'e109c97f-ba9c-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Best adventure tour in Yogyakarta! The guide was super friendly, and the sights were incredible.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'e109c97f-ba9c-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => 'Amazing experience! The temples and caves were beautiful, and the hike was challenging but fun.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'e109c97f-ba9c-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'Great tour, but I was hoping for more adventurous activities. The cultural sites were still great!',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '8a6a9c07-ba9c-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Absolutely loved it! Yogyakarta is full of rich history, and this tour brought it all to life.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '8a6a9c07-ba9c-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => 'The temples and heritage sites were breathtaking. A great way to learn about Javanese history.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => '8a6a9c07-ba9c-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'Great history tour. Some of the sites were a bit crowded, but it was still worth it.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'de04f9d4-ba9b-11ef-95b1-525400d81c3e',
-                'rating' => 5.0,
-                'comment' => 'Fantastic food tour! I tried so many different dishes, and each one was better than the last.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'de04f9d4-ba9b-11ef-95b1-525400d81c3e',
-                'rating' => 4.0,
-                'comment' => 'Good tour, but I expected a bit more variety in the dishes. Still, the food was amazing.',
-                'review_date' => $randomDate
-            ],
-            [
-                'user_id' => '03c7612b-178f-42d3-aac5-d8c1c780f8db',
-                'product_id' => 'de04f9d4-ba9b-11ef-95b1-525400d81c3e',
-                'rating' => 4.5,
-                'comment' => "Wonderful food and great guide! I got to try authentic local dishes and learn about the city’s culinary history.",
-                'review_date' => $randomDate
+                // 'user_name' => 'Sofia Pereira',
+                'rating' => 4,
+                'review_date' => $randomDate,
+                'product_id' => '86e14cd4-9a65-4f3e-ad84-10e479ce8338',
+                'user_id' => '635094ae-7306-450e-815c-0c5b2438c778',
+                'comment' => 'A great way to explore Lisbon! The tram ride was fun, and the local food was delicious. I would recommend this tour to anyone visiting Portugal.',
             ]
         ];
 
-        foreach ($reviews as $review) {
-            Review::create($review);
-        }
+        DB::transaction(function () use ($reviews) {
+            foreach ($reviews as $review) {
+                Review::create($review);
+            }
+        });
     }
 }
