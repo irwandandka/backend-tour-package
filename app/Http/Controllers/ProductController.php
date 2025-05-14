@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Product, City, Currency};
-use App\Services\{ErrorHandler, PricingService};
+use App\Services\{AllotmentService, ErrorHandler, PackageService, PricingService};
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -20,11 +20,15 @@ class ProductController extends Controller
 
     protected $errorHandler;
     protected $pricingService;
+    protected $packageService;
+    protected $allotmentService;
 
     public function __construct()
     {
         $this->errorHandler = new ErrorHandler;
         $this->pricingService = new PricingService;
+        $this->packageService = new PackageService;
+        $this->allotmentService = new AllotmentService;
     }
 
     /**
@@ -53,11 +57,7 @@ class ProductController extends Controller
             )
                 ->get()
                 ->map(function ($product) use ($validated, $targetCurrency) {
-                    $price = $this->pricingService->getPricing(
-                        $product,
-                        $validated,
-                        $targetCurrency
-                    );
+                    $price = 0;
 
                     return [
                         'id' => $product->id,
@@ -93,18 +93,24 @@ class ProductController extends Controller
                 'currency' => 'required',
             ]);
 
+            $dateNow = Carbon::now();
+
             $product = Product::with(
                 [
                     'city',
                     'city.country',
                     'reviews',
                     'product_details',
+                    'product_details.allotments',
+                    'product_details.product_prices',
                     'reviews.user',
-                    'product_prices',
                     'purchase_currency',
                     'purchase_currency.baseExchangeRates',
                     'sales_currency',
                     'sales_currency.baseExchangeRates',
+                    'itineraries',
+                    'reviews',
+                    'reviews.user',
                 ]
             )
                 ->where('slug', $slug)
@@ -112,11 +118,62 @@ class ProductController extends Controller
 
             $targetCurrency = Currency::where('code', $validated['currency'])->first();
 
+            $availableItem = $this
+                ->packageService
+                ->getAvailableProductDetail(
+                    $product,
+                    $dateNow,
+                    true,
+                    true
+                );
+
             $price = $this->pricingService->getPricing(
-                $product,
+                $availableItem,
                 $validated,
                 $targetCurrency
             );
+
+            $itineraries = $product
+                ->itineraries
+                ->where('language', strtolower($validated['lang']))
+                ->sortBy('day')
+                ->values()
+                ->map(function ($itinerary) {
+                    return [
+                        'id' => $itinerary->id,
+                        'title' => $itinerary->title,
+                        'day' => $itinerary->day,
+                        'caption' => $itinerary->caption,
+                        'description' => $itinerary->description,
+                        'schedule_time' => $itinerary->schedule_time,
+                        'latitude' => $itinerary->latitude,
+                        'longitude' => $itinerary->longitude,
+                    ];
+                });
+
+            $reviews = $product
+                ->reviews
+                ->sortByDesc('created_at')
+                ->values()
+                ->map(function ($review) {
+                    return [
+                        'id' => $review->id,
+                        'user' => $review->user->name,
+                        'email' => $review->user->email,
+                        'profile_picture_url' => $review->user->profile_picture_url,
+                        'rating' => $review->rating,
+                        'comment' => $review->comment,
+                        'review_date' => $review->created_at->format('l, jS F Y'),
+                    ];
+                });
+
+            $duration = $product->trip_length > 1
+                ? $product->trip_length . ' Days'
+                : $product->trip_length . ' Day';
+
+            if ($product->trip_length > 1) {
+                $duration .= ', ' . $product->trip_length - 1 . ' Nights';
+            }
 
             $resultProduct = [
                 'id' => $product->id,
@@ -124,31 +181,12 @@ class ProductController extends Controller
                 'slug' => $product->slug,
                 'description' => $product->description,
                 'image' => $product->thumbnail_image,
-                'duration' => $product->duration,
+                'duration' => $duration,
                 'price' => formatCurrency($price, $validated['currency']),
                 'rating' => round($product->reviews->avg('rating'), 1),
                 'location' => $product->city->name . ', ' . $product->city->country->name,
-                'reviews' => $product->reviews->map(function ($review) {
-                    return [
-                        'id' => $review->id,
-                        'user' => $review->user->name,
-                        'rating' => $review->rating,
-                        'comment' => $review->comment,
-                        'review_date' => $review->review_date
-                    ];
-                }),
-                'product_details' => $product->product_details->map(function ($productDetail) {
-                    return [
-                        'id' => $productDetail->id,
-                        'day' => $productDetail->day,
-                        'title' => $productDetail->title,
-                        'schedule_time' => $productDetail->schedule_time,
-                        'image' => $productDetail->activity_image,
-                        'description' => $productDetail->description,
-                        'latitude' => $productDetail->latitude,
-                        'longitude' => $productDetail->longitude,
-                    ];
-                }),
+                'itineraries' => $itineraries,
+                'reviews' => $reviews,
             ];
 
             return response()->json([
@@ -166,19 +204,65 @@ class ProductController extends Controller
     public function popularDestination(Request $request)
     {
         try {
-            $popularDestinations = Product::withAvg('reviews', 'rating')
+            $validated = $this->validate($request, [
+                'lang' => 'required',
+                'currency' => 'required',
+            ]);
+
+            $dateNow = Carbon::now();
+
+            $targetCurrency = Currency::where('code', $validated['currency'])->first();
+
+            $popularDestinations = Product::with(
+                [
+                    'city',
+                    'city.country',
+                    'product_details',
+                    'product_details.allotments',
+                    'product_details.product_prices',
+                    'product_details.product.purchase_currency',
+                    'product_details.product.sales_currency',
+                ]
+            )
+                ->withAvg('reviews', 'rating')
                 ->orderByDesc('reviews_avg_rating')
                 ->limit(10)
                 ->get()
-                ->map(function ($product) {
+                ->map(function ($product) use ($dateNow, $validated, $targetCurrency) {
+                    $availableItem = $this
+                        ->packageService
+                        ->getAvailableProductDetail(
+                            $product,
+                            $dateNow,
+                            true,
+                            true
+                        );
+
+                    if (!$availableItem) return null;
+
+                    $price = $this->pricingService->getPricing(
+                        $availableItem,
+                        $validated,
+                        $targetCurrency,
+                    );
+
+                    $cityName = $product->city->name;
+                    $countryName = $product->city->country->name;
+
                     return [
                         'id' => $product->id,
                         'name' => $product->name,
                         'slug' => $product->slug,
-                        'price' => $product->price,
-                        'rating' => $product->reviews_avg_rating
+                        'price' => formatCurrency($price, $validated['currency']),
+                        'location' => $cityName . ', ' . $countryName,
+                        'image' => $product->thumbnail_image,
+                        'rating' => number_format($product->reviews_avg_rating, 1),
                     ];
-                });
+                })
+                ->filter(function ($product) {
+                    return $product !== null;
+                })
+                ->values();
 
             return response()->json([
                 'status' => 'success',
@@ -195,7 +279,17 @@ class ProductController extends Controller
     public function exploreNow(Request $request)
     {
         try {
+            $validated = $this->validate($request, [
+                'lang' => 'required',
+                'region' => 'string|nullable',
+            ]);
+
             $cities = City::with(['products.reviews']) // Load products and reviews
+                ->when(isset($validated['region']), function ($query) use ($validated) {
+                    $query->whereHas('country', function ($query) use ($validated) {
+                        $query->where('region_id', $validated['region']);
+                    });
+                })
                 ->get()
                 ->map(function ($city) {
                     // Calculate the average rating for each city based on its products' reviews
@@ -212,6 +306,7 @@ class ProductController extends Controller
                     return [
                         'id' => $city->id,
                         'name' => $city->name,
+                        'image' => $city->image,
                         'rating' => $averageRating, // Return the calculated average rating
                     ];
                 })
@@ -241,48 +336,68 @@ class ProductController extends Controller
             $validated = $this->validate($request, [
                 'lang' => 'required',
                 'currency' => 'required',
+                'period' => 'required|date_format:Ym',
             ]);
 
             $targetCurrency = Currency::where('code', $validated['currency'])->first();
 
+            $dateNow = Carbon::now();
+
             $product = Product::with(
                 [
-                    'Allotments',
+                    'product_details',
+                    'product_details.allotments',
+                    'product_details.product_prices',
+                    'product_details.product.purchase_currency',
+                    'product_details.product.sales_currency',
                 ]
             )
                 ->where('slug', $request->slug)->first();
 
+            $availableItem = $this
+                ->packageService
+                ->getAvailableProductDetail(
+                    $product,
+                    $dateNow,
+                    true,
+                    true
+                );
+
             $tripLength = $product->trip_length;
 
-            $allotments = $product
-                ->allotments
-                ->where('period', '>=', Carbon::now())
-                ->values();
-
-            $now = Carbon::now();
-            $dateStart = Carbon::parse($product->date_from);
-            $dateEnd = Carbon::parse($product->date_until);
-            if ($now < $dateStart) {
-                $now = $dateStart;
-            }
+            $dateStart = Carbon::createFromFormat('Ym', $validated['period'])
+                ->startOfMonth();
+            $dateEnd = Carbon::createFromFormat('Ym', $validated['period'])
+                ->endOfMonth();
 
             $price = $this->pricingService->getPricing(
-                $product,
+                $availableItem,
                 $validated,
                 $targetCurrency
             );
 
             $result = [];
-            for ($currentDate = $dateStart; $currentDate <= $dateEnd; $currentDate->addDay()) {
-                $day = $currentDate->day;
 
-                if ($allotments->sum('day' . $day) > 0) {
+            if ($dateNow->isSameMonth($dateStart)) {
+                $dateStart = $dateNow;
+            }
+
+            for ($currentDate = $dateStart; $currentDate <= $dateEnd; $currentDate->addDay()) {
+                $date = $currentDate;
+
+                $allotments = $this->allotmentService
+                    ->getAllotment(
+                        $availableItem,
+                        $date
+                    );
+
+                if ($allotments > 0) {
                     $result[] = [
-                        'date_start' => $currentDate->format('l, jS F Y'),
-                        'date_end' => $currentDate->addDays($tripLength - 1)->format('l, jS F Y'),
-                        'date_start_iso' => $currentDate->format('Y-m-d'),
-                        'date_end_iso' => $currentDate->addDays($tripLength - 1)->format('Y-m-d'),
-                        'allotment' => $allotments->sum('day' . $day),
+                        'date_start' => $date->copy()->format('l, jS F Y'),
+                        'date_end' => $date->copy()->addDays($tripLength - 1)->format('l, jS F Y'),
+                        'date_start_iso' => $date->copy()->format('Y-m-d'),
+                        'date_end_iso' => $date->copy()->addDays($tripLength - 1)->format('Y-m-d'),
+                        'allotment' => $allotments,
                         'price' => formatCurrency($price, $validated['currency']),
                     ];
                 }

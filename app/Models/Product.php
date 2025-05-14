@@ -104,4 +104,9 @@ class Product extends Model
     {
         return $this->belongsTo(Currency::class, 'sales_currency_id');
     }
+
+    public function itineraries()
+    {
+        return $this->hasMany(Itinerary::class);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Currency;
 use App\Models\Product;
+use App\Models\ProductDetail;
 
 class PricingService
 {
@@ -13,14 +14,14 @@ class PricingService
         $this->currencyService = new CurrencyService;
     }
 
-    public function getPricing($product, $params, $targetCurrency)
+    public function getPricing(ProductDetail $productDetail, $params, Currency $targetCurrency)
     {
-        $purchaseCurrency = $product->purchase_currency;
-        $salesCurrency = $product->sales_currency;
+        $purchaseCurrency = $productDetail->product->purchase_currency;
+        $salesCurrency = $productDetail->product->sales_currency;
 
         $purchasePrice = $salesPrice = 0;
 
-        $productPrice = $product
+        $productPrice = $productDetail
             ->product_prices
             ->where('level', 1)
             ->first();
@@ -50,7 +51,7 @@ class PricingService
         return $purchasePrice + $salesPrice;
     }
 
-    public function calculatePricing($productId, $currency, $params)
+    public function calculatePricing($productId, Currency $currency, $params)
     {
         $product = Product::with(
             [
