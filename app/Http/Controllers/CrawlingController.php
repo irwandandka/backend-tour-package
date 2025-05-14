@@ -52,6 +52,8 @@ class CrawlingController extends Controller
                         $currencySGD = Currency::where('code', 'SGD')->first();
                         $targetCurrency = Currency::where('code', $currency)->first();
 
+                        if (!$targetCurrency) continue;
+
                         // Simpan kurs ke database
                         ExchangeRate::updateOrCreate(
                             [
