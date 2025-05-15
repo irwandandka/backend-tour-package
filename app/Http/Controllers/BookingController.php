@@ -33,19 +33,22 @@ class BookingController extends Controller
         try {
             $user = auth('api')->user();
 
-            $validate = $request->validate([
+            $validated = $request->validate([
                 'currency' => 'required|in:USD,IDR',
                 'product_id' => 'required|exists:products,id',
                 'date_from' => 'required|date',
                 'date_to' => 'required|date',
-                'quantity_adult' => 'required|integer',
-                'quantity_child' => 'required|integer',
-                'quantity_infant' => 'required|integer',
-                'quantity_senior' => 'required|integer',
+                'product_details' => 'required|array|min:1',
+                'product_details.*.product_detail' => 'required|exists:product_details,id',
+                'product_details.*.quantity' => 'required|integer|min:1',
+                'product_details.*.quantity_adult' => 'required|integer|min:0',
+                'product_details.*.quantity_child' => 'required|integer|min:0',
+                'product_details.*.quantity_infant' => 'required|integer|min:0',
+                'product_details.*.quantity_senior' => 'required|integer|min:0',
             ]);
 
-            $result = DB::transaction(function () use ($validate, $user) {
-                $transaction = $this->bookingService->createTransaction($validate, $user);
+            $result = DB::transaction(function () use ($validated, $user) {
+                $transaction = $this->bookingService->createTransaction($validated, $user);
 
                 return $transaction;
             });
@@ -66,36 +69,42 @@ class BookingController extends Controller
         try {
             $transaction = Transaction::with(
                 [
-                    'product',
-                    'status',
-                    'transactionDetails',
+                    "product",
+                    "status",
+                    "transactionDetails",
+                    "transactionDetails.product",
+                    "transactionDetails.productDetail",
                 ]
             )
                 ->where('id', $id)
                 ->first();
 
-            $transactionDetail = $transaction->transactionDetails->first();
-
             $data = [
-                'id' => $transaction->id,
-                'code' => $transaction->code,
-                'status' => $transaction->status->name,
-                'product' => $transaction->product->name,
-                'quantity' => $transaction->quantity,
-                'sales_total' => $transaction->sales_total,
-                'sales_total_base' => $transaction->sales_total_base,
-                'booking_date' => Carbon::parse($transaction->booking_date)->format('l, jS F Y'),
-                'notes' => $transaction->notes,
-                'details' => [
-                    'quantity_adult' => $transactionDetail->quantity_adult,
-                    'quantity_child' => $transactionDetail->quantity_child,
-                    'quantity_infant' => $transactionDetail->quantity_infant,
-                    'quantity_senior' => $transactionDetail->quantity_senior,
-                    'sales_adult' => $transactionDetail->sales_adult,
-                    'sales_child' => $transactionDetail->sales_child,
-                    'sales_infant' => $transactionDetail->sales_infant,
-                    'sales_senior' => $transactionDetail->sales_senior,
-                ],
+                "id" => $transaction->id,
+                "code" => $transaction->code,
+                "status" => $transaction->status->name,
+                "product" => $transaction->product->name,
+                "quantity" => $transaction->quantity,
+                "sales_total" => $transaction->sales_total,
+                "sales_total_base" => $transaction->sales_total_base,
+                "booking_date" => Carbon::parse($transaction->booking_date)->format("l, jS F Y"),
+                "notes" => $transaction->notes,
+                "transaction_details" => $transaction
+                    ->transactionDetails
+                    ->map(function ($detail) {
+                        return [
+                            "product_detail_name" => $detail->productDetail->name_en,
+                            "product_detail_image" => $detail->productDetail->activity_image,
+                            "quantity_adult" => $detail->quantity_adult,
+                            "quantity_child" => $detail->quantity_child,
+                            "quantity_infant" => $detail->quantity_infant,
+                            "quantity_senior" => $detail->quantity_senior,
+                            "sales_adult" => $detail->sales_adult,
+                            "sales_child" => $detail->sales_child,
+                            "sales_infant" => $detail->sales_infant,
+                            "sales_senior" => $detail->sales_senior,
+                        ];
+                    }),
             ];
 
             return response()->json([

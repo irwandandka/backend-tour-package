@@ -110,37 +110,36 @@ class PricingService
         return $productPrices;
     }
 
-    public function calculatePricing($productId, Currency $currency, $params)
+    public function calculatePricing(Product $product, $currencies, $detail, $params)
     {
-        $product = Product::with(
-            [
-                'product_prices',
-                'purchase_currency',
-                'sales_currency',
-            ]
-        )
-            ->where('id', $productId)
-            ->first();
-
-        $currencies = Currency::get();
-        $targetCurrency = $currencies->where('code', $currency)->first();
+        $targetCurrency = $currencies->where('code', $params['currency'])->first();
         $currencySGD = $currencies->where('code', 'SGD')->first();
 
         $pricingDetail = [];
 
         $typePrices = ['adult', 'child', 'infant', 'senior'];
 
+        $productDetail = $product
+            ->product_details
+            ->where('id', $detail['product_detail'])
+            ->first();
+
         $purchaseTotal = $purchaseTotalBase = $purchaseSubtotal = $purchaseSubtotalBase = $salesSubtotal = $salesSubtotalBase = $salesTotal = $salesTotalBase = 0;
 
-        foreach ($typePrices as $type) {
+        $pricingDetail = [];
+        foreach ($typePrices as $index => $type) {
+            if ($detail["quantity_$type"] == 0) {
+                continue;
+            }
+
             $purchasePrice = $salesPrice = 0;
 
-            $productPrice = $product
+            $productPrice = $productDetail
                 ->product_prices
-                ->where('level', 1)
+                ->where('level', $index + 1)
                 ->first();
 
-            if (!$productPrice) return 0;
+            if (!$productPrice) continue;
 
             // Target Currency
             $purchasePrice = $this->currencyService->convert(
@@ -156,9 +155,11 @@ class PricingService
                 $currencySGD
             );
 
+            $pricingDetail["quantity_$type"] = $detail["quantity_$type"];
+
             $pricingDetail["purchase_$type"] = $purchasePrice;
-            $purchaseSubtotalBase += $purchaseInSGD * $params["quantity_$type"];
-            $purchaseSubtotal += $purchasePrice * $params["quantity_$type"];
+            $purchaseSubtotalBase += $purchaseInSGD * $detail["quantity_$type"];
+            $purchaseSubtotal += $purchasePrice * $detail["quantity_$type"];
 
             // Target Currency
             $salesPrice = $this->currencyService->convert(
@@ -174,8 +175,8 @@ class PricingService
                 $currencySGD
             );
             $pricingDetail["sales_$type"] = ($purchasePrice + $salesPrice);
-            $salesSubtotal += ($purchasePrice + $salesPrice) * $params["quantity_$type"];
-            $salesSubtotalBase += ($purchaseInSGD + $salesInSGD) * $params["quantity_$type"];
+            $salesSubtotal += ($purchasePrice + $salesPrice) * $detail["quantity_$type"];
+            $salesSubtotalBase += ($purchaseInSGD + $salesInSGD) * $detail["quantity_$type"];
         }
 
         $purchaseTotal += $purchaseSubtotal;
@@ -193,6 +194,12 @@ class PricingService
         $pricingDetail['sales_total_base'] = $salesTotalBase;
         $pricingDetail['sales_subtotal'] = $salesSubtotal;
         $pricingDetail['sales_subtotal_base'] = $salesSubtotalBase;
+
+        $pricingDetail['product_detail_id'] = $productDetail->id;
+        $pricingDetail['product_id'] = $product->id;
+        $pricingDetail['quantity'] = 1;
+        $pricingDetail['date_from'] = $params['date_from'];
+        $pricingDetail['date_to'] = $params['date_to'];
 
         return $pricingDetail;
     }

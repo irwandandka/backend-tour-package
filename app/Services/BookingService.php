@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Currency;
+use App\Models\Product;
 use App\Models\Status;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
@@ -32,19 +34,52 @@ class BookingService
             'notes' => 'Booking a product',
         ]);
 
-        $detail = $this->pricingService->calculatePricing($data['product_id'], $data['currency'], $data);
+        $product = Product::with(
+            [
+                'product_details',
+                'product_details.product_prices',
+                'purchase_currency',
+                'sales_currency',
+            ]
+        )
+            ->where('id', $data['product_id'])
+            ->first();
 
-        $detail['transaction_id'] = $transaction->id;
-        $detail['product_id'] = $transaction->product_id;
-        $detail['user_id'] = $user->id;
-        $detail['date_from'] = Carbon::parse($data['date_from']);
-        $detail['date_to'] = Carbon::parse($data['date_to']);
-        $detail['quantity'] = 1;
+        $currencies = Currency::get();
 
-        $transactionDetail = TransactionDetail::create($detail);
+        $salesTotal = $salesTotalBase = 0;
 
-        $transaction->total_amount = $transactionDetail->sales_total;
-        $transaction->total_amount_base = $transactionDetail->sales_total_base;
+        collect($data['product_details'])
+            ->map(function ($product_detail) use (
+                $data,
+                $product,
+                $currencies,
+                $transaction,
+                $user,
+                &$salesTotal,
+                &$salesTotalBase
+            ) {
+                $detail = $this->pricingService->calculatePricing(
+                    $product,
+                    $currencies,
+                    $product_detail,
+                    $data
+                );
+
+                $detail['transaction_id'] = $transaction->id;
+                $detail['user_id'] = $user->id;
+
+                $salesTotal += $detail['sales_total'];
+                $salesTotalBase += $detail['sales_total_base'];
+
+                return $detail;
+            })
+            ->each(function ($detail) {
+                TransactionDetail::create($detail);
+            });
+
+        $transaction->total_amount = $salesTotal;
+        $transaction->total_amount_base = $salesTotalBase;
         $transaction->save();
 
         return $transaction;
