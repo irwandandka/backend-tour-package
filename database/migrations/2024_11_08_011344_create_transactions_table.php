@@ -21,12 +21,12 @@ return new class extends Migration
             $table->double('total_amount')->default(0);
             $table->double('total_amount_base')->default(0);
             $table->date('booking_date');
-            $table->string('customer_name');
-            $table->string('customer_email');
-            $table->string('customer_phone');
-            $table->string('address');
-            $table->string('postal_code');
-            $table->string('notes')->nullable();
+            $table->string('customer_name', 50)->nullable();
+            $table->string('customer_email', 50)->nullable();
+            $table->string('customer_phone', 20)->nullable();
+            $table->string('address', 100)->nullable();
+            $table->string('postal_code', 10)->nullable();
+            $table->string('notes', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
 

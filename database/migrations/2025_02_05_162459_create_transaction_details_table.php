@@ -14,32 +14,33 @@ return new class extends Migration
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('transaction_id');
+            $table->uuid('product_detail_id')->nullable();
             $table->uuid('product_id');
             $table->uuid('discount_id')->nullable();
             $table->uuid('user_id');
-            $table->smallInteger('quantity');
-            $table->smallInteger('quantity_adult');
-            $table->smallInteger('quantity_child');
-            $table->smallInteger('quantity_infant');
-            $table->smallInteger('quantity_senior');
-            $table->double('purchase_adult');
-            $table->double('sales_adult');
-            $table->double('purchase_child');
-            $table->double('sales_child');
-            $table->double('purchase_infant');
-            $table->double('sales_infant');
-            $table->double('purchase_senior');
-            $table->double('sales_senior');
-            $table->double('purchase_total');
-            $table->double('purchase_total_base');
-            $table->double('sales_total');
-            $table->double('sales_total_base');
-            $table->double('purchase_subtotal');
-            $table->double('purchase_subtotal_base');
-            $table->double('sales_subtotal');
-            $table->double('sales_subtotal_base');
-            $table->double('discount_amount');
-            $table->double('discount_amount_base');
+            $table->smallInteger('quantity')->default(0);
+            $table->smallInteger('quantity_adult')->default(0);
+            $table->smallInteger('quantity_child')->default(0);
+            $table->smallInteger('quantity_infant')->default(0);
+            $table->smallInteger('quantity_senior')->default(0);
+            $table->double('purchase_adult')->default(0);
+            $table->double('sales_adult')->default(0);
+            $table->double('purchase_child')->default(0);
+            $table->double('sales_child')->default(0);
+            $table->double('purchase_infant')->default(0);
+            $table->double('sales_infant')->default(0);
+            $table->double('purchase_senior')->default(0);
+            $table->double('sales_senior')->default(0);
+            $table->double('purchase_total')->default(0);
+            $table->double('purchase_total_base')->default(0);
+            $table->double('sales_total')->default(0);
+            $table->double('sales_total_base')->default(0);
+            $table->double('purchase_subtotal')->default(0);
+            $table->double('purchase_subtotal_base')->default(0);
+            $table->double('sales_subtotal')->default(0);
+            $table->double('sales_subtotal_base')->default(0);
+            $table->double('discount_amount')->default(0);
+            $table->double('discount_amount_base')->default(0);
             $table->date('date_from');
             $table->date('date_to');
             $table->timestamps();
@@ -56,6 +57,13 @@ return new class extends Migration
                 ->foreign('product_id')
                 ->references('id')
                 ->on('products')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table
+                ->foreign('product_detail_id')
+                ->references('id')
+                ->on('product_details')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
