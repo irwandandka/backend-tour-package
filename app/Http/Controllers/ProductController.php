@@ -123,7 +123,7 @@ class ProductController extends Controller
                 ->getAvailableProductDetail(
                     $product,
                     $dateNow,
-                    true,
+                    false,
                     true
                 );
 
@@ -301,7 +301,7 @@ class ProductController extends Controller
                         ->getAvailableProductDetail(
                             $product,
                             $dateNow,
-                            true,
+                            false,
                             true
                         );
 
