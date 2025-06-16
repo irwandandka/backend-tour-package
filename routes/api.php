@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\{AuthController, BaseController, BookingController, CityController, CountryController, CrawlingController, NotificationController, PaymentController, ProductController, RegionController, SearchController, TestingController, UserController};
+use App\Http\Middleware\CheckAPIKey;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
 
     Route::prefix('auth')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
@@ -70,8 +71,11 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::prefix('/payment')->group(function () {
-            Route::post('/{id}', [PaymentController::class, 'payment']);
+            Route::post('/{id}', [PaymentController::class, 'pay']);
             Route::post('/midtrans/notification', [PaymentController::class, 'handleNotification']);
         });
+
+        Route::post('/pay/gopay', [PaymentController::class, 'payWithGopay']);
+        Route::post('/midtrans/callback', [PaymentController::class, 'handleCallback'])->name('midtrans.callback');
     });
 });
