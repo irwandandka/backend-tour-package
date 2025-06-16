@@ -24,7 +24,7 @@ class ProductSeeder extends Seeder
     {
         $status = Status::where('code', 'active')->first();
         $cities = City::get();
-        $user = User::where('email', 'irwndandka@gmail.com')->first();
+        $user = User::where('email', 'irwandandka29@gmail.com')->first();
         $currency = Currency::where('code', 'SGD')->first();
 
         $products = [

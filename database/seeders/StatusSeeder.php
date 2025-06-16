@@ -57,6 +57,10 @@ class StatusSeeder extends Seeder
             [
                 'name' => 'Refunded',
                 'code' => 'refund'
+            ],
+            [
+                'name' => 'Entry',
+                'code' => 'entry'
             ]
         ];
 
