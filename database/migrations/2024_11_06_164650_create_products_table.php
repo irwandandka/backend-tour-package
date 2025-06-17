@@ -23,7 +23,7 @@ return new class extends Migration
             $table->uuid('user_id');
             $table->uuid('city_id');
             $table->uuid('status_id');
-            $table->uuid('category_id');
+            $table->uuid('category_id')->nullable();
             $table->uuid('purchase_currency_id');
             $table->uuid('sales_currency_id');
             $table->timestamps();
