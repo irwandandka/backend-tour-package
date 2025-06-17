@@ -16,15 +16,7 @@ class ProductDetailSeeder extends Seeder
     public function run(): void
     {
         // Retrieve all products to assign details
-        $products = Product::whereIn('slug', [
-            'tokyo-city-highlights',
-            'busan-beach-escape',
-            'yogyakarta-heritage-journey',
-            'bangkok-city-temple-tour',
-            'ho-chi-minh-mekong-delta-explorer',
-            'rome-ancient-wonders',
-            'lisbon-city-highlights',
-        ])->get();
+        $products = Product::get();
 
         $productDetails = [
             [

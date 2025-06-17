@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Itinerary;
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,7 @@ class ItinerarySeeder extends Seeder
      */
     public function run(): void
     {
+        $products = Product::all();
         $itineraries = [
             [
                 "language" => "en",
@@ -24,7 +26,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Experience the perfect mix of modern and traditional Tokyo.",
                 "latitude" => 35.6581,
                 "longitude" => 139.7017,
-                "product_id" => "4bdb2a2a-181b-40a3-918b-e97d4212a350",
+                "product_id" => $products->where('slug', 'tokyo-city-highlights')->first()->id,
             ],
             [
                 "language" => "id",
@@ -35,7 +37,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Rasakan perpaduan sempurna antara modern dan tradisional di Tokyo.",
                 "latitude" => 35.6581,
                 "longitude" => 139.7017,
-                "product_id" => "4bdb2a2a-181b-40a3-918b-e97d4212a350",
+                "product_id" => $products->where('slug', 'tokyo-city-highlights')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -46,7 +48,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "体验现代与传统东京的完美融合。",
                 "latitude" => 35.6581,
                 "longitude" => 139.7017,
-                "product_id" => "4bdb2a2a-181b-40a3-918b-e97d4212a350",
+                "product_id" => $products->where('slug', 'tokyo-city-highlights')->first()->id,
             ],
             [
                 "language" => "en",
@@ -57,7 +59,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Elevate your experience at the Tokyo Skytree and enjoy local flavors at Nakamise Street.",
                 "latitude" => 35.7100,
                 "longitude" => 139.8107,
-                "product_id" => "4bdb2a2a-181b-40a3-918b-e97d4212a350",
+                "product_id" => $products->where('slug', 'tokyo-city-highlights')->first()->id,
             ],
             [
                 "language" => "id",
@@ -68,7 +70,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Tingkatkan pengalaman Anda di Tokyo Skytree dan nikmati cita rasa lokal di Jalan Nakamise.",
                 "latitude" => 35.7100,
                 "longitude" => 139.8107,
-                "product_id" => "4bdb2a2a-181b-40a3-918b-e97d4212a350",
+                "product_id" => $products->where('slug', 'tokyo-city-highlights')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -79,7 +81,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在东京晴空塔提升你的体验，并在仲见世街享受当地美食。",
                 "latitude" => 35.7100,
                 "longitude" => 139.8107,
-                "product_id" => "4bdb2a2a-181b-40a3-918b-e97d4212a350",
+                "product_id" => $products->where('slug', 'tokyo-city-highlights')->first()->id,
             ],
             [
                 "language" => "en",
@@ -90,7 +92,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "End your tour with breathtaking views and peaceful nature.",
                 "latitude" => 35.6586,
                 "longitude" => 139.7454,
-                "product_id" => "4bdb2a2a-181b-40a3-918b-e97d4212a350",
+                "product_id" => $products->where('slug', 'tokyo-city-highlights')->first()->id,
             ],
             [
                 "language" => "id",
@@ -101,7 +103,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Akhiri tur Anda dengan pemandangan menakjubkan dan ketenangan alam.",
                 "latitude" => 35.6586,
                 "longitude" => 139.7454,
-                "product_id" => "4bdb2a2a-181b-40a3-918b-e97d4212a350",
+                "product_id" => $products->where('slug', 'tokyo-city-highlights')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -112,7 +114,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "以令人屏息的景色和宁静的自然环境结束你的旅程。",
                 "latitude" => 35.6586,
                 "longitude" => 139.7454,
-                "product_id" => "4bdb2a2a-181b-40a3-918b-e97d4212a350",
+                "product_id" => $products->where('slug', 'tokyo-city-highlights')->first()->id,
             ],
             // Break
             [
@@ -124,7 +126,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "From fresh fish to handcrafted sushi in the heart of Tokyo.",
                 "latitude" => 35.6655,
                 "longitude" => 139.7708,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "id",
@@ -135,7 +137,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Dari ikan segar hingga sushi buatan tangan di pusat Tokyo.",
                 "latitude" => 35.6655,
                 "longitude" => 139.7708,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -146,7 +148,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "從新鮮漁獲到手作壽司，感受東京的美味核心。",
                 "latitude" => 35.6655,
                 "longitude" => 139.7708,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "en",
@@ -157,7 +159,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Dive into the spiritual and fashion side of Tokyo.",
                 "latitude" => 35.6764,
                 "longitude" => 139.6993,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "id",
@@ -168,7 +170,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Menelusuri sisi spiritual dan fashion Tokyo.",
                 "latitude" => 35.6764,
                 "longitude" => 139.6993,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -179,7 +181,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "深入了解東京的精神與時尚風貌。",
                 "latitude" => 35.6764,
                 "longitude" => 139.6993,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "en",
@@ -190,7 +192,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Experience the culture and flavors of old Tokyo.",
                 "latitude" => 35.7148,
                 "longitude" => 139.7967,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "id",
@@ -201,7 +203,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Rasakan budaya dan cita rasa Tokyo yang kuno.",
                 "latitude" => 35.7148,
                 "longitude" => 139.7967,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -212,7 +214,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "體驗老東京的文化與風味。",
                 "latitude" => 35.7148,
                 "longitude" => 139.7967,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "en",
@@ -223,7 +225,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "End your tour with stunning views of Tokyo Bay and Odaiba.",
                 "latitude" => 35.6270,
                 "longitude" => 139.7767,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "id",
@@ -234,7 +236,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Akhiri tur Anda dengan pemandangan menakjubkan di Teluk Tokyo dan Odaiba.",
                 "latitude" => 35.6270,
                 "longitude" => 139.7767,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -245,7 +247,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "以壯麗的東京灣和台場美景結束你的旅程。",
                 "latitude" => 35.6270,
                 "longitude" => 139.7767,
-                "product_id" => "8a1734e6-0ce1-42a4-b623-54f66380dadf",
+                "product_id" => $products->where('slug', 'tokyo-culture-cuisine')->first()->id,
             ],
             // Break
             [
@@ -257,7 +259,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "The perfect start to your beach getaway in Busan.",
                 "latitude" => 35.1587,
                 "longitude" => 129.1605,
-                "product_id" => "48466356-f6ca-4228-ab43-e399acf54b16",
+                "product_id" => $products->where('slug', 'busan-beach-escape')->first()->id,
             ],
             [
                 "language" => "id",
@@ -268,7 +270,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Awal yang sempurna untuk liburan pantai Anda di Busan.",
                 "latitude" => 35.1587,
                 "longitude" => 129.1605,
-                "product_id" => "48466356-f6ca-4228-ab43-e399acf54b16",
+                "product_id" => $products->where('slug', 'busan-beach-escape')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -279,7 +281,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "完美的開始，開啟您的釜山海灘假期。",
                 "latitude" => 35.1587,
                 "longitude" => 129.1605,
-                "product_id" => "48466356-f6ca-4228-ab43-e399acf54b16",
+                "product_id" => $products->where('slug', 'busan-beach-escape')->first()->id,
             ],
             [
                 "language" => "en",
@@ -290,7 +292,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "A perfect spot to relax during the day and enjoy the dazzling night lights.",
                 "latitude" => 35.1535,
                 "longitude" => 129.1180,
-                "product_id" => "48466356-f6ca-4228-ab43-e399acf54b16",
+                "product_id" => $products->where('slug', 'busan-beach-escape')->first()->id,
             ],
             [
                 "language" => "id",
@@ -301,7 +303,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Tempat yang sempurna untuk bersantai di siang hari dan menikmati cahaya malam yang memukau.",
                 "latitude" => 35.1535,
                 "longitude" => 129.1180,
-                "product_id" => "48466356-f6ca-4228-ab43-e399acf54b16",
+                "product_id" => $products->where('slug', 'busan-beach-escape')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -312,7 +314,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "白天放鬆，晚上享受迷人的燈光秀。",
                 "latitude" => 35.1535,
                 "longitude" => 129.1180,
-                "product_id" => "48466356-f6ca-4228-ab43-e399acf54b16",
+                "product_id" => $products->where('slug', 'busan-beach-escape')->first()->id,
             ],
             [
                 "language" => "en",
@@ -323,7 +325,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "The perfect way to end your beach escape with stunning natural beauty.",
                 "latitude" => 35.0984,
                 "longitude" => 129.1087,
-                "product_id" => "48466356-f6ca-4228-ab43-e399acf54b16",
+                "product_id" => $products->where('slug', 'busan-beach-escape')->first()->id,
             ],
             [
                 "language" => "id",
@@ -334,7 +336,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Cara sempurna untuk mengakhiri liburan pantai Anda dengan keindahan alam yang menakjubkan.",
                 "latitude" => 35.0984,
                 "longitude" => 129.1087,
-                "product_id" => "48466356-f6ca-4228-ab43-e399acf54b16",
+                "product_id" => $products->where('slug', 'busan-beach-escape')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -345,7 +347,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "以壯麗的自然景色結束您的海灘假期。",
                 "latitude" => 35.0984,
                 "longitude" => 129.1087,
-                "product_id" => "48466356-f6ca-4228-ab43-e399acf54b16",
+                "product_id" => $products->where('slug', 'busan-beach-escape')->first()->id,
             ],
             // Break
             [
@@ -357,7 +359,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Step into Busan’s artistic and historic hillside.",
                 "latitude" => 35.0975,
                 "longitude" => 129.0107,
-                "product_id" => "ca466fca-070a-40ec-9736-c847c3d021c7",
+                "product_id" => $products->where('slug', 'busan-heritage-trail')->first()->id,
             ],
             [
                 "language" => "id",
@@ -368,7 +370,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Melangkah ke perbukitan artistik dan bersejarah Busan.",
                 "latitude" => 35.0975,
                 "longitude" => 129.0107,
-                "product_id" => "ca466fca-070a-40ec-9736-c847c3d021c7",
+                "product_id" => $products->where('slug', 'busan-heritage-trail')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -379,7 +381,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "走入釜山藝術與歷史交融的山坡村落。",
                 "latitude" => 35.0975,
                 "longitude" => 129.0107,
-                "product_id" => "ca466fca-070a-40ec-9736-c847c3d021c7",
+                "product_id" => $products->where('slug', 'busan-heritage-trail')->first()->id,
             ],
             [
                 "language" => "en",
@@ -390,7 +392,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "A peaceful journey through Busan’s spiritual roots.",
                 "latitude" => 35.2646,
                 "longitude" => 129.0563,
-                "product_id" => "ca466fca-070a-40ec-9736-c847c3d021c7",
+                "product_id" => $products->where('slug', 'busan-heritage-trail')->first()->id,
             ],
             [
                 "language" => "id",
@@ -401,7 +403,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Perjalanan damai menyusuri akar spiritual Busan.",
                 "latitude" => 35.2646,
                 "longitude" => 129.0563,
-                "product_id" => "ca466fca-070a-40ec-9736-c847c3d021c7",
+                "product_id" => $products->where('slug', 'busan-heritage-trail')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -412,7 +414,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在釜山的靈性根源中展開平靜之旅。",
                 "latitude" => 35.2646,
                 "longitude" => 129.0563,
-                "product_id" => "ca466fca-070a-40ec-9736-c847c3d021c7",
+                "product_id" => $products->where('slug', 'busan-heritage-trail')->first()->id,
             ],
             // Break
             [
@@ -424,7 +426,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Step into the world of emperors and dynasties.",
                 "latitude" => 39.9163,
                 "longitude" => 116.3972,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "id",
@@ -435,7 +437,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Masuki dunia para kaisar dan dinasti.",
                 "latitude" => 39.9163,
                 "longitude" => 116.3972,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -446,7 +448,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "踏入帝王與朝代的世界。",
                 "latitude" => 39.9163,
                 "longitude" => 116.3972,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "en",
@@ -457,7 +459,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Where architecture meets ancient prayer.",
                 "latitude" => 39.8822,
                 "longitude" => 116.4065,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "id",
@@ -468,7 +470,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Saat arsitektur bertemu doa kuno.",
                 "latitude" => 39.8822,
                 "longitude" => 116.4065,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -479,7 +481,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "建築與古老祈禱的交匯點。",
                 "latitude" => 39.8822,
                 "longitude" => 116.4065,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "en",
@@ -490,7 +492,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Nature and nobility in perfect balance.",
                 "latitude" => 39.9991,
                 "longitude" => 116.2755,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "id",
@@ -501,7 +503,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Alam dan kebangsawanan dalam harmoni.",
                 "latitude" => 39.9991,
                 "longitude" => 116.2755,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -512,7 +514,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "自然與皇族生活的完美結合。",
                 "latitude" => 39.9991,
                 "longitude" => 116.2755,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "en",
@@ -523,7 +525,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Walk the wall that shaped a nation.",
                 "latitude" => 40.4319,
                 "longitude" => 116.5704,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "id",
@@ -534,7 +536,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Berjalan di tembok yang membentuk sejarah bangsa.",
                 "latitude" => 40.4319,
                 "longitude" => 116.5704,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -545,7 +547,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "走在塑造國家的長城之上。",
                 "latitude" => 40.4319,
                 "longitude" => 116.5704,
-                "product_id" => "b17126a4-1027-479b-82eb-36bcc5576c45",
+                "product_id" => $products->where('slug', 'beijing-imperial-wonders')->first()->id,
             ],
             // Break
             [
@@ -557,7 +559,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Step into the heart of old Beijing.",
                 "latitude" => 39.9428,
                 "longitude" => 116.3960,
-                "product_id" => "c29332c9-31fa-4ac2-84b9-4eada6db1efa",
+                "product_id" => $products->where('slug', 'beijing-local-living')->first()->id,
             ],
             [
                 "language" => "id",
@@ -568,7 +570,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Menjelajahi jantung kota tua Beijing.",
                 "latitude" => 39.9428,
                 "longitude" => 116.3960,
-                "product_id" => "c29332c9-31fa-4ac2-84b9-4eada6db1efa",
+                "product_id" => $products->where('slug', 'beijing-local-living')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -579,7 +581,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "走入老北京的心臟地帶。",
                 "latitude" => 39.9428,
                 "longitude" => 116.3960,
-                "product_id" => "c29332c9-31fa-4ac2-84b9-4eada6db1efa",
+                "product_id" => $products->where('slug', 'beijing-local-living')->first()->id,
             ],
             [
                 "language" => "en",
@@ -590,7 +592,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Cook like a local, eat like a local.",
                 "latitude" => 39.9286,
                 "longitude" => 116.4166,
-                "product_id" => "c29332c9-31fa-4ac2-84b9-4eada6db1efa",
+                "product_id" => $products->where('slug', 'beijing-local-living')->first()->id,
             ],
             [
                 "language" => "id",
@@ -601,7 +603,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Masak seperti warga lokal, makan seperti warga lokal.",
                 "latitude" => 39.9286,
                 "longitude" => 116.4166,
-                "product_id" => "c29332c9-31fa-4ac2-84b9-4eada6db1efa",
+                "product_id" => $products->where('slug', 'beijing-local-living')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -612,7 +614,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "像當地人一樣烹飪與品嚐。",
                 "latitude" => 39.9286,
                 "longitude" => 116.4166,
-                "product_id" => "c29332c9-31fa-4ac2-84b9-4eada6db1efa",
+                "product_id" => $products->where('slug', 'beijing-local-living')->first()->id,
             ],
             [
                 "language" => "en",
@@ -623,7 +625,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Balance body and mind with traditional arts.",
                 "latitude" => 39.9119,
                 "longitude" => 116.3970,
-                "product_id" => "c29332c9-31fa-4ac2-84b9-4eada6db1efa",
+                "product_id" => $products->where('slug', 'beijing-local-living')->first()->id,
             ],
             [
                 "language" => "id",
@@ -634,7 +636,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Seimbangkan tubuh dan pikiran dengan seni tradisional.",
                 "latitude" => 39.9119,
                 "longitude" => 116.3970,
-                "product_id" => "c29332c9-31fa-4ac2-84b9-4eada6db1efa",
+                "product_id" => $products->where('slug', 'beijing-local-living')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -645,7 +647,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "透過傳統藝術平衡身心。",
                 "latitude" => 39.9119,
                 "longitude" => 116.3970,
-                "product_id" => "c29332c9-31fa-4ac2-84b9-4eada6db1efa",
+                "product_id" => $products->where('slug', 'beijing-local-living')->first()->id,
             ],
             // Break
             [
@@ -657,7 +659,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Start your Bali escape with a golden sunset.",
                 "latitude" => -8.8296,
                 "longitude" => 115.0871,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "id",
@@ -668,7 +670,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Mulai liburan Bali Anda dengan matahari terbenam yang indah.",
                 "latitude" => -8.8296,
                 "longitude" => 115.0871,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -679,7 +681,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "以金色夕陽開啟你的峇里之旅。",
                 "latitude" => -8.8296,
                 "longitude" => 115.0871,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "en",
@@ -690,7 +692,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "A full day of culture, crafts, and green landscapes.",
                 "latitude" => -8.4342,
                 "longitude" => 115.2794,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "id",
@@ -701,7 +703,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Seharian penuh budaya, kerajinan, dan pemandangan hijau.",
                 "latitude" => -8.4342,
                 "longitude" => 115.2794,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -712,7 +714,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "文化與自然的完美結合。",
                 "latitude" => -8.4342,
                 "longitude" => 115.2794,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "en",
@@ -723,7 +725,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Sun, sand, and splash all day long.",
                 "latitude" => -8.8481,
                 "longitude" => 115.1764,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "id",
@@ -734,7 +736,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Matahari, pasir, dan keseruan seharian penuh.",
                 "latitude" => -8.8481,
                 "longitude" => 115.1764,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -745,7 +747,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "享受陽光、沙灘與海水的樂趣。",
                 "latitude" => -8.8481,
                 "longitude" => 115.1764,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "en",
@@ -756,7 +758,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "A spiritual farewell by the ocean.",
                 "latitude" => -8.6216,
                 "longitude" => 115.0867,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "id",
@@ -767,7 +769,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Perpisahan spiritual di tepi laut.",
                 "latitude" => -8.6216,
                 "longitude" => 115.0867,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -778,7 +780,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在海邊靜心告別峇里。",
                 "latitude" => -8.6216,
                 "longitude" => 115.0867,
-                "product_id" => "6cb75313-fc87-47f5-a0e6-d88217266f53",
+                "product_id" => $products->where('slug', 'bali-island-escape')->first()->id,
             ],
             // Break
             [
@@ -790,7 +792,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Begin your cultural journey with an ancient wonder.",
                 "latitude" => -7.7519,
                 "longitude" => 110.4918,
-                "product_id" => "88045c2e-8192-4f10-9c0b-4c500dbdfbd6",
+                "product_id" => $products->where('slug', 'yogyakarta-heritage-journey')->first()->id,
             ],
             [
                 "language" => "id",
@@ -801,7 +803,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Awali perjalanan budaya Anda dengan keajaiban kuno.",
                 "latitude" => -7.7519,
                 "longitude" => 110.4918,
-                "product_id" => "88045c2e-8192-4f10-9c0b-4c500dbdfbd6",
+                "product_id" => $products->where('slug', 'yogyakarta-heritage-journey')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -812,7 +814,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "以古老奇觀開啟你的文化之旅。",
                 "latitude" => -7.7519,
                 "longitude" => 110.4918,
-                "product_id" => "88045c2e-8192-4f10-9c0b-4c500dbdfbd6",
+                "product_id" => $products->where('slug', 'yogyakarta-heritage-journey')->first()->id,
             ],
             [
                 "language" => "en",
@@ -823,7 +825,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "A spiritual and scenic start to your day.",
                 "latitude" => -7.6079,
                 "longitude" => 110.2038,
-                "product_id" => "88045c2e-8192-4f10-9c0b-4c500dbdfbd6",
+                "product_id" => $products->where('slug', 'yogyakarta-heritage-journey')->first()->id,
             ],
             [
                 "language" => "id",
@@ -834,7 +836,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Awali hari Anda dengan keindahan dan kedamaian.",
                 "latitude" => -7.6079,
                 "longitude" => 110.2038,
-                "product_id" => "88045c2e-8192-4f10-9c0b-4c500dbdfbd6",
+                "product_id" => $products->where('slug', 'yogyakarta-heritage-journey')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -845,7 +847,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "靈性與自然的早晨之旅。",
                 "latitude" => -7.6079,
                 "longitude" => 110.2038,
-                "product_id" => "88045c2e-8192-4f10-9c0b-4c500dbdfbd6",
+                "product_id" => $products->where('slug', 'yogyakarta-heritage-journey')->first()->id,
             ],
             [
                 "language" => "en",
@@ -856,7 +858,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "History and handicrafts to complete your journey.",
                 "latitude" => -7.8049,
                 "longitude" => 110.3640,
-                "product_id" => "88045c2e-8192-4f10-9c0b-4c500dbdfbd6",
+                "product_id" => $products->where('slug', 'yogyakarta-heritage-journey')->first()->id,
             ],
             [
                 "language" => "id",
@@ -867,7 +869,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Sejarah dan kerajinan tangan sebagai penutup perjalanan.",
                 "latitude" => -7.8049,
                 "longitude" => 110.3640,
-                "product_id" => "88045c2e-8192-4f10-9c0b-4c500dbdfbd6",
+                "product_id" => $products->where('slug', 'yogyakarta-heritage-journey')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -878,7 +880,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "歷史與工藝為旅程劃下完美句點。",
                 "latitude" => -7.8049,
                 "longitude" => 110.3640,
-                "product_id" => "88045c2e-8192-4f10-9c0b-4c500dbdfbd6",
+                "product_id" => $products->where('slug', 'yogyakarta-heritage-journey')->first()->id,
             ],
             // Break
             [
@@ -890,7 +892,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "A royal welcome to the heart of Thai heritage.",
                 "latitude" => 13.7500,
                 "longitude" => 100.4913,
-                "product_id" => "d537c18a-7b15-4df4-958f-5343f67cb0b5",
+                "product_id" => $products->where('slug', 'bangkok-city-temple-tour')->first()->id,
             ],
             [
                 "language" => "id",
@@ -901,7 +903,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Sambutan kerajaan di jantung warisan Thailand.",
                 "latitude" => 13.7500,
                 "longitude" => 100.4913,
-                "product_id" => "d537c18a-7b15-4df4-958f-5343f67cb0b5",
+                "product_id" => $products->where('slug', 'bangkok-city-temple-tour')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -912,7 +914,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "泰國文化的皇家起點。",
                 "latitude" => 13.7500,
                 "longitude" => 100.4913,
-                "product_id" => "d537c18a-7b15-4df4-958f-5343f67cb0b5",
+                "product_id" => $products->where('slug', 'bangkok-city-temple-tour')->first()->id,
             ],
             [
                 "language" => "en",
@@ -923,7 +925,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Sacred spires and serene waters await.",
                 "latitude" => 13.7437,
                 "longitude" => 100.4880,
-                "product_id" => "d537c18a-7b15-4df4-958f-5343f67cb0b5",
+                "product_id" => $products->where('slug', 'bangkok-city-temple-tour')->first()->id,
             ],
             [
                 "language" => "id",
@@ -934,7 +936,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Menara sakral dan air sungai yang tenang menanti Anda.",
                 "latitude" => 13.7437,
                 "longitude" => 100.4880,
-                "product_id" => "d537c18a-7b15-4df4-958f-5343f67cb0b5",
+                "product_id" => $products->where('slug', 'bangkok-city-temple-tour')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -945,7 +947,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "神聖佛塔與寧靜河面交織的曼谷午後。",
                 "latitude" => 13.7437,
                 "longitude" => 100.4880,
-                "product_id" => "d537c18a-7b15-4df4-958f-5343f67cb0b5",
+                "product_id" => $products->where('slug', 'bangkok-city-temple-tour')->first()->id,
             ],
             [
                 "language" => "en",
@@ -956,7 +958,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Taste Thailand through your own creations.",
                 "latitude" => 13.7300,
                 "longitude" => 100.5210,
-                "product_id" => "d537c18a-7b15-4df4-958f-5343f67cb0b5",
+                "product_id" => $products->where('slug', 'bangkok-city-temple-tour')->first()->id,
             ],
             [
                 "language" => "id",
@@ -967,7 +969,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Rasakan cita rasa Thailand melalui masakan buatan Anda sendiri.",
                 "latitude" => 13.7300,
                 "longitude" => 100.5210,
-                "product_id" => "d537c18a-7b15-4df4-958f-5343f67cb0b5",
+                "product_id" => $products->where('slug', 'bangkok-city-temple-tour')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -978,7 +980,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "透過親手製作的佳餚感受泰國風味。",
                 "latitude" => 13.7300,
                 "longitude" => 100.5210,
-                "product_id" => "d537c18a-7b15-4df4-958f-5343f67cb0b5",
+                "product_id" => $products->where('slug', 'bangkok-city-temple-tour')->first()->id,
             ],
             // Break
             [
@@ -990,7 +992,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Breathtaking views and spiritual serenity.",
                 "latitude" => 18.8056,
                 "longitude" => 98.9215,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1001,7 +1003,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Pemandangan menakjubkan dan ketenangan spiritual.",
                 "latitude" => 18.8056,
                 "longitude" => 98.9215,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1012,7 +1014,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "壯麗風景與心靈寧靜的交融。",
                 "latitude" => 18.8056,
                 "longitude" => 98.9215,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1023,7 +1025,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Gentle giants and unforgettable memories.",
                 "latitude" => 18.8042,
                 "longitude" => 98.8327,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1034,7 +1036,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Gajah lembut dan kenangan tak terlupakan.",
                 "latitude" => 18.8042,
                 "longitude" => 98.8327,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1045,7 +1047,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "溫柔巨獸帶來難忘的回憶。",
                 "latitude" => 18.8042,
                 "longitude" => 98.8327,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1056,7 +1058,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Cook, taste, and live like a local.",
                 "latitude" => 18.7877,
                 "longitude" => 98.9931,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1067,7 +1069,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Masak, cicipi, dan hiduplah seperti warga lokal.",
                 "latitude" => 18.7877,
                 "longitude" => 98.9931,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1078,7 +1080,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "下廚、品嚐、融入當地生活。",
                 "latitude" => 18.7877,
                 "longitude" => 98.9931,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1089,7 +1091,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Craft and culture woven into one unforgettable afternoon.",
                 "latitude" => 18.7511,
                 "longitude" => 99.0802,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1100,7 +1102,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Kerajinan dan budaya bersatu dalam sore yang tak terlupakan.",
                 "latitude" => 18.7511,
                 "longitude" => 99.0802,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1111,7 +1113,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "藝術與文化交織成難忘午後。",
                 "latitude" => 18.7511,
                 "longitude" => 99.0802,
-                "product_id" => "b7a57e0f-0f7b-4de5-8797-be140251dd33",
+                "product_id" => $products->where('slug', 'chiang-mai-nature-culture')->first()->id,
             ],
             // Break
             [
@@ -1123,7 +1125,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Culture and charm in the heart of Hanoi.",
                 "latitude" => 21.0356,
                 "longitude" => 105.8520,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1134,7 +1136,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Budaya dan pesona di jantung kota Hanoi.",
                 "latitude" => 21.0356,
                 "longitude" => 105.8520,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1145,7 +1147,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "河內心臟地帶的文化魅力。",
                 "latitude" => 21.0356,
                 "longitude" => 105.8520,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1156,7 +1158,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "History and respect woven into the city’s fabric.",
                 "latitude" => 21.0366,
                 "longitude" => 105.8347,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1167,7 +1169,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Sejarah dan penghormatan dalam budaya kota.",
                 "latitude" => 21.0366,
                 "longitude" => 105.8347,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1178,7 +1180,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "歷史與尊敬交織於城市文化中。",
                 "latitude" => 21.0366,
                 "longitude" => 105.8347,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1189,7 +1191,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Nature’s masterpiece among the islands.",
                 "latitude" => 20.9101,
                 "longitude" => 107.1839,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1200,7 +1202,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Keindahan alam di antara pulau-pulau kapur.",
                 "latitude" => 20.9101,
                 "longitude" => 107.1839,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1211,7 +1213,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "自然界的傑作在海上綻放。",
                 "latitude" => 20.9101,
                 "longitude" => 107.1839,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1222,7 +1224,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "A heartfelt goodbye with flavors of Vietnam.",
                 "latitude" => 20.9612,
                 "longitude" => 105.9535,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1233,7 +1235,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Perpisahan hangat dengan cita rasa Vietnam.",
                 "latitude" => 20.9612,
                 "longitude" => 105.9535,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1244,7 +1246,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "以越南的滋味送上真摯的道別。",
                 "latitude" => 20.9612,
                 "longitude" => 105.9535,
-                "product_id" => "8098dab3-de12-4071-8424-2f9ef61ef1ae",
+                "product_id" => $products->where('slug', 'hanoi-halong-bay-discovery')->first()->id,
             ],
             // Break
             [
@@ -1256,7 +1258,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "A historical and cultural glimpse of Saigon.",
                 "latitude" => 10.7798,
                 "longitude" => 106.6992,
-                "product_id" => "c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8",
+                "product_id" => $products->where('slug', 'ho-chi-minh-mekong-delta-explorer')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1267,7 +1269,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Sekilas sejarah dan budaya Saigon.",
                 "latitude" => 10.7798,
                 "longitude" => 106.6992,
-                "product_id" => "c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8",
+                "product_id" => $products->where('slug', 'ho-chi-minh-mekong-delta-explorer')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1278,7 +1280,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "探索西貢的歷史與文化面貌。",
                 "latitude" => 10.7798,
                 "longitude" => 106.6992,
-                "product_id" => "c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8",
+                "product_id" => $products->where('slug', 'ho-chi-minh-mekong-delta-explorer')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1289,7 +1291,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Step into Vietnam’s wartime past.",
                 "latitude" => 11.1467,
                 "longitude" => 106.4992,
-                "product_id" => "c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8",
+                "product_id" => $products->where('slug', 'ho-chi-minh-mekong-delta-explorer')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1300,7 +1302,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Menelusuri masa perang Vietnam.",
                 "latitude" => 11.1467,
                 "longitude" => 106.4992,
-                "product_id" => "c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8",
+                "product_id" => $products->where('slug', 'ho-chi-minh-mekong-delta-explorer')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1311,7 +1313,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "走進越南的戰爭歷史。",
                 "latitude" => 11.1467,
                 "longitude" => 106.4992,
-                "product_id" => "c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8",
+                "product_id" => $products->where('slug', 'ho-chi-minh-mekong-delta-explorer')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1322,7 +1324,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Life flows with the river in the Mekong Delta.",
                 "latitude" => 10.2251,
                 "longitude" => 106.2130,
-                "product_id" => "c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8",
+                "product_id" => $products->where('slug', 'ho-chi-minh-mekong-delta-explorer')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1333,7 +1335,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Hidup mengalir bersama sungai di Delta Mekong.",
                 "latitude" => 10.2251,
                 "longitude" => 106.2130,
-                "product_id" => "c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8",
+                "product_id" => $products->where('slug', 'ho-chi-minh-mekong-delta-explorer')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1344,7 +1346,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "隨著湄公河水流感受生活節奏。",
                 "latitude" => 10.2251,
                 "longitude" => 106.2130,
-                "product_id" => "c0d4e3e3-a2e8-4315-8a34-6a63ba8535f8",
+                "product_id" => $products->where('slug', 'ho-chi-minh-mekong-delta-explorer')->first()->id,
             ],
             // Break
             [
@@ -1356,7 +1358,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Begin your KL journey with its iconic skyline.",
                 "latitude" => 3.1579,
                 "longitude" => 101.7123,
-                "product_id" => "fde70057-279e-4277-a0d9-e32766bc0859",
+                "product_id" => $products->where('slug', 'kuala-lumpur-urban-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1367,7 +1369,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Mulai perjalanan KL Anda dengan lanskap ikoniknya.",
                 "latitude" => 3.1579,
                 "longitude" => 101.7123,
-                "product_id" => "fde70057-279e-4277-a0d9-e32766bc0859",
+                "product_id" => $products->where('slug', 'kuala-lumpur-urban-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1378,7 +1380,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "從吉隆坡天際線開啟探索之旅。",
                 "latitude" => 3.1579,
                 "longitude" => 101.7123,
-                "product_id" => "fde70057-279e-4277-a0d9-e32766bc0859",
+                "product_id" => $products->where('slug', 'kuala-lumpur-urban-discovery')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1389,7 +1391,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "A spiritual and cultural escape just outside the city.",
                 "latitude" => 3.2379,
                 "longitude" => 101.6831,
-                "product_id" => "fde70057-279e-4277-a0d9-e32766bc0859",
+                "product_id" => $products->where('slug', 'kuala-lumpur-urban-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1400,7 +1402,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Pelarian spiritual dan budaya di pinggiran kota.",
                 "latitude" => 3.2379,
                 "longitude" => 101.6831,
-                "product_id" => "fde70057-279e-4277-a0d9-e32766bc0859",
+                "product_id" => $products->where('slug', 'kuala-lumpur-urban-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1411,7 +1413,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "城市邊緣的心靈與文化之旅。",
                 "latitude" => 3.2379,
                 "longitude" => 101.6831,
-                "product_id" => "fde70057-279e-4277-a0d9-e32766bc0859",
+                "product_id" => $products->where('slug', 'kuala-lumpur-urban-discovery')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1422,7 +1424,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Savor flavors and lights of KL after dark.",
                 "latitude" => 3.1458,
                 "longitude" => 101.7090,
-                "product_id" => "fde70057-279e-4277-a0d9-e32766bc0859",
+                "product_id" => $products->where('slug', 'kuala-lumpur-urban-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1433,7 +1435,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Nikmati rasa dan cahaya Kuala Lumpur di malam hari.",
                 "latitude" => 3.1458,
                 "longitude" => 101.7090,
-                "product_id" => "fde70057-279e-4277-a0d9-e32766bc0859",
+                "product_id" => $products->where('slug', 'kuala-lumpur-urban-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1444,7 +1446,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "沉浸在吉隆坡夜晚的風味與燈光中。",
                 "latitude" => 3.1458,
                 "longitude" => 101.7090,
-                "product_id" => "fde70057-279e-4277-a0d9-e32766bc0859",
+                "product_id" => $products->where('slug', 'kuala-lumpur-urban-discovery')->first()->id,
             ],
             // Break
             [
@@ -1456,7 +1458,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Start your Langkawi journey with breathtaking aerial views.",
                 "latitude" => 6.3326,
                 "longitude" => 99.7211,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1467,7 +1469,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Mulai perjalanan Langkawi Anda dengan pemandangan udara yang memukau.",
                 "latitude" => 6.3326,
                 "longitude" => 99.7211,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1478,7 +1480,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "以壯麗的空中視角開始您的蘭卡威之旅。",
                 "latitude" => 6.3326,
                 "longitude" => 99.7211,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1489,7 +1491,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Discover Langkawi’s cultural heritage and beauty.",
                 "latitude" => 6.3487,
                 "longitude" => 99.7321,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1500,7 +1502,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Temukan warisan budaya dan keindahan Langkawi.",
                 "latitude" => 6.3487,
                 "longitude" => 99.7321,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1511,7 +1513,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "探索蘭卡威的文化遺產與美麗。",
                 "latitude" => 6.3487,
                 "longitude" => 99.7321,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1522,7 +1524,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Adventurous water sports and wildlife encounters in Langkawi.",
                 "latitude" => 6.3747,
                 "longitude" => 99.7473,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1533,7 +1535,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Olahraga air yang seru dan pertemuan dengan satwa liar di Langkawi.",
                 "latitude" => 6.3747,
                 "longitude" => 99.7473,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1544,7 +1546,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "蘭卡威的水上冒險和野生動物奇遇。",
                 "latitude" => 6.3747,
                 "longitude" => 99.7473,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1555,7 +1557,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "A perfect farewell to Langkawi with a sunset cruise.",
                 "latitude" => 6.3326,
                 "longitude" => 99.7211,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1566,7 +1568,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Perpisahan sempurna dengan Langkawi melalui pelayaran matahari terbenam.",
                 "latitude" => 6.3326,
                 "longitude" => 99.7211,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1577,7 +1579,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "通過日落遊船完美告別蘭卡威。",
                 "latitude" => 6.3326,
                 "longitude" => 99.7211,
-                "product_id" => "51abfe59-858b-41f8-9f19-52765e16cf80",
+                "product_id" => $products->where('slug', 'langkawi-island-retreat')->first()->id,
             ],
             // Break
             [
@@ -1589,7 +1591,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Step into the heart of ancient Rome with a visit to the Colosseum.",
                 "latitude" => 41.8902,
                 "longitude" => 12.4922,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1600,7 +1602,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Masuki jantung Roma kuno dengan mengunjungi Colosseum.",
                 "latitude" => 41.8902,
                 "longitude" => 12.4922,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1611,7 +1613,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "走進古羅馬的心臟，參觀羅馬競技場。",
                 "latitude" => 41.8902,
                 "longitude" => 12.4922,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1622,7 +1624,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Marvel at the beauty of the Pantheon and make a wish at the Trevi Fountain.",
                 "latitude" => 41.9020,
                 "longitude" => 12.4534,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1633,7 +1635,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Kagumi keindahan Pantheon dan buat permohonan di Air Mancur Trevi.",
                 "latitude" => 41.9020,
                 "longitude" => 12.4534,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1644,7 +1646,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "欣賞萬神殿的美麗，並在特雷維噴泉許下願望。",
                 "latitude" => 41.9020,
                 "longitude" => 12.4534,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1655,7 +1657,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Witness the artistic grandeur of Vatican City and the Sistine Chapel.",
                 "latitude" => 41.9029,
                 "longitude" => 12.4534,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1666,7 +1668,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Saksikan kemegahan seni Kota Vatikan dan Kapel Sistina.",
                 "latitude" => 41.9029,
                 "longitude" => 12.4534,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1677,7 +1679,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "見證梵蒂岡城和西斯廷教堂的藝術宏偉。",
                 "latitude" => 41.9029,
                 "longitude" => 12.4534,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1688,7 +1690,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "End your Roman journey with a visit to the ancient Roman Baths.",
                 "latitude" => 41.8339,
                 "longitude" => 12.4922,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1699,7 +1701,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Akhiri perjalanan Romawi Anda dengan kunjungan ke Pemandian Romawi kuno.",
                 "latitude" => 41.8339,
                 "longitude" => 12.4922,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1710,7 +1712,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "以參觀古羅馬浴池結束您的羅馬之旅。",
                 "latitude" => 41.8339,
                 "longitude" => 12.4922,
-                "product_id" => "bceadb6c-8a57-4e14-9366-286cdec342f3",
+                "product_id" => $products->where('slug', 'rome-ancient-wonders')->first()->id,
             ],
             // Break
             [
@@ -1722,7 +1724,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Taste the authentic flavors of Rome’s traditional cuisine.",
                 "latitude" => 41.9028,
                 "longitude" => 12.4964,
-                "product_id" => "cfbc1163-c325-4848-9e4f-983daa797409",
+                "product_id" => $products->where('slug', 'rome-city-culinary-delights')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1733,7 +1735,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Rasakan cita rasa otentik kuliner tradisional Roma.",
                 "latitude" => 41.9028,
                 "longitude" => 12.4964,
-                "product_id" => "cfbc1163-c325-4848-9e4f-983daa797409",
+                "product_id" => $products->where('slug', 'rome-city-culinary-delights')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1744,7 +1746,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "品嚐羅馬傳統美食的正宗風味。",
                 "latitude" => 41.9028,
                 "longitude" => 12.4964,
-                "product_id" => "cfbc1163-c325-4848-9e4f-983daa797409",
+                "product_id" => $products->where('slug', 'rome-city-culinary-delights')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1755,7 +1757,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Experience the cultural and culinary delights of Rome.",
                 "latitude" => 41.9029,
                 "longitude" => 12.4534,
-                "product_id" => "cfbc1163-c325-4848-9e4f-983daa797409",
+                "product_id" => $products->where('slug', 'rome-city-culinary-delights')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1766,7 +1768,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Rasakan kenikmatan budaya dan kuliner Roma.",
                 "latitude" => 41.9029,
                 "longitude" => 12.4534,
-                "product_id" => "cfbc1163-c325-4848-9e4f-983daa797409",
+                "product_id" => $products->where('slug', 'rome-city-culinary-delights')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1777,7 +1779,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "體驗羅馬的文化和美食樂趣。",
                 "latitude" => 41.9029,
                 "longitude" => 12.4534,
-                "product_id" => "cfbc1163-c325-4848-9e4f-983daa797409",
+                "product_id" => $products->where('slug', 'rome-city-culinary-delights')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1788,7 +1790,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Discover Rome’s ancient history and its vibrant food market culture.",
                 "latitude" => 41.8902,
                 "longitude" => 12.4922,
-                "product_id" => "cfbc1163-c325-4848-9e4f-983daa797409",
+                "product_id" => $products->where('slug', 'rome-city-culinary-delights')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1799,7 +1801,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Temukan sejarah kuno Roma dan budaya pasar makanan yang hidup.",
                 "latitude" => 41.8902,
                 "longitude" => 12.4922,
-                "product_id" => "cfbc1163-c325-4848-9e4f-983daa797409",
+                "product_id" => $products->where('slug', 'rome-city-culinary-delights')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1810,7 +1812,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "發現羅馬的古老歷史和充滿活力的美食市場文化。",
                 "latitude" => 41.8902,
                 "longitude" => 12.4922,
-                "product_id" => "cfbc1163-c325-4848-9e4f-983daa797409",
+                "product_id" => $products->where('slug', 'rome-city-culinary-delights')->first()->id,
             ],
             // Break
             [
@@ -1822,7 +1824,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Step into the heart of British monarchy at Buckingham Palace.",
                 "latitude" => 51.5014,
                 "longitude" => -0.1419,
-                "product_id" => "7e21f9b0-e6eb-4820-8333-b98acf09fc07",
+                "product_id" => $products->where('slug', 'london-landmarks-royal-history')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1833,7 +1835,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Masuki jantung monarki Inggris di Istana Buckingham.",
                 "latitude" => 51.5014,
                 "longitude" => -0.1419,
-                "product_id" => "7e21f9b0-e6eb-4820-8333-b98acf09fc07",
+                "product_id" => $products->where('slug', 'london-landmarks-royal-history')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1844,7 +1846,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "走進英國君主制的心臟，白金漢宮。",
                 "latitude" => 51.5014,
                 "longitude" => -0.1419,
-                "product_id" => "7e21f9b0-e6eb-4820-8333-b98acf09fc07",
+                "product_id" => $products->where('slug', 'london-landmarks-royal-history')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1855,7 +1857,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Discover the royal treasures and dark secrets of the Tower of London.",
                 "latitude" => 51.5081,
                 "longitude" => -0.0759,
-                "product_id" => "7e21f9b0-e6eb-4820-8333-b98acf09fc07",
+                "product_id" => $products->where('slug', 'london-landmarks-royal-history')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1866,7 +1868,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Temukan harta kerajaan dan rahasia gelap Menara London.",
                 "latitude" => 51.5081,
                 "longitude" => -0.0759,
-                "product_id" => "7e21f9b0-e6eb-4820-8333-b98acf09fc07",
+                "product_id" => $products->where('slug', 'london-landmarks-royal-history')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1877,7 +1879,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "發現倫敦塔的皇家寶藏和黑暗秘密。",
                 "latitude" => 51.5081,
                 "longitude" => -0.0759,
-                "product_id" => "7e21f9b0-e6eb-4820-8333-b98acf09fc07",
+                "product_id" => $products->where('slug', 'london-landmarks-royal-history')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1888,7 +1890,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Discover the heart of British democracy and royal ceremonies.",
                 "latitude" => 51.4995,
                 "longitude" => -0.1248,
-                "product_id" => "7e21f9b0-e6eb-4820-8333-b98acf09fc07",
+                "product_id" => $products->where('slug', 'london-landmarks-royal-history')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1899,7 +1901,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Temukan pusat demokrasi Inggris dan upacara kerajaan.",
                 "latitude" => 51.4995,
                 "longitude" => -0.1248,
-                "product_id" => "7e21f9b0-e6eb-4820-8333-b98acf09fc07",
+                "product_id" => $products->where('slug', 'london-landmarks-royal-history')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1910,7 +1912,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "發現英國民主的心臟和皇室儀式。",
                 "latitude" => 51.4995,
                 "longitude" => -0.1248,
-                "product_id" => "7e21f9b0-e6eb-4820-8333-b98acf09fc07",
+                "product_id" => $products->where('slug', 'london-landmarks-royal-history')->first()->id,
             ],
             // Break
             [
@@ -1922,7 +1924,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Experience London’s vibrant theatre scene and cultural hub.",
                 "latitude" => 51.5136,
                 "longitude" => -0.1254,
-                "product_id" => "849ddfbf-bcd2-4c27-847c-f3c72501946a",
+                "product_id" => $products->where('slug', 'london-theatrical-cultural-escape')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1933,7 +1935,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Rasakan dunia teater yang hidup di London dan pusat budayanya.",
                 "latitude" => 51.5136,
                 "longitude" => -0.1254,
-                "product_id" => "849ddfbf-bcd2-4c27-847c-f3c72501946a",
+                "product_id" => $products->where('slug', 'london-theatrical-cultural-escape')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1944,7 +1946,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "體驗倫敦充滿活力的劇院文化和文化中心。",
                 "latitude" => 51.5136,
                 "longitude" => -0.1254,
-                "product_id" => "849ddfbf-bcd2-4c27-847c-f3c72501946a",
+                "product_id" => $products->where('slug', 'london-theatrical-cultural-escape')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1955,7 +1957,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Dive into the rich history and vibrant culture of London.",
                 "latitude" => 51.5194,
                 "longitude" => -0.1270,
-                "product_id" => "849ddfbf-bcd2-4c27-847c-f3c72501946a",
+                "product_id" => $products->where('slug', 'london-theatrical-cultural-escape')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1966,7 +1968,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Menyelami sejarah yang kaya dan budaya yang hidup di London.",
                 "latitude" => 51.5194,
                 "longitude" => -0.1270,
-                "product_id" => "849ddfbf-bcd2-4c27-847c-f3c72501946a",
+                "product_id" => $products->where('slug', 'london-theatrical-cultural-escape')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -1977,7 +1979,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "深入了解倫敦的豐富歷史和多元文化。",
                 "latitude" => 51.5194,
                 "longitude" => -0.1270,
-                "product_id" => "849ddfbf-bcd2-4c27-847c-f3c72501946a",
+                "product_id" => $products->where('slug', 'london-theatrical-cultural-escape')->first()->id,
             ],
             [
                 "language" => "en",
@@ -1988,7 +1990,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Enjoy art and culture in the heart of London’s vibrant scenes.",
                 "latitude" => 51.5074,
                 "longitude" => -0.1278,
-                "product_id" => "849ddfbf-bcd2-4c27-847c-f3c72501946a",
+                "product_id" => $products->where('slug', 'london-theatrical-cultural-escape')->first()->id,
             ],
             [
                 "language" => "id",
@@ -1999,7 +2001,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Nikmati seni dan budaya di jantung kehidupan London yang dinamis.",
                 "latitude" => 51.5074,
                 "longitude" => -0.1278,
-                "product_id" => "849ddfbf-bcd2-4c27-847c-f3c72501946a",
+                "product_id" => $products->where('slug', 'london-theatrical-cultural-escape')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2010,7 +2012,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在倫敦充滿活力的文化景象中享受藝術與文化。",
                 "latitude" => 51.5074,
                 "longitude" => -0.1278,
-                "product_id" => "849ddfbf-bcd2-4c27-847c-f3c72501946a",
+                "product_id" => $products->where('slug', 'london-theatrical-cultural-escape')->first()->id,
             ],
             // Break
             [
@@ -2022,7 +2024,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Explore the historical landmarks that define Lisbon’s cultural heritage.",
                 "latitude" => 38.6922,
                 "longitude" => -9.2061,
-                "product_id" => "86e14cd4-9a65-4f3e-ad84-10e479ce8338",
+                "product_id" => $products->where('slug', 'lisbon-city-highlights')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2033,7 +2035,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Jelajahi landmark bersejarah yang mendefinisikan warisan budaya Lisbon.",
                 "latitude" => 38.6922,
                 "longitude" => -9.2061,
-                "product_id" => "86e14cd4-9a65-4f3e-ad84-10e479ce8338",
+                "product_id" => $products->where('slug', 'lisbon-city-highlights')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2044,7 +2046,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "探索塑造里斯本文化遺產的歷史地標。",
                 "latitude" => 38.6922,
                 "longitude" => -9.2061,
-                "product_id" => "86e14cd4-9a65-4f3e-ad84-10e479ce8338",
+                "product_id" => $products->where('slug', 'lisbon-city-highlights')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2055,7 +2057,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Wander through the charming streets of Alfama and enjoy panoramic views from São Jorge Castle.",
                 "latitude" => 38.7129,
                 "longitude" => -9.1335,
-                "product_id" => "86e14cd4-9a65-4f3e-ad84-10e479ce8338",
+                "product_id" => $products->where('slug', 'lisbon-city-highlights')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2066,7 +2068,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Jelajahi jalan-jalan indah di Alfama dan nikmati pemandangan kota dari Kastil São Jorge.",
                 "latitude" => 38.7129,
                 "longitude" => -9.1335,
-                "product_id" => "86e14cd4-9a65-4f3e-ad84-10e479ce8338",
+                "product_id" => $products->where('slug', 'lisbon-city-highlights')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2077,7 +2079,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "穿行在阿尔法玛區迷人的街道，並在圣乔治城堡享受全景。",
                 "latitude" => 38.7129,
                 "longitude" => -9.1335,
-                "product_id" => "86e14cd4-9a65-4f3e-ad84-10e479ce8338",
+                "product_id" => $products->where('slug', 'lisbon-city-highlights')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2088,7 +2090,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Explore the heart of Lisbon with its vibrant squares and rich cultural history.",
                 "latitude" => 38.7128,
                 "longitude" => -9.1390,
-                "product_id" => "86e14cd4-9a65-4f3e-ad84-10e479ce8338",
+                "product_id" => $products->where('slug', 'lisbon-city-highlights')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2099,7 +2101,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Jelajahi jantung Lisbon dengan alun-alun yang penuh warna dan sejarah budaya yang kaya.",
                 "latitude" => 38.7128,
                 "longitude" => -9.1390,
-                "product_id" => "86e14cd4-9a65-4f3e-ad84-10e479ce8338",
+                "product_id" => $products->where('slug', 'lisbon-city-highlights')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2110,7 +2112,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "探索里斯本的心臟，欣賞充滿活力的廣場和豐富的文化歷史。",
                 "latitude" => 38.7128,
                 "longitude" => -9.1390,
-                "product_id" => "86e14cd4-9a65-4f3e-ad84-10e479ce8338",
+                "product_id" => $products->where('slug', 'lisbon-city-highlights')->first()->id,
             ],
             // Break
             [
@@ -2122,7 +2124,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Wander through the heart of Lisbon and experience its rich history.",
                 "latitude" => 38.7109,
                 "longitude" => -9.1397,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2133,7 +2135,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Jelajahi jantung Lisbon dan rasakan sejarahnya yang kaya.",
                 "latitude" => 38.7109,
                 "longitude" => -9.1397,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2144,7 +2146,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在里斯本的心脏地带漫游，体验其丰富的历史。",
                 "latitude" => 38.7109,
                 "longitude" => -9.1397,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2155,7 +2157,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Discover the monumental Belem Tower and the majestic Jerónimos Monastery.",
                 "latitude" => 38.6922,
                 "longitude" => -9.2061,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2166,7 +2168,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Temukan Menara Belem yang monumental dan Biara Jerónimos yang megah.",
                 "latitude" => 38.6922,
                 "longitude" => -9.2061,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2177,7 +2179,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "发现贝伦塔的壮丽和热罗尼莫修道院的宏伟。",
                 "latitude" => 38.6922,
                 "longitude" => -9.2061,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2188,7 +2190,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Explore the enchanting Pena Palace and the ancient Moorish Castle in Sintra.",
                 "latitude" => 38.7867,
                 "longitude" => -9.3881,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2199,7 +2201,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Jelajahi Istana Pena yang mempesona dan Kastil Moorish yang kuno di Sintra.",
                 "latitude" => 38.7867,
                 "longitude" => -9.3881,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2210,7 +2212,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "探索辛特拉的佩纳宫和古老的摩尔人城堡。",
                 "latitude" => 38.7867,
                 "longitude" => -9.3881,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2221,7 +2223,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "End your journey by exploring Alfama and experiencing the soulful Fado music.",
                 "latitude" => 38.7129,
                 "longitude" => -9.1335,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2232,7 +2234,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Akhiri perjalanan Anda dengan menjelajahi Alfama dan merasakan musik Fado yang penuh perasaan.",
                 "latitude" => 38.7129,
                 "longitude" => -9.1335,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2243,7 +2245,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "通过探索阿尔法玛并体验充满灵魂的法多音乐，结束您的旅程。",
                 "latitude" => 38.7129,
                 "longitude" => -9.1335,
-                "product_id" => "7fa3f0d5-fdf3-41fa-bac6-39b3c8452dc9",
+                "product_id" => $products->where('slug', 'lisbon-sintra-escapade')->first()->id,
             ],
             // Break
             [
@@ -2255,7 +2257,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Explore Riyadh’s modern landmarks and delve into Saudi Arabia’s rich history.",
                 "latitude" => 24.7136,
                 "longitude" => 46.6753,
-                "product_id" => "1c67be66-5f54-454e-9db1-1d4a5538dfa1",
+                "product_id" => $products->where('slug', 'riyadh-city-heritage-exploration')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2266,7 +2268,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Jelajahi landmark modern Riyadh dan gali sejarah kaya Arab Saudi.",
                 "latitude" => 24.7136,
                 "longitude" => 46.6753,
-                "product_id" => "1c67be66-5f54-454e-9db1-1d4a5538dfa1",
+                "product_id" => $products->where('slug', 'riyadh-city-heritage-exploration')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2277,7 +2279,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "探索利雅得的现代地标，深入了解沙特阿拉伯丰富的历史。",
                 "latitude" => 24.7136,
                 "longitude" => 46.6753,
-                "product_id" => "1c67be66-5f54-454e-9db1-1d4a5538dfa1",
+                "product_id" => $products->where('slug', 'riyadh-city-heritage-exploration')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2288,7 +2290,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Step back in time and experience the historic heritage of Diriyah and At-Turaif.",
                 "latitude" => 24.7128,
                 "longitude" => 46.5689,
-                "product_id" => "1c67be66-5f54-454e-9db1-1d4a5538dfa1",
+                "product_id" => $products->where('slug', 'riyadh-city-heritage-exploration')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2299,7 +2301,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Melangkah kembali ke masa lalu dan rasakan warisan bersejarah Diriyah dan At-Turaif.",
                 "latitude" => 24.7128,
                 "longitude" => 46.5689,
-                "product_id" => "1c67be66-5f54-454e-9db1-1d4a5538dfa1",
+                "product_id" => $products->where('slug', 'riyadh-city-heritage-exploration')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2310,7 +2312,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "回到过去，体验迪里耶和阿特图雷夫的历史遗产。",
                 "latitude" => 24.7128,
                 "longitude" => 46.5689,
-                "product_id" => "1c67be66-5f54-454e-9db1-1d4a5538dfa1",
+                "product_id" => $products->where('slug', 'riyadh-city-heritage-exploration')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2321,7 +2323,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Immerse yourself in the local culture with a visit to the traditional souks and historical sites.",
                 "latitude" => 24.6297,
                 "longitude" => 46.7223,
-                "product_id" => "1c67be66-5f54-454e-9db1-1d4a5538dfa1",
+                "product_id" => $products->where('slug', 'riyadh-city-heritage-exploration')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2332,7 +2334,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Rasakan budaya lokal dengan mengunjungi souk tradisional dan situs sejarah.",
                 "latitude" => 24.6297,
                 "longitude" => 46.7223,
-                "product_id" => "1c67be66-5f54-454e-9db1-1d4a5538dfa1",
+                "product_id" => $products->where('slug', 'riyadh-city-heritage-exploration')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2343,7 +2345,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "沉浸在当地文化中，参观传统集市和历史遗址。",
                 "latitude" => 24.6297,
                 "longitude" => 46.7223,
-                "product_id" => "1c67be66-5f54-454e-9db1-1d4a5538dfa1",
+                "product_id" => $products->where('slug', 'riyadh-city-heritage-exploration')->first()->id,
             ],
             // Break
             [
@@ -2355,7 +2357,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Explore Riyadh’s modern architecture and delve into the Kingdom's rich history.",
                 "latitude" => 24.7136,
                 "longitude" => 46.6753,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2366,7 +2368,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Jelajahi arsitektur modern Riyadh dan gali sejarah kaya Kerajaan.",
                 "latitude" => 24.7136,
                 "longitude" => 46.6753,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2377,7 +2379,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "探索利雅得的现代建筑，深入了解沙特的丰富历史。",
                 "latitude" => 24.7136,
                 "longitude" => 46.6753,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2388,7 +2390,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Step into Saudi Arabia’s rich heritage at Diriyah and the At-Turaif district.",
                 "latitude" => 24.7128,
                 "longitude" => 46.5689,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2399,7 +2401,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Masuki warisan kaya Arab Saudi di Diriyah dan distrik At-Turaif.",
                 "latitude" => 24.7128,
                 "longitude" => 46.5689,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2410,7 +2412,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "走进沙特阿拉伯丰富的遗产，探索迪里耶和阿特图雷夫区。",
                 "latitude" => 24.7128,
                 "longitude" => 46.5689,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2421,7 +2423,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Discover the ancient wonders of Madain Saleh and the breathtaking landscapes of Al-Ula.",
                 "latitude" => 26.8972,
                 "longitude" => 37.9385,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2432,7 +2434,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Temukan keajaiban kuno Madain Saleh dan pemandangan Al-Ula yang menakjubkan.",
                 "latitude" => 26.8972,
                 "longitude" => 37.9385,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2443,7 +2445,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "发现马达因·萨利赫的古代奇迹，以及阿尔乌拉的壮丽景观。",
                 "latitude" => 26.8972,
                 "longitude" => 37.9385,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2454,7 +2456,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "End your journey with an exhilarating adventure and breathtaking desert views.",
                 "latitude" => 26.8923,
                 "longitude" => 38.1437,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2465,7 +2467,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Akhiri perjalanan Anda dengan petualangan yang mendebarkan dan pemandangan gurun yang menakjubkan.",
                 "latitude" => 26.8923,
                 "longitude" => 38.1437,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2476,7 +2478,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "以令人兴奋的冒险和美丽的沙漠景色结束您的旅程。",
                 "latitude" => 26.8923,
                 "longitude" => 38.1437,
-                "product_id" => "89a923f5-4220-4be6-8a65-54fc36403188",
+                "product_id" => $products->where('slug', 'riyadh-al-ula-adventure')->first()->id,
             ],
             // Break
             [
@@ -2488,7 +2490,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Dive into Egypt's rich history with a visit to Cairo's iconic museum.",
                 "latitude" => 30.0444,
                 "longitude" => 31.2357,
-                "product_id" => "c788d1bd-1fe9-4e7c-a0b0-02e3b7093166",
+                "product_id" => $products->where('slug', 'cairo-pyramids-giza')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2499,7 +2501,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Jelajahi sejarah kaya Mesir dengan mengunjungi museum ikonik Cairo.",
                 "latitude" => 30.0444,
                 "longitude" => 31.2357,
-                "product_id" => "c788d1bd-1fe9-4e7c-a0b0-02e3b7093166",
+                "product_id" => $products->where('slug', 'cairo-pyramids-giza')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2510,7 +2512,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "通过参观开罗的标志性博物馆，深入了解埃及的丰富历史。",
                 "latitude" => 30.0444,
                 "longitude" => 31.2357,
-                "product_id" => "c788d1bd-1fe9-4e7c-a0b0-02e3b7093166",
+                "product_id" => $products->where('slug', 'cairo-pyramids-giza')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2521,7 +2523,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Marvel at the architectural wonders of the ancient world at the Pyramids of Giza.",
                 "latitude" => 29.9792,
                 "longitude" => 31.1342,
-                "product_id" => "c788d1bd-1fe9-4e7c-a0b0-02e3b7093166",
+                "product_id" => $products->where('slug', 'cairo-pyramids-giza')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2532,7 +2534,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Terkagumlah dengan keajaiban arsitektur dunia kuno di Piramida Giza.",
                 "latitude" => 29.9792,
                 "longitude" => 31.1342,
-                "product_id" => "c788d1bd-1fe9-4e7c-a0b0-02e3b7093166",
+                "product_id" => $products->where('slug', 'cairo-pyramids-giza')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2543,7 +2545,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在吉萨金字塔欣赏古代世界的建筑奇迹。",
                 "latitude" => 29.9792,
                 "longitude" => 31.1342,
-                "product_id" => "c788d1bd-1fe9-4e7c-a0b0-02e3b7093166",
+                "product_id" => $products->where('slug', 'cairo-pyramids-giza')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2554,7 +2556,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Experience the vibrant culture of Cairo's markets and historic Islamic district.",
                 "latitude" => 30.0473,
                 "longitude" => 31.2357,
-                "product_id" => "c788d1bd-1fe9-4e7c-a0b0-02e3b7093166",
+                "product_id" => $products->where('slug', 'cairo-pyramids-giza')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2565,7 +2567,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Rasakan budaya hidup pasar Cairo dan distrik Islam yang bersejarah.",
                 "latitude" => 30.0473,
                 "longitude" => 31.2357,
-                "product_id" => "c788d1bd-1fe9-4e7c-a0b0-02e3b7093166",
+                "product_id" => $products->where('slug', 'cairo-pyramids-giza')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2576,7 +2578,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "体验开罗市场的生动文化和历史悠久的伊斯兰区。",
                 "latitude" => 30.0473,
                 "longitude" => 31.2357,
-                "product_id" => "c788d1bd-1fe9-4e7c-a0b0-02e3b7093166",
+                "product_id" => $products->where('slug', 'cairo-pyramids-giza')->first()->id,
             ],
             // Break
             [
@@ -2588,7 +2590,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Step into the world of ancient Egypt at the Egyptian Museum.",
                 "latitude" => 30.0444,
                 "longitude" => 31.2357,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2599,7 +2601,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Masuki dunia Mesir kuno di Museum Mesir.",
                 "latitude" => 30.0444,
                 "longitude" => 31.2357,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2610,7 +2612,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在埃及博物馆走进古埃及的世界。",
                 "latitude" => 30.0444,
                 "longitude" => 31.2357,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2621,7 +2623,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Marvel at the wonders of the ancient world in Giza.",
                 "latitude" => 29.9792,
                 "longitude" => 31.1342,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2632,7 +2634,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Terkagumlah dengan keajaiban dunia kuno di Giza.",
                 "latitude" => 29.9792,
                 "longitude" => 31.1342,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2643,7 +2645,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在吉萨欣赏古代世界的奇迹。",
                 "latitude" => 29.9792,
                 "longitude" => 31.1342,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2654,7 +2656,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Explore the Mediterranean charm of Alexandria.",
                 "latitude" => 31.2156,
                 "longitude" => 29.9553,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2665,7 +2667,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Jelajahi pesona Mediterania Alexandria.",
                 "latitude" => 31.2156,
                 "longitude" => 29.9553,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2676,7 +2678,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "探索亚历山大的地中海魅力。",
                 "latitude" => 31.2156,
                 "longitude" => 29.9553,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2687,7 +2689,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "End your journey with a serene visit to the Montazah Palace and coastline.",
                 "latitude" => 31.2150,
                 "longitude" => 29.8858,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2698,7 +2700,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Akhiri perjalanan Anda dengan kunjungan yang tenang ke Istana Montazah dan garis pantai.",
                 "latitude" => 31.2150,
                 "longitude" => 29.8858,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2709,7 +2711,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在蒙塔扎宫和海岸线的宁静访问中结束您的旅程。",
                 "latitude" => 31.2150,
                 "longitude" => 29.8858,
-                "product_id" => "469b7034-1a2f-4cc1-8c94-350b9d187b08",
+                "product_id" => $products->where('slug', 'cairo-alexandria-discovery')->first()->id,
             ],
             // Break
             [
@@ -2721,7 +2723,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Step back in time with a heritage tour of Kuwait City.",
                 "latitude" => 29.3759,
                 "longitude" => 47.9774,
-                "product_id" => "faab5233-0dfe-4095-a564-3187c0bfb082",
+                "product_id" => $products->where('slug', 'kuwait-city-heritage-modern-marvels')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2732,7 +2734,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Kembali ke masa lalu dengan tur warisan Kota Kuwait.",
                 "latitude" => 29.3759,
                 "longitude" => 47.9774,
-                "product_id" => "faab5233-0dfe-4095-a564-3187c0bfb082",
+                "product_id" => $products->where('slug', 'kuwait-city-heritage-modern-marvels')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2743,7 +2745,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "通过科威特城市的遗产之旅，回到过去。",
                 "latitude" => 29.3759,
                 "longitude" => 47.9774,
-                "product_id" => "faab5233-0dfe-4095-a564-3187c0bfb082",
+                "product_id" => $products->where('slug', 'kuwait-city-heritage-modern-marvels')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2754,7 +2756,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Marvel at Kuwait’s modern architecture and indulge in world-class shopping.",
                 "latitude" => 29.3799,
                 "longitude" => 47.9880,
-                "product_id" => "faab5233-0dfe-4095-a564-3187c0bfb082",
+                "product_id" => $products->where('slug', 'kuwait-city-heritage-modern-marvels')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2765,7 +2767,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Terkagumlah dengan arsitektur modern Kuwait dan manjakan diri dengan belanja kelas dunia.",
                 "latitude" => 29.3799,
                 "longitude" => 47.9880,
-                "product_id" => "faab5233-0dfe-4095-a564-3187c0bfb082",
+                "product_id" => $products->where('slug', 'kuwait-city-heritage-modern-marvels')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2776,7 +2778,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "惊叹于科威特的现代建筑，并尽情享受世界级购物。",
                 "latitude" => 29.3799,
                 "longitude" => 47.9880,
-                "product_id" => "faab5233-0dfe-4095-a564-3187c0bfb082",
+                "product_id" => $products->where('slug', 'kuwait-city-heritage-modern-marvels')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2787,7 +2789,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "End your journey with a visit to the Grand Mosque and the vibrant Souk Al-Mubarakiya.",
                 "latitude" => 29.3757,
                 "longitude" => 47.9779,
-                "product_id" => "faab5233-0dfe-4095-a564-3187c0bfb082",
+                "product_id" => $products->where('slug', 'kuwait-city-heritage-modern-marvels')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2798,7 +2800,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Akhiri perjalanan Anda dengan kunjungan ke Masjid Agung dan Souk Al-Mubarakiya yang hidup.",
                 "latitude" => 29.3757,
                 "longitude" => 47.9779,
-                "product_id" => "faab5233-0dfe-4095-a564-3187c0bfb082",
+                "product_id" => $products->where('slug', 'kuwait-city-heritage-modern-marvels')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2809,7 +2811,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在参观大清真寺和充满活力的穆巴拉基亚市场后结束您的旅程。",
                 "latitude" => 29.3757,
                 "longitude" => 47.9779,
-                "product_id" => "faab5233-0dfe-4095-a564-3187c0bfb082",
+                "product_id" => $products->where('slug', 'kuwait-city-heritage-modern-marvels')->first()->id,
             ],
             // Break
             [
@@ -2821,7 +2823,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Explore the rich history and culture of Kuwait City.",
                 "latitude" => 29.3759,
                 "longitude" => 47.9774,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2832,7 +2834,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Jelajahi sejarah dan budaya kaya Kota Kuwait.",
                 "latitude" => 29.3759,
                 "longitude" => 47.9774,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2843,7 +2845,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "探索科威特城市的丰富历史和文化。",
                 "latitude" => 29.3759,
                 "longitude" => 47.9774,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2854,7 +2856,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Marvel at the modern architecture and vibrant shopping culture of Kuwait.",
                 "latitude" => 29.3799,
                 "longitude" => 47.9880,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2865,7 +2867,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Terkagumlah dengan arsitektur modern dan budaya belanja yang hidup di Kuwait.",
                 "latitude" => 29.3799,
                 "longitude" => 47.9880,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2876,7 +2878,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "欣赏科威特的现代建筑和充满活力的购物文化。",
                 "latitude" => 29.3799,
                 "longitude" => 47.9880,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2887,7 +2889,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Experience the thrill of the desert with an adventurous safari ride.",
                 "latitude" => 29.3375,
                 "longitude" => 47.8100,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2898,7 +2900,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Rasakan sensasi gurun dengan safari yang penuh petualangan.",
                 "latitude" => 29.3375,
                 "longitude" => 47.8100,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2909,7 +2911,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "通过充满冒险的沙漠之旅，体验沙漠的刺激。",
                 "latitude" => 29.3375,
                 "longitude" => 47.8100,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "en",
@@ -2920,7 +2922,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "End your journey with a peaceful night in the desert under the stars.",
                 "latitude" => 29.3375,
                 "longitude" => 47.8100,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "id",
@@ -2931,7 +2933,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "Akhiri perjalanan Anda dengan malam yang tenang di gurun di bawah bintang-bintang.",
                 "latitude" => 29.3375,
                 "longitude" => 47.8100,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
             [
                 "language" => "zh",
@@ -2942,7 +2944,7 @@ class ItinerarySeeder extends Seeder
                 "caption" => "在沙漠中度过一个宁静的夜晚，在星星下结束您的旅程。",
                 "latitude" => 29.3375,
                 "longitude" => 47.8100,
-                "product_id" => "3a609b19-5348-4e09-bc81-004042e6de4b",
+                "product_id" => $products->where('slug', 'kuwait-city-desert-adventure')->first()->id,
             ],
         ];
 

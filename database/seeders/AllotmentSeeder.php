@@ -15,15 +15,7 @@ class AllotmentSeeder extends Seeder
     public function run(): void
     {
         $products = Product::with(['product_details'])
-            ->whereIn('slug', [
-                'tokyo-city-highlights',
-                'busan-beach-escape',
-                'yogyakarta-heritage-journey',
-                'bangkok-city-temple-tour',
-                'ho-chi-minh-mekong-delta-explorer',
-                'rome-ancient-wonders',
-                'lisbon-city-highlights',
-            ])->get();
+            ->get();
 
         DB::transaction(function () use ($products) {
             foreach ($products as $product) {

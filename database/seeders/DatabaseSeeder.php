@@ -20,6 +20,11 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrencySeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ProductSeeder::class);
-        // $this->call(ProductDetailSeeder::class);
+        $this->call(ProductDetailSeeder::class);
+        $this->call(ProductPriceSeeder::class);
+        $this->call(ItinerarySeeder::class);
+        $this->call(AllotmentSeeder::class);
+        $this->call(ReviewSeeder::class);
+        $this->call(PaymentMethodSeeder::class);
     }
 }
