@@ -19,8 +19,7 @@ return new class extends Migration
             $table->string('name_zh')->nullable();
             $table->string('activity_image');
             $table->integer('max_pax')->default(0);
-            $table->integer('min_pax')->default(0);
-            $table->integer('max_child')->default(0);
+            $table->integer('min_adult')->default(0);
             $table->integer('max_adult')->default(0);
             $table->date('date_from')->nullable();
             $table->date('date_until')->nullable();
