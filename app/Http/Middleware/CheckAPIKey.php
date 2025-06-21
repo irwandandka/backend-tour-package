@@ -16,6 +16,11 @@ class CheckAPIKey
     public function handle(Request $request, Closure $next): Response
     {
         $apiKey = $request->header('X-API-KEY');
+
+        if ($request->is('api/v1/auth/google/callback')) {
+            return $next($request);
+        }
+
         if ($apiKey !== env('API_KEY')) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
