@@ -20,8 +20,9 @@ class GoogleService
         $this->client->addScope('https://www.googleapis.com/auth/userinfo.profile');
     }
 
-    public function getAuthUrl(): string
+    public function getAuthUrl(string $redirectUri): string
     {
+        $this->client->setRedirectUri($redirectUri);
         return $this->client->createAuthUrl();
     }
 

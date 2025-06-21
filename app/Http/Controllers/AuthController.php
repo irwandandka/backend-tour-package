@@ -107,10 +107,16 @@ class AuthController extends Controller
     /**
      * @see SwaggerInfo::redirectToGoogle()
      */
-    public function redirectToGoogle()
+    public function redirectToGoogle(Request $request)
     {
         try {
-            $authUrl = $this->googleService->getAuthUrl();
+            $redirectUri = $request->query('redirect_uri');
+
+            if (!$redirectUri) {
+                return response()->json(['message' => 'redirect_uri is required'], 400);
+            }
+
+            $authUrl = $this->googleService->getAuthUrl($redirectUri);
 
             return response()->json(['url' => $authUrl]);
         } catch (Throwable $e) {
