@@ -83,6 +83,11 @@ class AuthController extends Controller
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'Bearer',
+                'user' => [
+                    'id' => $user->id,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ]
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
