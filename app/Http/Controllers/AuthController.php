@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\HasApiTokens;
 use App\Services\ErrorHandler;
 use Throwable;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -126,7 +127,8 @@ class AuthController extends Controller
                 [
                     'name' => $userData['name'],
                     'google_id' => $userData['id'],
-                    'avatar' => $userData['avatar']
+                    'avatar' => $userData['avatar'],
+                    'password' => bcrypt(Str::random(32)), // if user doesn't exist, set a random password, let them reset it later
                 ]
             );
 
