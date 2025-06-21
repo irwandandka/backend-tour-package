@@ -137,14 +137,15 @@ class AuthController extends Controller
                 ]
             );
 
-            // Generate token untuk klien
-            $token = $user->createToken('authToken')->plainTextToken;
+            // Generate token dan set expired
+            $tokenResult = $user->createToken('authToken');
+            $tokenResult->accessToken->expires_at = Carbon::now()->addDays(3);
+            $tokenResult->accessToken->save();
 
-            // Set token expiration to 3 days
-            $token->accessToken->expires_at = Carbon::now()->addDays(3);
-            $token->accessToken->save();
-
-            return response()->json(['token' => $token, 'user' => $user]);
+            return response()->json([
+                'token' => $tokenResult->plainTextToken,
+                'user' => $user,
+            ]);
         } catch (\Throwable $e) {
             return $this->errorHandler->handle($e);
         }
