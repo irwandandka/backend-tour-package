@@ -151,19 +151,19 @@ class AuthController extends Controller
 
             $tokenResult = $user->createToken('authToken');
 
-            // Update expired_at di personal_access_tokens
-            $tokenModel = $user->tokens()->latest()->first();
-            $tokenModel->expires_at = now()->addDays(3);
-            $tokenModel->save();
+            // Set expired_at 3 hari
+            $user->tokens()->latest()->first()?->forceFill([
+                'expires_at' => now()->addDays(3),
+            ])->save();
 
-            // Kirim kembali ke React Native app pakai scheme + token & user info
-            $redirect = $redirectUri . '?token=' . $tokenResult->plainTextToken . '&user=' . urlencode(json_encode([
-                'id' => $user->id,
-                'email' => $user->email,
-                'name' => $user->name,
-            ]));
-
-            return redirect()->away($redirect);
+            return response()->json([
+                'token' => $tokenResult->plainTextToken,
+                'user' => [
+                    'id' => $user->id,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ]
+            ]);
         } catch (\Throwable $e) {
             return $this->errorHandler->handle($e);
         }
