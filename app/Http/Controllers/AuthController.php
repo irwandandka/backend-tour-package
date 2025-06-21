@@ -143,15 +143,16 @@ class AuthController extends Controller
                 ]
             );
 
-            // Generate token dan set expired
             $tokenResult = $user->createToken('authToken');
-            $tokenResult->accessToken->expires_at = Carbon::now()->addDays(3);
-            $tokenResult->accessToken->save();
 
-            return response()->json([
-                'token' => $tokenResult->plainTextToken,
-                'user' => $user,
-            ]);
+            // Update expired_at di personal_access_tokens
+            $tokenModel = $user->tokens()->latest()->first();
+            $tokenModel->expires_at = now()->addDays(3);
+            $tokenModel->save();
+
+            // Redirect ke app menggunakan custom scheme + data
+            $redirectUrl = "tour-package://redirect?token=" . $tokenResult->plainTextToken . "&email=" . urlencode($user->email);
+            return redirect()->away($redirectUrl);
         } catch (\Throwable $e) {
             return $this->errorHandler->handle($e);
         }
