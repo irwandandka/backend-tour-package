@@ -130,16 +130,22 @@ class AuthController extends Controller
     public function handleGoogleCallback(Request $request)
     {
         try {
-            $userData = $this->googleService->getUserData($request->input('code'));
+            $code = $request->input('code');
+            $redirectUri = $request->input('redirect_uri');
 
-            // Cari atau buat pengguna di database
+            if (!$redirectUri) {
+                return response()->json(['message' => 'redirect_uri is required'], 400);
+            }
+
+            $userData = $this->googleService->getUserData($code, $redirectUri);
+
             $user = User::updateOrCreate(
                 ['email' => $userData['email']],
                 [
                     'name' => $userData['name'],
                     'google_id' => $userData['id'],
                     'avatar' => $userData['avatar'],
-                    'password' => bcrypt(Str::random(32)), // if user doesn't exist, set a random password, let them reset it later
+                    'password' => bcrypt(Str::random(32)),
                 ]
             );
 
@@ -150,9 +156,14 @@ class AuthController extends Controller
             $tokenModel->expires_at = now()->addDays(3);
             $tokenModel->save();
 
-            // Redirect ke app menggunakan custom scheme + data
-            $redirectUrl = "tour-package://redirect?token=" . $tokenResult->plainTextToken . "&email=" . urlencode($user->email);
-            return redirect()->away($redirectUrl);
+            // Kirim kembali ke React Native app pakai scheme + token & user info
+            $redirect = $redirectUri . '?token=' . $tokenResult->plainTextToken . '&user=' . urlencode(json_encode([
+                'id' => $user->id,
+                'email' => $user->email,
+                'name' => $user->name,
+            ]));
+
+            return redirect()->away($redirect);
         } catch (\Throwable $e) {
             return $this->errorHandler->handle($e);
         }
