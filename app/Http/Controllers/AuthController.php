@@ -12,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Services\ErrorHandler;
 use Throwable;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -75,6 +76,10 @@ class AuthController extends Controller
             // If successful, generate a token
             $token = $user->createToken('auth_token')->plainTextToken;
 
+            // Set token expiration to 3 days
+            $token->accessToken->expires_at = Carbon::now()->addDays(3);
+            $token->accessToken->save();
+
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'Bearer',
@@ -134,6 +139,10 @@ class AuthController extends Controller
 
             // Generate token untuk klien
             $token = $user->createToken('authToken')->plainTextToken;
+
+            // Set token expiration to 3 days
+            $token->accessToken->expires_at = Carbon::now()->addDays(3);
+            $token->accessToken->save();
 
             return response()->json(['token' => $token, 'user' => $user]);
         } catch (\Throwable $e) {

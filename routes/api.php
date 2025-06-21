@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\{AuthController, BaseController, BookingController, CityController, CountryController, CrawlingController, NotificationController, PaymentController, ProductController, RegionController, SearchController, TestingController, UserController};
 use App\Http\Middleware\CheckAPIKey;
+use App\Http\Middleware\CheckTokenExpiration;
 use Illuminate\Support\Facades\Route;
 
 
@@ -57,7 +58,7 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
         Route::get('/currency-rates', [CrawlingController::class, 'getCurrencyRates']);
     });
 
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware(['auth:sanctum', CheckTokenExpiration::class])->group(function () {
         Route::prefix('/user')->group(function () {
             Route::get('/profile', [UserController::class, 'profile']);
             Route::post('/review-product/{slug}', [ProductController::class]);
