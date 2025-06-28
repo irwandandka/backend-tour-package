@@ -36,6 +36,7 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
     });
 
     Route::prefix('/product')->group(function () {
+        Route::get('/test-redis', [ProductController::class, 'testRedis']);
         Route::get('/list', [ProductController::class, 'list']);
         Route::get('/popular-destination', [ProductController::class, 'popularDestination']);
         Route::get('/explore-now', [ProductController::class, 'exploreNow']);

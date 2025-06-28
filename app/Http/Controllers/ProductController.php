@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\TestRedisJob;
 use App\Models\{Product, City, Currency};
 use App\Services\{AllotmentService, ErrorHandler, PackageService, PricingService};
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -525,6 +526,20 @@ class ProductController extends Controller
             return response()->json([
                 'status' => 'success',
                 'data' => $availablePeriod,
+            ]);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
+        }
+    }
+
+    public function testRedis(Request $request)
+    {
+        try {
+            TestRedisJob::dispatch();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Redis job has been dispatched successfully.',
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
