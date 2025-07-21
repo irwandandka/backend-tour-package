@@ -73,15 +73,14 @@ class AuthController extends Controller
                 return response()->json(['message' => 'Invalid login credentials'], 401);
             }
 
-            // If successful, generate a token
-            $token = $user->createToken('auth_token')->plainTextToken;
+            $tokenResult = $user->createToken('auth_token');
 
             // Set token expiration to 3 days
-            $token->accessToken->expires_at = Carbon::now()->addDays(3);
-            $token->accessToken->save();
+            $tokenResult->accessToken->expires_at = Carbon::now()->addDays(3);
+            $tokenResult->accessToken->save();
 
             return response()->json([
-                'access_token' => $token,
+                'access_token' => $tokenResult->plainTextToken,
                 'token_type' => 'Bearer',
                 'user' => [
                     'id' => $user->id,
