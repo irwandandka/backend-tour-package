@@ -410,6 +410,7 @@ class ProductController extends Controller
             $targetCurrency = Currency::where('code', $validated['currency'])->first();
 
             $dateNow = Carbon::now();
+            $datePeriod = Carbon::createFromFormat('Ym', $validated['period']);
 
             $product = Product::with(
                 [
@@ -426,7 +427,7 @@ class ProductController extends Controller
                 ->packageService
                 ->getAvailableProductDetail(
                     $product,
-                    $dateNow,
+                    $datePeriod,
                     true,
                     true
                 );
@@ -490,38 +491,41 @@ class ProductController extends Controller
 
             $product = Product::with(
                 [
-                    'Allotments',
+                    'product_details',
+                    'product_details.allotments',
                 ]
             )
                 ->where('slug', $request->slug)
                 ->first();
 
-            $availablePeriod = $product
-                ->allotments
+            // Kumpulkan semua allotments dari setiap product_detail
+            $allAllotments = $product->product_details
+                ->flatMap(function ($detail) {
+                    return $detail->allotments;
+                });
+
+            // Filter allotments berdasarkan period >= sekarang, lalu group by period
+            $availablePeriod = $allAllotments
                 ->where('period', '>=', Carbon::now())
                 ->groupBy('period')
                 ->mapWithKeys(function ($allotments, $period) {
-                    $allotments->sum(function ($allotment) {
-                        return
-                            $allotment->day1 + $allotment->day2 + $allotment->day3 + $allotment->day4 + $allotment->day5 +
-                            $allotment->day6 + $allotment->day7 + $allotment->day8 + $allotment->day9 + $allotment->day10 +
-                            $allotment->day11 + $allotment->day12 + $allotment->day13 + $allotment->day14 + $allotment->day15 +
-                            $allotment->day16 + $allotment->day17 + $allotment->day18 + $allotment->day19 + $allotment->day20 +
-                            $allotment->day21 + $allotment->day22 + $allotment->day23 + $allotment->day24 + $allotment->day25 +
-                            $allotment->day26 + $allotment->day27 + $allotment->day28 + $allotment->day29 + $allotment->day30 +
-                            $allotment->day31;
+                    $total = $allotments->sum(function ($allotment) {
+                        return collect(range(1, 31))->sum(function ($day) use ($allotment) {
+                            return $allotment->{'day' . $day};
+                        });
                     });
 
-                    return [$period];
+                    return [$period => $total];
                 })
-                ->map(function ($period) {
+                ->map(function ($_, $period) {
                     $periodFormat = Carbon::createFromFormat('Ym', $period);
 
                     return [
                         'id' => $period,
                         'name' => $periodFormat->translatedFormat('F Y'),
                     ];
-                });
+                })
+                ->values(); // Optional: reset keys to numerical index
 
             return response()->json([
                 'status' => 'success',
