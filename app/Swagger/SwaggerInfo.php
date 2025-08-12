@@ -22,11 +22,7 @@ class SwaggerInfo
      *     url="https://apilaravel.irwandandka.my.id",
      *     description="Production server for the API"
      * )
-     *
-     * @OA\Server(
-     *     url="http://localhost:8000",
-     *     description="Local development server"
-     * )
+     * 
      */
     public static function init()
     {
