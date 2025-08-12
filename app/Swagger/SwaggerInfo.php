@@ -556,7 +556,7 @@ class SwaggerInfo
     /**
      * @OA\GET(
      *      path="/api/v1/product/explore-now",
-     *      tags={"Product"},
+     *      tags={"Tour Packages"},
      *      summary="Retrieve a list of cities.",
      *      description="Returns a list of cities which has the highest reviews of their tour packages.",
      *      @OA\Response(
@@ -578,7 +578,7 @@ class SwaggerInfo
     /**
      * @OA\Get(
      *     path="/api/v1/product/list",
-     *     tags={"Product"},
+     *     tags={"Tour Packages"},
      *     summary="Retrieve a list of all tour packages",
      *     description="Returns a list of available tour packages.",
      *     @OA\Response(
@@ -677,7 +677,7 @@ class SwaggerInfo
     /**
      * @OA\Get(
      *     path="/api/v1/product/{slug}",
-     *     tags={"Product"},
+     *     tags={"Tour Packages"},
      *     summary="Get a single tour package by slug",
      *     description="Retrieve detailed information about a specific tour package using the package's slug.",
      *     @OA\Parameter(
@@ -886,7 +886,7 @@ class SwaggerInfo
      * @OA\Get(
      *      path="/product/popular-destination",
      *      summary="Get popular destinations",
-     *      tags={"Product"},
+     *      tags={"Tour Packages"},
      *      @OA\Response(
      *          response=200,
      *          description="Success",

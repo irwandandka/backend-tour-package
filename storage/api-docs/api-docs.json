@@ -730,7 +730,7 @@
         "/api/v1/product/explore-now": {
             "get": {
                 "tags": [
-                    "Product"
+                    "Tour Packages"
                 ],
                 "summary": "Retrieve a list of cities.",
                 "description": "Returns a list of cities which has the highest reviews of their tour packages.",
@@ -752,7 +752,7 @@
         "/api/v1/product/list": {
             "get": {
                 "tags": [
-                    "Product"
+                    "Tour Packages"
                 ],
                 "summary": "Retrieve a list of all tour packages",
                 "description": "Returns a list of available tour packages.",
@@ -842,7 +842,7 @@
         "/api/v1/product/{slug}": {
             "get": {
                 "tags": [
-                    "Product"
+                    "Tour Packages"
                 ],
                 "summary": "Get a single tour package by slug",
                 "description": "Retrieve detailed information about a specific tour package using the package's slug.",
@@ -1030,7 +1030,7 @@
         "/product/popular-destination": {
             "get": {
                 "tags": [
-                    "Product"
+                    "Tour Packages"
                 ],
                 "summary": "Get popular destinations",
                 "operationId": "33ed3d36e2b99c15d4885d0f4959ffc9",
@@ -1156,8 +1156,8 @@
             "description": "Regions"
         },
         {
-            "name": "Product",
-            "description": "Product"
+            "name": "Tour Packages",
+            "description": "Tour Packages"
         }
     ]
 }
