@@ -22,12 +22,23 @@ class CityController extends Controller
     public function list(Request $request)
     {
         try {
+            $validate = $request->validate([
+                'country' => 'sometimes|exists:countries,id',
+                'region' => 'sometimes|exists:regions,id',
+            ]);
+
             $cities = City::with(
                 [
                     'country',
                     'region'
                 ]
             )
+                ->when(isset($validate['country']), function ($query) use ($validate) {
+                    return $query->where('country_id', $validate['country']);
+                })
+                ->when(isset($validate['region']), function ($query) use ($validate) {
+                    return $query->where('region_id', $validate['region']);
+                })
                 ->get()
                 ->map(function ($city) {
                     return [
