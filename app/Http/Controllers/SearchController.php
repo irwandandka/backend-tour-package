@@ -58,11 +58,6 @@ class SearchController extends Controller
                 ];
             });
 
-            $searchResult = $searchData = [];
-            foreach ($products as $product) {
-                $searchData[] = [];
-            }
-
             $searchResult = $products
                 ->merge($cities)
                 ->merge($countries)
