@@ -127,56 +127,67 @@ class PricingService
         $purchaseTotal = $purchaseTotalBase = $purchaseSubtotal = $purchaseSubtotalBase = $salesSubtotal = $salesSubtotalBase = $salesTotal = $salesTotalBase = 0;
 
         $pricingDetail = [];
-        foreach ($typePrices as $index => $type) {
+        $level = 0;
+
+        foreach ($typePrices as $type) {
             if ($detail["quantity_$type"] == 0) {
                 continue;
             }
 
-            $purchasePrice = $salesPrice = 0;
+            $purchasePrice = $purchaseInSGD = $salesPrice = $salesInSGD = 0;
 
-            $productPrice = $productDetail
-                ->product_prices
-                ->where('level', $index + 1)
-                ->first();
+            $countPaxPerType = 1;
 
-            if (!$productPrice) continue;
+            while ($countPaxPerType <= $detail["quantity_$type"]) {
+                $level++;
 
-            // Target Currency
-            $purchasePrice = $this->currencyService->convert(
-                $productPrice->{"purchase_$type"},
-                $product->purchase_currency,
-                $targetCurrency
-            );
+                $productPrice = $productDetail
+                    ->product_prices
+                    ->where('level', $level)
+                    ->first();
 
-            // Base Currency
-            $purchaseInSGD = $this->currencyService->convert(
-                $productPrice->{"purchase_$type"},
-                $product->purchase_currency,
-                $currencySGD
-            );
+                if (!$productPrice) continue;
+
+                // Target Currency
+                $purchasePrice += $this->currencyService->convert(
+                    $productPrice->{"purchase_$type"},
+                    $product->purchase_currency,
+                    $targetCurrency
+                );
+
+                // Base Currency
+                $purchaseInSGD += $this->currencyService->convert(
+                    $productPrice->{"purchase_$type"},
+                    $product->purchase_currency,
+                    $currencySGD
+                );
+
+                // Target Currency
+                $salesPrice += $this->currencyService->convert(
+                    $productPrice->{"sales_$type"},
+                    $product->sales_currency,
+                    $targetCurrency
+                );
+
+                // Base Currency
+                $salesInSGD += $this->currencyService->convert(
+                    $productPrice->{"sales_$type"},
+                    $product->sales_currency,
+                    $currencySGD
+                );
+
+                $countPaxPerType++;
+            }
 
             $pricingDetail["quantity_$type"] = $detail["quantity_$type"];
 
             $pricingDetail["purchase_$type"] = $purchasePrice;
-            $purchaseSubtotalBase += $purchaseInSGD * $detail["quantity_$type"];
-            $purchaseSubtotal += $purchasePrice * $detail["quantity_$type"];
+            $purchaseSubtotalBase += $purchaseInSGD;
+            $purchaseSubtotal += $purchasePrice;
 
-            // Target Currency
-            $salesPrice = $this->currencyService->convert(
-                $productPrice->{"sales_$type"},
-                $product->sales_currency,
-                $targetCurrency
-            );
-
-            // Base Currency
-            $salesInSGD = $this->currencyService->convert(
-                $productPrice->{"sales_$type"},
-                $product->sales_currency,
-                $currencySGD
-            );
             $pricingDetail["sales_$type"] = ($purchasePrice + $salesPrice);
-            $salesSubtotal += ($purchasePrice + $salesPrice) * $detail["quantity_$type"];
-            $salesSubtotalBase += ($purchaseInSGD + $salesInSGD) * $detail["quantity_$type"];
+            $salesSubtotal += ($purchasePrice + $salesPrice);
+            $salesSubtotalBase += ($purchaseInSGD + $salesInSGD);
         }
 
         $purchaseTotal += $purchaseSubtotal;
