@@ -16,6 +16,8 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
         // Google OAuth
         Route::get('/google', [AuthController::class, 'redirectToGoogle']);
         Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback']);
+
+        Route::post('/save-profile', [AuthController::class, 'saveProfile']);
     });
 
     Route::prefix('/city')->group(function () {
@@ -67,17 +69,19 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
 
         Route::prefix('/booking')->group(function () {
             Route::post('/', [BookingController::class, 'store']);
+            Route::get('/history', [BookingController::class, 'history']);
             Route::get('/{id}', [BookingController::class, 'show']);
             Route::post('{id}/cancel', [BookingController::class, 'cancel']);
             Route::post('/{id}/update', [BookingController::class, 'update']);
         });
 
         Route::prefix('/payment')->group(function () {
+            // Gopay Payment
+            Route::post('/gopay/{id}', [PaymentController::class, 'payWithGopay']);
+            Route::post('/midtrans/callback', [PaymentController::class, 'handleCallbackGopay'])->name('midtrans.callback');
+
             Route::post('/{id}', [PaymentController::class, 'pay']);
             Route::post('/midtrans/notification', [PaymentController::class, 'handleNotification']);
         });
-
-        Route::post('/pay/gopay', [PaymentController::class, 'payWithGopay']);
-        Route::post('/midtrans/callback', [PaymentController::class, 'handleCallback'])->name('midtrans.callback');
     });
 });

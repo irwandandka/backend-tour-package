@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Insert 1 user, atau ambil kalau sudah ada
-        self::$user = User::firstOrCreate(
+        self::$user = User::updateOrCreate(
             ['email' => 'irwandandka29@gmail.com'],
             [
                 'name' => 'Irwanda',
