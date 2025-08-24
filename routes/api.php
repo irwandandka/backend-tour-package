@@ -11,13 +11,13 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
-        Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+        Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum', CheckTokenExpiration::class);
 
         // Google OAuth
         Route::get('/google', [AuthController::class, 'redirectToGoogle']);
         Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback']);
 
-        Route::post('/save-profile', [AuthController::class, 'saveProfile']);
+        Route::post('/save-profile', [AuthController::class, 'saveProfile'])->middleware('auth:sanctum', CheckTokenExpiration::class);
     });
 
     Route::prefix('/city')->group(function () {
@@ -76,6 +76,7 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
         });
 
         Route::prefix('/payment')->group(function () {
+            Route::get('/list', [PaymentController::class, 'list']);
             // Gopay Payment
             Route::post('/gopay/{id}', [PaymentController::class, 'payWithGopay']);
             Route::post('/midtrans/callback', [PaymentController::class, 'handleCallbackGopay'])->name('midtrans.callback');

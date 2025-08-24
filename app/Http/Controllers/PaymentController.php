@@ -2,72 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
 use App\Models\Status;
 use App\Models\Transaction;
+use App\Models\PaymentMethod;
 use App\Services\ErrorHandler;
+use App\Services\GopayPaymentService;
+use App\Services\MidtransService;
 use Exception;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Midtrans\Notification;
-use Midtrans\Snap;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class PaymentController extends Controller
 {
     use ValidatesRequests;
 
-    private $errorHandler;
+    private $errorHandler, $midtransService, $midtransServerKey;
     public function __construct()
     {
         $this->errorHandler = new ErrorHandler;
+        $this->midtransService = new MidtransService;
+        $this->midtransServerKey = config('midtrans.server_key');
     }
 
-    public function payment(Request $request, $id)
+    public function list(Request $request)
     {
         try {
-            $transaction = Transaction::where('id', $id)->first();
+            $paymentMethods = PaymentMethod::where('is_active', true)
+                ->select('id', 'name', 'description', 'logo')
+                ->get();
 
-            if (!$transaction) {
-                throw new Exception('Transaction not found', 404);
-            }
-
-            $validate = $this->validate($request, [
-                'payment_method' => 'required|exists:payment_methods,id',
+            return response()->json([
+                'status' => 'success',
+                'data' => $paymentMethods,
             ]);
-
-            $transaction_details = [
-                'order_id' => $transaction->id,
-                'gross_amount' => $transaction->total_amount,
-            ];
-
-            $customer_details = [
-                'first_name' => $transaction->first_name,
-                'email' => $transaction->email,
-                'phone' => $transaction->phone,
-            ];
-
-            $params = [
-                'transaction_details' => $transaction_details,
-                'customer_details' => $customer_details,
-            ];
-
-            // make payment record
-            $payment = Payment::create([
-                'transaction_id' => $transaction->id,
-                'payment_method' => $validate['payment_method'],
-                'amount' => $transaction->total_amount,
-                'currency' => $transaction->currency,
-            ]);
-
-            dd('Sabar ya, ini masih contoh');
-
-            $snapToken = Snap::getSnapToken($params);
-
-            // Logic to pay a booking
-            return response()->json(['token' => $snapToken]);
-        } catch (Throwable $e) {
-            return $this->errorHandler->handle($e);
+        } catch (Throwable $error) {
+            return $this->errorHandler->handle($error);
         }
     }
 
