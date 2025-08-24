@@ -66,4 +66,76 @@ class PaymentController extends Controller
 
         return response()->json(['message' => 'Notification processed']);
     }
+
+    public function payWithGopay(Transaction $transaction, Request $request, GopayPaymentService $gopay)
+    {
+        try {
+            $orderId = $transaction->id;
+            $amount = $transaction->total_amount;
+            $callbackUrl = route('midtrans.callback');
+
+            $response = $gopay->charge($orderId, $amount, $callbackUrl);
+
+            // ambil QR code (butuh GET + basic auth)
+            $qrBase64 = null;
+            $qrUrl = $response['actions'][0]['url'] ?? null;
+
+            if ($qrUrl) {
+                $qrResponse = Http::withBasicAuth($this->midtransServerKey, '')
+                    ->get($qrUrl);
+
+                if ($qrResponse->successful()) {
+                    $qrBase64 = 'data:image/png;base64,' . base64_encode($qrResponse->body());
+                }
+            }
+
+            // Set Payment Method
+            $transaction->paymentMethod()->associate($gopay->getPaymentMethod());
+
+            return response()->json([
+                'order_id'   => $orderId,
+                'status'     => $response['transaction_status'] ?? 'unknown',
+                'gopay_url'  => $response['actions'][1]['url'] ?? null, // deeplink
+                'qr_base64'  => $qrBase64, // untuk ditampilkan langsung di FE
+            ]);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
+        }
+    }
+
+    public function handleCallbackGopay(Request $request)
+    {
+        try {
+            $payload = $request->all();
+
+            // Kamu bisa log dulu untuk debug
+            Log::info('Midtrans callback:', $payload);
+
+            $orderId = $payload['order_id'] ?? null;
+            $status  = $payload['transaction_status'] ?? null;
+
+            $transaction = Transaction::with(
+                [
+                    'transactionDetails',
+                    'user',
+                    'status'
+                ]
+            )
+                ->where('id', $orderId)->first();
+
+            if (!$transaction) {
+                throw new NotFoundHttpException('Transaction not found');
+            }
+
+            // Update status transaction
+            if ($transaction) {
+                $transaction->status()->associate(Status::where('code', $status)->first());
+                $transaction->save();
+            }
+
+            return response()->json(['message' => 'Callback received'], 200);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
+        }
+    }
 }

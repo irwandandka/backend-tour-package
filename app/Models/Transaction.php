@@ -67,4 +67,9 @@ class Transaction extends Model
     {
         return $this->hasMany(Passenger::class);
     }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
 }

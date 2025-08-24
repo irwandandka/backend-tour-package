@@ -78,7 +78,7 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
         Route::prefix('/payment')->group(function () {
             Route::get('/list', [PaymentController::class, 'list']);
             // Gopay Payment
-            Route::post('/gopay/{id}', [PaymentController::class, 'payWithGopay']);
+            Route::post('/gopay/{transaction}', [PaymentController::class, 'payWithGopay']);
             Route::post('/midtrans/callback', [PaymentController::class, 'handleCallbackGopay'])->name('midtrans.callback');
 
             Route::post('/{id}', [PaymentController::class, 'pay']);

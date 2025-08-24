@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('user_id');
             $table->uuid('product_id');
             $table->uuid('status_id');
+            $table->uuid('payment_method_id');
             $table->string('code');
             $table->smallInteger('quantity')->default(0);
             $table->double('total_amount')->default(0);
@@ -50,6 +51,13 @@ return new class extends Migration
                 ->foreign('status_id')
                 ->references('id')
                 ->on('statuses')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table
+                ->foreign('payment_method_id')
+                ->references('id')
+                ->on('payment_methods')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
