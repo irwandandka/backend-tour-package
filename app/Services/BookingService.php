@@ -28,6 +28,8 @@ class BookingService
         $transaction = Transaction::create([
             'user_id' => $user->id,
             'product_id' => $data['product_id'],
+            'date_from' => $data['date_from'],
+            'date_to' => $data['date_to'],
             'status_id' => $statusEntry->id,
             'code' => $bookingCode,
             'booking_date' => now(),
