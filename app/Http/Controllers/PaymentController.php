@@ -33,7 +33,7 @@ class PaymentController extends Controller
     {
         try {
             $paymentMethods = PaymentMethod::where('is_active', true)
-                ->select('id', 'name', 'description', 'logo')
+                ->select('id', 'name', 'code', 'description', 'logo')
                 ->get();
 
             return response()->json([
