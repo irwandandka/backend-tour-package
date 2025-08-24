@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('address', 100)->nullable();
             $table->string('postal_code', 10)->nullable();
             $table->string('notes', 100)->nullable();
+            $table->date('date_from');
+            $table->date('date_to');
             $table->timestamps();
             $table->softDeletes();
 

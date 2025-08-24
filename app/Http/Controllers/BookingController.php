@@ -91,6 +91,10 @@ class BookingController extends Controller
                 "total_amount_base" => $transaction->total_amount_base,
                 "booking_date" => Carbon::parse($transaction->booking_date)->format("l, jS F Y"),
                 "notes" => $transaction->notes,
+                "customer_name" => $transaction->customer_name,
+                "customer_email" => $transaction->customer_email,
+                "from_date" => Carbon::parse($transaction->date_from)->format("l, jS F Y"),
+                "to_date" => Carbon::parse($transaction->date_to)->format("l, jS F Y"),
                 "transaction_details" => $transaction
                     ->transactionDetails
                     ->map(function ($detail) {
