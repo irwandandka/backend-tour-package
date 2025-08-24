@@ -21,9 +21,9 @@ class AllotmentSeeder extends Seeder
             foreach ($products as $product) {
                 foreach ($product->product_details as $detail) {
                     $detail->allotments()->create([
-                        'product_detail_id' => $product->id,
+                        'product_detail_id' => $detail->id,
                         'transaction_id' => null,
-                        'period' => '202505',
+                        'period' => '202507',
                         'code' => 'Insert-Allotment-202505',
                         'day1' => 25,
                         'day2' => 25,
