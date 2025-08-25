@@ -13,6 +13,7 @@ use App\Services\ErrorHandler;
 use Throwable;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -179,7 +180,17 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            $request->user()->currentAccessToken()->delete();
+            // kalau pakai middleware auth:sanctum
+            // $request->user()->currentAccessToken()->delete();
+
+            // custom sendiri aja
+            $token = $request->bearerToken();
+            if ($token) {
+                $accessToken = PersonalAccessToken::findToken($token);
+                if ($accessToken) {
+                    $accessToken->delete();
+                }
+            }
 
             return response()->json(['message' => 'Logged out successfully'], 200);
         } catch (Throwable $e) {
