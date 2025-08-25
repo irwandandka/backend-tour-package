@@ -38,6 +38,9 @@ class UserController extends Controller
                 "address" => $userLogin->address,
                 "birth_date" => $userLogin->birth_date,
                 "gender" => $userLogin->gender,
+                "email_verified_at" => $userLogin->email_verified_at,
+                "country" => $userLogin->country ? $userLogin->country->only('id', 'name') : null,
+                "city" => $userLogin->city ? $userLogin->city->only('id', 'name') : null,
             ];
 
             return response()->json([
