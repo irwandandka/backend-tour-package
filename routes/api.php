@@ -11,13 +11,13 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
-        Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum', CheckTokenExpiration::class);
+        Route::post('/logout', [AuthController::class, 'logout'])->middleware('check.token.expiration');
 
         // Google OAuth
         Route::get('/google', [AuthController::class, 'redirectToGoogle']);
         Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback']);
 
-        Route::post('/save-profile', [AuthController::class, 'saveProfile'])->middleware('auth:sanctum', CheckTokenExpiration::class);
+        Route::post('/save-profile', [AuthController::class, 'saveProfile'])->middleware('check.token.expiration');
     });
 
     Route::prefix('/city')->group(function () {
@@ -61,7 +61,7 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
         Route::get('/currency-rates', [CrawlingController::class, 'getCurrencyRates']);
     });
 
-    Route::middleware(['auth:sanctum', CheckTokenExpiration::class])->group(function () {
+    Route::middleware(['check.token.expiration'])->group(function () {
         Route::prefix('/user')->group(function () {
             Route::get('/profile', [UserController::class, 'profile']);
             Route::post('/review-product/{slug}', [ProductController::class]);
