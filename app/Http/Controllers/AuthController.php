@@ -87,6 +87,8 @@ class AuthController extends Controller
                     'id' => $user->id,
                     'email' => $user->email,
                     'name' => $user->name,
+                    'username' => $user->username,
+                    'profile_picture_url' => $user->profile_picture_url
                 ]
             ]);
         } catch (Throwable $e) {
