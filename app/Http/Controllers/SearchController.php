@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PaginationHelper;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Product;
@@ -9,6 +10,7 @@ use App\Models\Region;
 use Throwable;
 use Illuminate\Http\Request;
 use App\Services\ErrorHandler;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchController extends Controller
 {
@@ -22,10 +24,14 @@ class SearchController extends Controller
     public function globalSearch(Request $request)
     {
         try {
-            $query = $request->input('query');
+            $validated = $request->validate([
+                'query' => 'required|string|min:1',
+                'page' => 'nullable|integer|min:1',
+                'per_page' => 'nullable|integer|min:1|max:50',
+            ]);
 
             // Search for every models
-            $products = Product::search($query)->get()->map(function ($product) {
+            $products = Product::search($validated['query'])->get()->map(function ($product) {
                 return [
                     'id' => $product->id,
                     'name' => $product->name,
@@ -34,7 +40,7 @@ class SearchController extends Controller
                 ];
             });
 
-            $cities = City::search($query)->get()->map(function ($city) {
+            $cities = City::search($validated['query'])->get()->map(function ($city) {
                 return [
                     'id' => $city->id,
                     'name' => $city->name,
@@ -42,7 +48,7 @@ class SearchController extends Controller
                 ];
             });
 
-            $countries = Country::search($query)->get()->map(function ($country) {
+            $countries = Country::search($validated['query'])->get()->map(function ($country) {
                 return [
                     'id' => $country->id,
                     'name' => $country->name,
@@ -50,7 +56,7 @@ class SearchController extends Controller
                 ];
             });
 
-            $regions = Region::search($query)->get()->map(function ($region) {
+            $regions = Region::search($validated['query'])->get()->map(function ($region) {
                 return [
                     'id' => $region->id,
                     'name' => $region->name,
@@ -63,7 +69,13 @@ class SearchController extends Controller
                 ->merge($countries)
                 ->merge($regions);
 
-            return response()->json($searchResult);
+            $paginatedResults = PaginationHelper::paginate(
+                $searchResult,
+                $validated['per_page'] ?? 10,
+                $validated['page'] ?? 1
+            );
+
+            return response()->json($paginatedResults);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
         }
