@@ -243,7 +243,7 @@ class BookingController extends Controller
                         "code" => $transaction->code,
                         "status" => $transaction->status->name,
                         "product" => $transaction->product->name,
-                        "quantity" => $transaction->quantity,
+                        "image" => $transaction->product->thumbnail_image,
                         "total_amount" => $transaction->total_amount,
                         "total_amount_base" => $transaction->total_amount_base,
                         "booking_date" => Carbon::parse($transaction->booking_date)->format("l, jS F Y"),
