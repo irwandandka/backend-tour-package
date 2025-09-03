@@ -26,11 +26,23 @@ class BaseController extends Controller
             $languages = [
                 [
                     'name' => 'English',
-                    'code' => 'en'
+                    'code' => 'en',
+                    'logo' => 'https://pub-cfc04ba1c45649688f85c3bdd738f319.r2.dev/america-flag.webp',
                 ],
                 [
                     'name' => 'Indonesia',
-                    'code' => 'id'
+                    'code' => 'id',
+                    'logo' => 'https://pub-cfc04ba1c45649688f85c3bdd738f319.r2.dev/indonesia-flag.webp',
+                ],
+                [
+                    'name' => 'Chinese Simplified',
+                    'code' => 'zh-CN',
+                    'logo' => 'https://pub-cfc04ba1c45649688f85c3bdd738f319.r2.dev/china-flag.webp',
+                ],
+                [
+                    'name' => 'Thailand',
+                    'code' => 'th',
+                    'logo' => 'https://pub-cfc04ba1c45649688f85c3bdd738f319.r2.dev/thailand-flag.webp',
                 ],
             ];
 
