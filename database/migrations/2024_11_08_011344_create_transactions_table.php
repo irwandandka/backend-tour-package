@@ -17,10 +17,12 @@ return new class extends Migration
             $table->uuid('product_id');
             $table->uuid('status_id');
             $table->uuid('payment_method_id');
+            $table->uuid('currency_id');
             $table->string('code');
             $table->smallInteger('quantity')->default(0);
             $table->double('total_amount')->default(0);
             $table->double('total_amount_base')->default(0);
+            $table->double('paid_amount')->default(0);
             $table->date('booking_date');
             $table->string('customer_name', 50)->nullable();
             $table->string('customer_email', 50)->nullable();
@@ -30,6 +32,7 @@ return new class extends Migration
             $table->string('notes', 100)->nullable();
             $table->date('date_from');
             $table->date('date_to');
+            $table->timestamp('expired_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -58,6 +61,13 @@ return new class extends Migration
                 ->foreign('payment_method_id')
                 ->references('id')
                 ->on('payment_methods')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table
+                ->foreign('currency_id')
+                ->references('id')
+                ->on('currencies')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

@@ -72,4 +72,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(PaymentMethod::class);
     }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
 }
