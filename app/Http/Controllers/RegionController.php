@@ -27,6 +27,7 @@ class RegionController extends Controller
                     'countries'
                 ]
             )
+                ->whereIn('code', ['as', 'eu', 'sea', 'me'])
                 ->get()
                 ->map(function ($region) {
                     return [
