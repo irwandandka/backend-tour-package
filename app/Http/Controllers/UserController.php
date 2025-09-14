@@ -5,86 +5,77 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\ErrorHandler;
+use App\Services\FileUploadService;
 use Throwable;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Support\Facades\DB;
+use App\Services\R2Service;
+use App\Http\Resources\User\UserResource;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
     use ValidatesRequests;
 
     protected $errorHandler;
+    protected $r2Service;
+    protected $fileUploadService;
+    protected $userService;
 
-    public function __construct(ErrorHandler $errorHandler)
-    {
+    public function __construct(
+        ErrorHandler $errorHandler,
+        R2Service $r2Service,
+        FileUploadService $fileUploadService,
+        UserService $userService
+    ) {
         $this->errorHandler = $errorHandler;
+        $this->r2Service = $r2Service;
+        $this->fileUploadService = $fileUploadService;
+        $this->userService = $userService;
     }
 
-    public function profile(Request $request)
-    {
+    public function profile(
+        Request $request
+    ) {
         try {
             $userLogin = Auth::user();
 
-            $userProfile = [
-                'id' => $userLogin->id,
-                'name' => $userLogin->name,
-                'email' => $userLogin->email,
-                'created_at' => Carbon::parse($userLogin->created_at)->format('l jS F Y'),
-                "profile_picture_url" => $userLogin->profile_picture_url,
-                "username" => $userLogin->username,
-                "phone" => $userLogin->phone,
-                "address" => $userLogin->address,
-                "birth_date" => $userLogin->birth_date,
-                "gender" => $userLogin->gender,
-                "email_verified_at" => $userLogin->email_verified_at,
-                "country" => $userLogin->country ? $userLogin->country->only('id', 'name') : null,
-                "city" => $userLogin->city ? $userLogin->city->only('id', 'name') : null,
-            ];
-
             return response()->json([
                 'status' => 'success',
-                'data' => $userProfile
+                'data' => new UserResource($userLogin)
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
         }
     }
 
-    public function saveProfile(User $user, Request $request)
-    {
+    public function saveProfile(
+        User $user,
+        Request $request
+    ) {
         try {
-            $validated = $this->validate($request, [
-                'username' => 'nullable|string|max:25',
-                'name' => 'required|string|max:100',
-                'email' => 'required|email|max:100',
-                'phone' => 'nullable|string|max:20',
-                'address' => 'nullable|string|max:255',
-                'birth_date' => 'nullable|date_format:Y-m-d',
-                'gender' => 'nullable|string|max:10',
-            ]);
-
-            DB::transaction(function () use ($user, $validated) {
-                $user->update($validated);
-            });
+            $user = $this->userService->updateProfile($request, $user);
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Profile updated successfully',
-                'data' => $user->only(
-                    'id',
-                    'name',
-                    'email',
-                    'phone',
-                    'profile_picture_url',
-                    'username',
-                    'address',
-                    'birth_date',
-                    'gender',
-                    'created_at',
-                    'updated_at'
-                )
+                'data' => new UserResource($user),
+            ]);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
+        }
+    }
+
+    public function uploadProfilePicture(
+        Request $request
+    ) {
+        try {
+            $result = $this->userService->updateProfilePicture($request);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Profile picture updated successfully',
+                'data' => new UserResource($result),
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);

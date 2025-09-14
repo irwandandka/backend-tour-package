@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\{AuthController, BaseController, BookingController, CityController, CountryController, CrawlingController, NotificationController, PaymentController, ProductController, RegionController, SearchController, TestingController, UserController};
 use App\Http\Middleware\CheckAPIKey;
-use App\Http\Middleware\CheckTokenExpiration;
 use Illuminate\Support\Facades\Route;
 
 
@@ -61,9 +60,14 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
         Route::get('/currency-rates', [CrawlingController::class, 'getCurrencyRates']);
     });
 
+    Route::prefix('/debug')->group(function () {
+        Route::get('/test-invoice/{id}', [TestingController::class, 'testInvoice']);
+    });
+
     Route::middleware(['check.token.expiration'])->group(function () {
         Route::prefix('/user')->group(function () {
             Route::get('/profile', [UserController::class, 'profile']);
+            Route::post('/upload-profile-picture', [UserController::class, 'uploadProfilePicture']);
             Route::post('/review-product/{slug}', [ProductController::class]);
         });
 
@@ -76,7 +80,11 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
         });
 
         Route::prefix('/payment')->group(function () {
+            // List Payment Methods
             Route::get('/list', [PaymentController::class, 'list']);
+
+            Route::post('/set-payment-method', [PaymentController::class, 'setPaymentMethod']);
+
             // Gopay Payment
             Route::post('/gopay/{transaction}', [PaymentController::class, 'payWithGopay']);
             Route::post('/midtrans/callback', [PaymentController::class, 'handleCallbackGopay'])->name('midtrans.callback');
