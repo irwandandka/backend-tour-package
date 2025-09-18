@@ -9,7 +9,6 @@
         "aws/aws-sdk-php": "^3.331",
         "barryvdh/laravel-snappy": "^1.0",
         "darkaonline/l5-swagger": "^8.6",
-        "filament/filament": "^3.3",
         "google/apiclient": "^2.18",
         "guzzlehttp/guzzle": "^7.9",
         "intervention/image": "^3.11",
