@@ -34,6 +34,7 @@ class FileGenerateService
 
         Invoice::create([
             'transaction_id' => $transaction->id,
+            'invoice_number' => $this->generateCode('INV-'),
             'status_id' => Status::STATUS_UNPAID,
             'currency_id' => $transaction->currency_id,
             'amount' => $transaction->total_amount,
@@ -62,5 +63,18 @@ class FileGenerateService
         file_put_contents($ticketPath, "Ticket for Transaction ID: {$transaction->id}");
 
         return $ticketPath;
+    }
+
+    private function generateCode(string $prefix, int $length = 8): string
+    {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+
+        return $prefix . $randomString;
     }
 }
