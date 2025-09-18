@@ -20,6 +20,7 @@ class Invoice extends Model
         'notes',
         'url',
         'invoice_date',
+        'invoice_number',
         'due_date',
         'paid_at',
     ];
