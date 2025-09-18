@@ -34,7 +34,8 @@ class SendTransactionOrderedNotification
             ->send(new TransactionOrderedMail($event->transaction));
 
         // Kirim telegram notif
+        $chatId = config('services.telegram.chat_id');
         app(TelegramNotificationService::class)
-            ->send("Transaction Ordered: {$event->transaction->code}");
+            ->sendMessage($chatId, "Transaction Ordered: {$event->transaction->code}");
     }
 }
