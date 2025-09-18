@@ -63,8 +63,6 @@ class FileUploadService
         $fileName = basename($filePath);
         $storagePath = $fileDir ? ($fileDir . '/' . $fileName) : $fileName;
 
-        dd($fileName, $storagePath);
-
         // Upload file ke MinIO
         Storage::disk('minio')->put($storagePath, file_get_contents($filePath));
 

@@ -48,8 +48,6 @@ class PaymentService
             $transaction->save();
 
             event(new TransactionOrdered($transaction));
-
-            dd('Sabar');
         });
     }
 
