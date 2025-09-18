@@ -5,8 +5,8 @@ Hi {{ $transaction->user->name }},
 
 Thank you for your order **#{{ $transaction->code }}**.
 
-**Product:** {{ $transaction->product->name }}  
-**Quantity:** {{ $transaction->quantity }}  
+**Product:** {{ $transaction->product->name }}
+**Quantity:** {{ $transaction->quantity }}
 **Total:** Rp {{ number_format($transaction->amount, 0, ',', '.') }}
 
 We've attached the **invoice** for your order.

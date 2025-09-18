@@ -54,11 +54,16 @@ class TransactionOrderedMail extends Mailable
      */
     public function attachments(): array
     {
+        $url = $this->transaction->invoice->url; // URL dari DB (S3/MinIO)
+
+        // ambil konten file dari URL
+        $pdfContent = file_get_contents($url);
+
         return [
-            Attachment::fromPath(
-                storage_path("app/invoices/{$this->transaction->code}.pdf")
-            )->as("Invoice-{$this->transaction->code}.pdf")
-                ->withMime('application/pdf'),
+            Attachment::fromData(
+                fn() => $pdfContent,
+                "Invoice-{$this->transaction->code}.pdf"
+            )->withMime('application/pdf'),
         ];
     }
 }

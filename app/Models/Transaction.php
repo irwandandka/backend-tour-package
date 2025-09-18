@@ -77,4 +77,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(Currency::class);
     }
+
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class);
+    }
 }
