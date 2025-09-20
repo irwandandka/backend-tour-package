@@ -378,8 +378,8 @@ class PackageService
 
             if ($allotments > 0) {
                 $result[] = [
-                    'date_start' => $date->copy()->format('l, jS F Y'),
-                    'date_end' => $date->copy()->addDays($tripLength - 1)->format('l, jS F Y'),
+                    'date_start' => $date->copy()->format('l, j F Y'),
+                    'date_end' => $date->copy()->addDays($tripLength - 1)->format('l, j F Y'),
                     'date_start_iso' => $date->copy()->format('Y-m-d'),
                     'date_end_iso' => $date->copy()->addDays($tripLength - 1)->format('Y-m-d'),
                     'allotment' => $allotments,
