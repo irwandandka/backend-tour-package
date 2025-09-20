@@ -17,7 +17,7 @@ class PopularDestinationResource extends JsonResource
             'slug' => $this->slug,
             'price' => formatCurrency($this->price, $this->currency),
             'location' => $this->location,
-            'image' => $this->image,
+            'image' => $this->thumbnail_image,
             'rating' => number_format($this->reviews_avg_rating, 1),
         ];
     }
