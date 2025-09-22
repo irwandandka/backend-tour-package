@@ -118,4 +118,22 @@ class PaymentController extends Controller
             return $this->errorHandler->handle($e);
         }
     }
+
+    public function getTransactionStatus(Transaction $transaction)
+    {
+        // Pastikan user yang meminta adalah pemilik transaksi (opsional tapi sangat direkomendasikan)
+        // if ($transaction->user_id !== auth()->id()) {
+        //     return response()->json(['message' => 'Unauthorized'], 403);
+        // }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'transaction_id' => $transaction->id,
+                'order_id' => $transaction->order_id,
+                'status' => $transaction->status->name, // Asumsi ada relasi 'status' dan kolom 'name'
+                'status_code' => $transaction->status->code, // Asumsi ada kolom 'code' (misal: 'settlement')
+            ],
+        ]);
+    }
 }

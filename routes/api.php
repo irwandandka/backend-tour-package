@@ -83,6 +83,8 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
             // List Payment Methods
             Route::get('/list', [PaymentController::class, 'list']);
 
+            Route::get('/{transaction}/status', [PaymentController::class, 'getTransactionStatus']);
+
             Route::post('/set-payment-method', [PaymentController::class, 'setPaymentMethod']);
 
             // Gopay Payment

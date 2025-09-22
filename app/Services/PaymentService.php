@@ -89,50 +89,107 @@ class PaymentService
         });
     }
 
-    private function payWithGopay(
-        Transaction $transaction,
-        Request $request
-    ) {
+    // skema dengan deeplink
+    private function payWithGopay(Transaction $transaction, Request $request)
+    {
         $orderId = $transaction->id;
         $amount = $transaction->total_amount;
         $callbackUrl = route('midtrans.callback');
 
         $gopay = app(GopayPaymentService::class);
-
         $response = $gopay->charge($orderId, $amount, $callbackUrl);
         Log::channel('transaction')->info('Midtrans RAW charge response:', $response);
 
-        // Periksa dulu apakah request charge awal berhasil
         if (!isset($response['status_code']) || $response['status_code'] != '201') {
             $errorMessage = $response['status_message'] ?? 'Failed to create Midtrans transaction.';
             throw new \Exception($errorMessage);
         }
 
-        // Ambil URL untuk gambar QR code
-        $qrUrl = $response['actions'][0]['url'] ?? null;
-        $qrBase64 = null;
+        // =================================================================
+        // !! PERUBAHAN UTAMA DI SINI !!
+        // Kita hanya perlu mencari action dengan nama 'deeplink-redirect'
+        // =================================================================
+        $actions = collect($response['actions']);
+        $deepLinkAction = $actions->firstWhere('name', 'deeplink-redirect');
+        $deepLinkUrl = $deepLinkAction['url'] ?? null;
 
-        if ($qrUrl) {
-            $midtransServerKey = config('midtrans.server_key');
-            $qrResponse = Http::withBasicAuth($midtransServerKey, '')->get($qrUrl);
-
-            if ($qrResponse->successful()) {
-                $qrBase64 = 'data:image/png;base64,' . base64_encode($qrResponse->body());
-            }
+        if (!$deepLinkUrl) {
+            throw new \Exception('GoPay deep link URL not found in Midtrans response.');
         }
+
+        // Sisa kode yang rumit (request kedua, base64, sleep) DIHAPUS SEMUA.
 
         // Update paid_amount
         $transaction->paid_amount = $amount;
         $transaction->save();
 
-        Log::channel('transaction')->info('Midtrans charge response:', $response);
-
+        // Kembalikan URL deep link ke frontend
         return [
-            'order_id'   => $transaction->id,
-            'status'     => $response['transaction_status'] ?? 'pending',
-            'qr_base64'  => $qrBase64,
+            'order_id'       => $transaction->id,
+            'status'         => $response['transaction_status'] ?? 'pending',
+            'deep_link_url'  => $deepLinkUrl, // <-- Kirim URL ini ke frontend
         ];
     }
+
+
+    // Skema dengan QRcode
+    // private function payWithGopay(Transaction $transaction, Request $request)
+    // {
+    //     $orderId = $transaction->id;
+    //     $amount = $transaction->total_amount;
+    //     $callbackUrl = route('midtrans.callback');
+
+    //     $gopay = app(GopayPaymentService::class);
+    //     $response = $gopay->charge($orderId, $amount, $callbackUrl);
+    //     Log::channel('transaction')->info('Midtrans RAW charge response:', $response);
+
+    //     if (!isset($response['status_code']) || $response['status_code'] != '201') {
+    //         $errorMessage = $response['status_message'] ?? 'Failed to create Midtrans transaction.';
+    //         throw new \Exception($errorMessage);
+    //     }
+
+    //     // =================================================================
+    //     // !! PERUBAHAN UTAMA DI SINI !!
+    //     // Kita tidak lagi menggunakan actions[0], tapi mencari berdasarkan nama.
+    //     // =================================================================
+    //     $actions = collect($response['actions']);
+    //     $qrAction = $actions->firstWhere('name', 'generate-qr-code-v2');
+    //     $qrUrl = $qrAction['url'] ?? null;
+    //     // =================================================================
+
+    //     $qrBase64 = null;
+    //     if ($qrUrl) {
+    //         $midtransServerKey = config('midtrans.server_key');
+
+    //         // =================================================================
+    //         // !! PERBAIKAN DI SINI !!
+    //         // Tambahkan header Accept: image/png
+    //         // =================================================================
+    //         $qrResponse = Http::withBasicAuth($midtransServerKey, '')
+    //             ->withHeaders(['Accept' => 'image/png']) // <-- TAMBAHKAN HEADER INI
+    //             ->get($qrUrl);
+    //         // =================================================================
+
+    //         if ($qrResponse->successful()) {
+    //             $qrBase64 = 'data:image/png;base64,' . base64_encode($qrResponse->body());
+    //         } else {
+    //             Log::channel('transaction')->error('Gagal mengambil gambar QR Code dari Midtrans.', [
+    //                 'url' => $qrUrl,
+    //                 'status_code' => $qrResponse->status(),
+    //                 'body' => $qrResponse->json() ?? $qrResponse->body(),
+    //             ]);
+    //         }
+    //     }
+
+    //     $transaction->paid_amount = $amount;
+    //     $transaction->save();
+
+    //     return [
+    //         'order_id'   => $transaction->id,
+    //         'status'     => $response['transaction_status'] ?? 'pending',
+    //         'qr_base64'  => $qrBase64,
+    //     ];
+    // }
 
     public function handleCallbackGopay(Request $request)
     {
