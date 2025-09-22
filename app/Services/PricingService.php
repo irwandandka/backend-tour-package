@@ -146,7 +146,7 @@ class PricingService
                     ->where('level', $level)
                     ->first();
 
-                if (!$productPrice) continue;
+                if (!$productPrice) break;
 
                 // Target Currency
                 $purchasePrice += $this->currencyService->convert(
