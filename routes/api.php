@@ -89,7 +89,7 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
             Route::post('/gopay/{transaction}', [PaymentController::class, 'payWithGopay']);
             Route::post('/midtrans/callback', [PaymentController::class, 'handleCallbackGopay'])->name('midtrans.callback');
 
-            Route::post('/{id}', [PaymentController::class, 'pay']);
+            Route::post('/{transaction}', [PaymentController::class, 'pay']);
             Route::post('/midtrans/notification', [PaymentController::class, 'handleNotification']);
         });
     });
