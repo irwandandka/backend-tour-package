@@ -194,34 +194,69 @@ class PaymentService
     public function handleCallbackGopay(Request $request)
     {
         $payload = $request->all();
-
-        // Kamu bisa log dulu untuk debug
-        Log::channel('transaction')->info('Midtrans callback:', $payload);
+        Log::channel('transaction')->info('Midtrans callback received:', $payload);
 
         $orderId = $payload['order_id'] ?? null;
-        $status  = $payload['transaction_status'] ?? null;
-
-        $transaction = Transaction::with(
-            [
-                'transactionDetails',
-                'user',
-                'status'
-            ]
-        )
-            ->where('id', $orderId)->first();
-
-        if (!$transaction) {
-            throw new NotFoundHttpException('Transaction not found');
+        if (!$orderId) {
+            return response()->json(['message' => 'Order ID not found'], 400);
         }
 
-        // Update status transaction
-        if ($transaction) {
-            $transaction->status()->associate(Status::where('code', $status)->first());
-            $transaction->save();
+        // Cari transaksi di database Anda
+        $transaction = Transaction::find($orderId);
+        if (!$transaction) {
+            throw new NotFoundHttpException('Transaction not found in local DB');
+        }
 
-            event(new TransactionPaid($transaction));
+        // =================================================================
+        // LANGKAH VERIFIKASI KE MIDTRANS (BAGIAN BARU & PENTING)
+        // =================================================================
+        try {
+            $midtransServerKey = config('midtrans.server_key');
+            $isProduction = config('midtrans.is_production');
 
-            return response()->json(['message' => 'Transaction updated']);
+            // Tentukan URL berdasarkan environment
+            $statusUrl = $isProduction
+                ? "https://api.midtrans.com/v2/{$orderId}/status"
+                : "https://api.sandbox.midtrans.com/v2/{$orderId}/status";
+
+            // Lakukan GET request ke Midtrans untuk verifikasi
+            $response = Http::withBasicAuth($midtransServerKey, '')
+                ->withHeaders(['Accept' => 'application/json'])
+                ->get($statusUrl);
+
+            if ($response->failed()) {
+                Log::channel('transaction')->error('Failed to verify transaction status to Midtrans.', [
+                    'order_id' => $orderId,
+                    'response_status' => $response->status(),
+                    'response_body' => $response->body(),
+                ]);
+                throw new \Exception('Failed to verify transaction status to Midtrans.');
+            }
+
+            $midtransStatus = $response->json();
+            Log::channel('transaction')->info('Midtrans verification response:', $midtransStatus);
+
+            // Dapatkan status resmi dari hasil verifikasi
+            $verifiedStatus = $midtransStatus['transaction_status'] ?? null;
+
+            // Update status transaction HANYA JIKA statusnya berubah
+            if ($transaction->status->code !== $verifiedStatus) {
+                $newStatus = Status::where('code', $verifiedStatus)->first();
+                if ($newStatus) {
+                    $transaction->status()->associate($newStatus);
+                    $transaction->save();
+
+                    // Trigger event HANYA jika pembayaran berhasil (settlement/capture)
+                    if ($verifiedStatus === 'settlement' || $verifiedStatus === 'capture') {
+                        event(new TransactionPaid($transaction));
+                    }
+                }
+            }
+
+            return response()->json(['message' => 'Callback processed successfully']);
+        } catch (\Throwable $e) {
+            Log::channel('transaction')->error('Error in Midtrans callback handler: ' . $e->getMessage());
+            return response()->json(['message' => 'An error occurred'], 500);
         }
     }
 
