@@ -82,4 +82,9 @@ class Transaction extends Model
     {
         return $this->hasOne(Invoice::class);
     }
+
+    public function eticket()
+    {
+        return $this->hasOne(ETicket::class);
+    }
 }

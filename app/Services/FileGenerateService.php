@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\{Invoice, Status, Transaction};
+use App\Models\{ETicket, Invoice, Status, Transaction};
 use Illuminate\Support\Facades\View;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 
@@ -59,10 +59,38 @@ class FileGenerateService
         // This is a placeholder implementation
         $ticketPath = storage_path("tickets/ticket_{$transaction->id}.pdf");
 
-        // Simulate file generation
-        file_put_contents($ticketPath, "Ticket for Transaction ID: {$transaction->id}");
+        // render blade ke HTML
+        $html = View::make('pdf.eticket', compact('transaction'))->render();
 
-        return $ticketPath;
+        // Generate PDF dari HTML
+        SnappyPdf::loadHTML($html)
+            ->setPaper('a4')
+            ->setOption('margin-top', '10mm')
+            ->setOption('margin-bottom', '10mm')
+            ->setOption('margin-left', '10mm')
+            ->setOption('margin-right', '10mm')
+            ->save($ticketPath);
+
+        // upload file to cloud storage
+        $fileUploadService = app(FileUploadService::class);
+        $fileDir = 'etickets';
+
+        $result = $fileUploadService->uploadFile($ticketPath, $fileDir);
+
+        ETicket::create([
+            'transaction_id' => $transaction->id,
+            'ticket_code' => $this->generateCode('ETK-'),
+            'filename' => $result['filePath'] ?? null,
+            'url' => $result['fileURL'] ?? null,
+        ]);
+
+        unlink($ticketPath);
+
+        return [
+            'path' => $ticketPath,
+            'url' => $result['fileURL'] ?? null,
+            'filename' => $result['filePath'] ?? null,
+        ];
     }
 
     private function generateCode(string $prefix, int $length = 8): string
