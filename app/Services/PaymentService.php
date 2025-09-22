@@ -102,21 +102,26 @@ class PaymentService
         $response = $gopay->charge($orderId, $amount, $callbackUrl);
         Log::channel('transaction')->info('Midtrans RAW charge response:', $response);
 
-        // ambil QR code (butuh GET + basic auth)
-        $qrBase64 = null;
+        // Periksa dulu apakah request charge awal berhasil
+        if (!isset($response['status_code']) || $response['status_code'] != '201') {
+            $errorMessage = $response['status_message'] ?? 'Failed to create Midtrans transaction.';
+            throw new \Exception($errorMessage);
+        }
+
+        // Ambil URL untuk gambar QR code
         $qrUrl = $response['actions'][0]['url'] ?? null;
+        $qrBase64 = null;
 
         if ($qrUrl) {
             $midtransServerKey = config('midtrans.server_key');
-            $qrResponse = Http::withBasicAuth($midtransServerKey, '')
-                ->get($qrUrl);
+            $qrResponse = Http::withBasicAuth($midtransServerKey, '')->get($qrUrl);
 
             if ($qrResponse->successful()) {
                 $qrBase64 = 'data:image/png;base64,' . base64_encode($qrResponse->body());
             }
         }
 
-        // update paid_amount
+        // Update paid_amount
         $transaction->paid_amount = $amount;
         $transaction->save();
 
@@ -124,9 +129,8 @@ class PaymentService
 
         return [
             'order_id'   => $transaction->id,
-            'status'     => $response['transaction_status'] ?? 'unknown',
-            'gopay_url'  => $response['actions'][1]['url'] ?? null, // deeplink
-            'qr_base64'  => $response['qr_base64'] ?? null, // untuk ditampilkan langsung di FE
+            'status'     => $response['transaction_status'] ?? 'pending',
+            'qr_base64'  => $qrBase64,
         ];
     }
 
