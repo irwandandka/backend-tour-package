@@ -89,7 +89,8 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
 
             // Gopay Payment
             Route::post('/gopay/{transaction}', [PaymentController::class, 'payWithGopay']);
-            Route::match(['get', 'post'], '/midtrans/callback', [PaymentController::class, 'handleCallbackGopay'])->name('midtrans.callback');
+            Route::match(['get', 'post'], '/midtrans/callback', [PaymentController::class, 'handleCallbackGopay'])->name('midtrans.callback')
+                ->withoutMiddleware(['check.token.expiration', CheckAPIKey::class]);
 
             Route::post('/{transaction}', [PaymentController::class, 'pay']);
             Route::post('/midtrans/notification', [PaymentController::class, 'handleNotification']);
