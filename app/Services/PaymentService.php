@@ -85,7 +85,7 @@ class PaymentService
                     throw new \Exception('Unsupported payment method');
             }
 
-            event(new TransactionPaid($transaction));
+            return $result;
         });
     }
 
@@ -157,6 +157,10 @@ class PaymentService
         if ($transaction) {
             $transaction->status()->associate(Status::where('code', $status)->first());
             $transaction->save();
+
+            event(new TransactionPaid($transaction));
+
+            return response()->json(['message' => 'Transaction updated']);
         }
     }
 
