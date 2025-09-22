@@ -3,10 +3,11 @@
 namespace App\Services;
 
 use App\Events\TransactionOrdered;
+use App\Events\TransactionPaid;
 use App\Services\GopayPaymentService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{DB, Http};
-use App\Models\{Log, PaymentMethod, Status, Transaction};
+use Illuminate\Support\Facades\{DB, Http, Log};
+use App\Models\{PaymentMethod, Status, Transaction};
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PaymentService
@@ -48,6 +49,8 @@ class PaymentService
             $transaction->save();
 
             event(new TransactionOrdered($transaction));
+
+            return $transaction;
         });
     }
 
@@ -58,14 +61,20 @@ class PaymentService
         return DB::transaction(function () use ($transaction, $request) {
             // Implement payment logic here
 
+            $result = null;
+
             switch ($request->payment_method) {
                 case PaymentMethod::ID_GOPAY:
-                    return $this->payWithGopay(
+                    $result = $this->payWithGopay(
                         $transaction,
                         $request
                     );
                     break;
                 case PaymentMethod::ID_BANK_TRANSFER:
+                    $result = $this->payWithBankTransfer(
+                        $transaction,
+                        $request
+                    );
                     break;
                 case PaymentMethod::ID_MANDIRI_VA:
                     break;
@@ -75,6 +84,8 @@ class PaymentService
                 default:
                     throw new \Exception('Unsupported payment method');
             }
+
+            event(new TransactionPaid($transaction));
         });
     }
 
@@ -82,13 +93,14 @@ class PaymentService
         Transaction $transaction,
         Request $request
     ) {
-        $orderId = $transaction->order_id;
+        $orderId = $transaction->id;
         $amount = $transaction->total_amount;
         $callbackUrl = route('midtrans.callback');
 
         $gopay = app(GopayPaymentService::class);
 
         $response = $gopay->charge($orderId, $amount, $callbackUrl);
+        Log::channel('transaction')->info('Midtrans RAW charge response:', $response);
 
         // ambil QR code (butuh GET + basic auth)
         $qrBase64 = null;
@@ -104,11 +116,14 @@ class PaymentService
             }
         }
 
-        // Set Payment Method
-        $transaction->paymentMethod()->associate($gopay->getPaymentMethod());
+        // update paid_amount
+        $transaction->paid_amount = $amount;
+        $transaction->save();
+
+        Log::channel('transaction')->info('Midtrans charge response:', $response);
 
         return [
-            'order_id'   => $transaction->order_id,
+            'order_id'   => $transaction->id,
             'status'     => $response['transaction_status'] ?? 'unknown',
             'gopay_url'  => $response['actions'][1]['url'] ?? null, // deeplink
             'qr_base64'  => $response['qr_base64'] ?? null, // untuk ditampilkan langsung di FE
@@ -120,7 +135,7 @@ class PaymentService
         $payload = $request->all();
 
         // Kamu bisa log dulu untuk debug
-        Log::info('Midtrans callback:', $payload);
+        Log::channel('transaction')->info('Midtrans callback:', $payload);
 
         $orderId = $payload['order_id'] ?? null;
         $status  = $payload['transaction_status'] ?? null;
@@ -143,6 +158,24 @@ class PaymentService
             $transaction->status()->associate(Status::where('code', $status)->first());
             $transaction->save();
         }
+    }
+
+    public function payWithBankTransfer(
+        Transaction $transaction,
+        Request $request
+    ) {
+        // Implement bank transfer payment logic here
+        $file = $request->file('proof_of_payment');
+
+        // save to cloud storage
+        $fileUploadService = app(FileUploadService::class);
+        $fileDir = 'proof_of_payments';
+        $result = $fileUploadService->uploadFile($file->getPathname(), $fileDir);
+
+        // update paid_amount
+        $transaction->paid_amount = $transaction->total_amount;
+        $transaction->save();
+        return [];
     }
 
     public function handleNotification(array $notificationData)
