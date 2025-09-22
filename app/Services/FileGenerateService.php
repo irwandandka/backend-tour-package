@@ -60,7 +60,7 @@ class FileGenerateService
         $ticketPath = storage_path("tickets/ticket_{$transaction->id}.pdf");
 
         // render blade ke HTML
-        $html = View::make('pdf.eticket', compact('transaction'))->render();
+        $html = View::make('pdf.ticket', compact('transaction'))->render();
 
         // Generate PDF dari HTML
         SnappyPdf::loadHTML($html)
