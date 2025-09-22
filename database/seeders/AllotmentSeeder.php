@@ -23,8 +23,8 @@ class AllotmentSeeder extends Seeder
                     $detail->allotments()->create([
                         'product_detail_id' => $detail->id,
                         'transaction_id' => null,
-                        'period' => '202507',
-                        'code' => 'Insert-Allotment-202505',
+                        'period' => '202602',
+                        'code' => 'Insert-Allotment-202602',
                         'day1' => 25,
                         'day2' => 25,
                         'day3' => 25,

@@ -417,7 +417,7 @@ class PackageService
 
         // Filter allotments berdasarkan period >= sekarang, lalu group by period
         $availablePeriod = $allAllotments
-            ->where('period', '>=', Carbon::now())
+            ->where('period', '>=', Carbon::now()->format('Ym'))
             ->groupBy('period')
             ->mapWithKeys(function ($allotments, $period) {
                 $total = $allotments->sum(function ($allotment) {
@@ -436,6 +436,7 @@ class PackageService
                     'name' => $periodFormat->translatedFormat('F Y'),
                 ];
             })
+            ->sortBy('id')
             ->values();
 
         return $availablePeriod;
