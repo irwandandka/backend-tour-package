@@ -96,6 +96,7 @@ class BookingService
 
         $transaction->total_amount = $salesTotal;
         $transaction->total_amount_base = $salesTotalBase;
+        $transaction->currency_id = $currencies->where('code', $validated['currency'])->first()->id;
         $transaction->save();
 
         return $transaction;
