@@ -46,6 +46,7 @@ class PaymentService
             }
 
             $transaction->paymentMethod()->associate($paymentMethod);
+            $transaction->status()->associate(Status::where('code', 'pending')->first());
             $transaction->save();
 
             event(new TransactionOrdered($transaction));
