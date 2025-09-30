@@ -26,10 +26,10 @@ class BookingHistoryDetailResource extends JsonResource
             "notes" => $transaction->notes,
             "customer_name" => $transaction->customer_name,
             "customer_email" => $transaction->customer_email,
+            'payment_method' => $transaction->paymentMethod ? $transaction->paymentMethod->name : null,
             "from_date" => Carbon::parse($transaction->date_from)->format("l, jS F Y"),
             "to_date" => Carbon::parse($transaction->date_to)->format("l, jS F Y"),
-            "transaction_details" => $transaction
-                ->transactionDetails
+            "transaction_details" => $transaction->transactionDetails
                 ->map(function ($detail) {
                     return [
                         "product_detail_name" => $detail->productDetail->name_en,

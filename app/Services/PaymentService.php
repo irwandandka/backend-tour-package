@@ -105,10 +105,6 @@ class PaymentService
             throw new \Exception($errorMessage);
         }
 
-        // =================================================================
-        // !! PERUBAHAN UTAMA DI SINI !!
-        // Kita hanya perlu mencari action dengan nama 'deeplink-redirect'
-        // =================================================================
         $actions = collect($response['actions']);
         $deepLinkAction = $actions->firstWhere('name', 'deeplink-redirect');
         $deepLinkUrl = $deepLinkAction['url'] ?? null;
@@ -116,8 +112,6 @@ class PaymentService
         if (!$deepLinkUrl) {
             throw new \Exception('GoPay deep link URL not found in Midtrans response.');
         }
-
-        // Sisa kode yang rumit (request kedua, base64, sleep) DIHAPUS SEMUA.
 
         // Update paid_amount
         $transaction->paid_amount = $amount;

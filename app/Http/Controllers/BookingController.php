@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Booking\BookingHistoryDetailResource;
 use App\Http\Resources\Booking\BookingHistoryResource;
 use App\Services\{BookingService, ErrorHandler};
+use Exception;
 use Illuminate\Http\Request;
 use Throwable;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -59,9 +61,11 @@ class BookingController extends Controller
         string $id
     ) {
         try {
-            $data = $this->bookingService->cancelBooking($id);
+            return DB::transaction(function () use ($id) {
+                $data = $this->bookingService->cancelBooking($id);
 
-            return response()->json(new BookingHistoryDetailResource($data));
+                return response()->json(new BookingHistoryDetailResource($data));
+            });
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
         }

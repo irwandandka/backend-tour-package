@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\{Currency, Passenger, Product, Status, Transaction, TransactionDetail, User};
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -49,6 +50,10 @@ class BookingService
             'booking_date' => now(),
             'notes' => 'Booking a product',
         ]);
+
+        if (!$transaction) {
+            throw new Exception('Failed to create transaction');
+        }
 
         $product = Product::with(
             [
@@ -117,6 +122,10 @@ class BookingService
             ->where('id', $id)
             ->first();
 
+        if (!$transaction) {
+            throw new Exception('Transaction not found');
+        }
+
         return $transaction;
     }
 
@@ -124,11 +133,12 @@ class BookingService
     {
         $transaction = Transaction::find($id);
 
-        $transaction->status_id = 3;
-        $transaction->save();
+        if (!$transaction) {
+            throw new Exception('Transaction not found');
+        }
 
-        // $job = new SendBookingEmail($email, $bookingDetails);
-        // dispatch($job);
+        $transaction->status_id = Status::STATUS_CANCELLED;
+        $transaction->save();
 
         return $transaction;
     }
@@ -162,6 +172,10 @@ class BookingService
                 ->where('id', $id)
                 ->first();
 
+            if (!$transaction) {
+                throw new Exception('Transaction not found');
+            }
+
             if ($transaction->passengers->isEmpty()) {
                 $totalPax = $transaction->transactionDetails->sum(function ($detail) {
                     return $detail->quantity_adult + $detail->quantity_child + $detail->quantity_infant;
@@ -193,14 +207,6 @@ class BookingService
 
             return $transaction;
         });
-        // $job = new SendBookingEmail($email, $bookingDetails);
-        // dispatch($job);
-    }
-
-    public function sendBookingEmail($email, $bookingDetails)
-    {
-        // $job = new SendBookingEmail($email, $bookingDetails);
-        // dispatch($job);
     }
 
     public function getHistory(
