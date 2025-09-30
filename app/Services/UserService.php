@@ -27,6 +27,8 @@ class UserService
 
         return DB::transaction(function () use ($user, $validated) {
             $user->update($validated);
+
+            return $user;
         });
     }
 

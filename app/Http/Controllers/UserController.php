@@ -46,16 +46,16 @@ class UserController extends Controller
     }
 
     public function saveProfile(
-        User $user,
         Request $request
     ) {
         try {
+            $user = auth('api')->user();
             $user = $this->userService->updateProfile($request, $user);
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Profile updated successfully',
-                'data' => new UserResource($user),
+                'data' => $user,
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);

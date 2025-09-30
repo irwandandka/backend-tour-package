@@ -16,7 +16,7 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
         Route::get('/google', [AuthController::class, 'redirectToGoogle']);
         Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback']);
 
-        Route::post('/save-profile', [AuthController::class, 'saveProfile'])->middleware('check.token.expiration');
+        // Route::post('/save-profile', [AuthController::class, 'saveProfile'])->middleware('check.token.expiration');
     });
 
     Route::prefix('/city')->group(function () {
