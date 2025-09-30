@@ -25,6 +25,8 @@ class Status extends Model
     public const STATUS_REVISED = '667fbd6c-21e9-4d4e-b98f-d0cc621cf602';
     public const STATUS_EXPIRED = '7a685d58-0e09-4124-a300-a76cf412e60a';
     public const STATUS_ORDERED = 'bdfae7da-9145-11f0-96b2-5e65455fb537';
+    public const STATUS_SETTLEMENT = 'e6667935-9dff-11f0-8ab4-4ea4ead923a6';
+    public const STATUS_CAPTURE = 'f3afb98d-9dff-11f0-8ab4-4ea4ead923a6';
 
     protected $keyType = 'string';
 

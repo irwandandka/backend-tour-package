@@ -242,6 +242,7 @@ class PaymentService
 
                     // Trigger event HANYA jika pembayaran berhasil (settlement/capture)
                     if ($verifiedStatus === 'settlement' || $verifiedStatus === 'capture') {
+                        Log::channel('transaction')->info('Triggering TransactionPaid event for transaction:', ['id' => $transaction->id]);
                         event(new TransactionPaid($transaction));
                     }
                 }
