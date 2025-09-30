@@ -101,4 +101,21 @@ class BookingController extends Controller
             return $this->errorHandler->handle($e);
         }
     }
+
+    public function submitReview(
+        Request $request,
+        string $id
+    ) {
+        try {
+            $result = $this->bookingService->submitReview($request, $id);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Review submitted successfully',
+                'data' => $result,
+            ]);
+        } catch (Throwable $e) {
+            return $this->errorHandler->handle($e);
+        }
+    }
 }

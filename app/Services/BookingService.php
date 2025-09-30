@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\{Currency, Passenger, Product, Status, Transaction, TransactionDetail, User};
+use App\Models\{Currency, Passenger, Review, Product, Status, Transaction, TransactionDetail, User};
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -117,6 +117,7 @@ class BookingService
                 "transactionDetails",
                 "transactionDetails.product",
                 "transactionDetails.productDetail",
+                "eticket",
             ]
         )
             ->where('id', $id)
@@ -235,6 +236,7 @@ class BookingService
 
         $bookings = $userData
             ->transactions
+            ->sortByDesc('created_at')
             ->map(function ($transaction) {
                 return (object) [
                     "id" => $transaction->id,
@@ -249,5 +251,31 @@ class BookingService
                 ];
             });
         return $bookings;
+    }
+
+    public function submitReview(
+        Request $request,
+        string $id
+    ) {
+        $validated = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'required|string',
+        ]);
+
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            throw new Exception('Transaction not found');
+        }
+
+        Review::create([
+            'user_id' => $transaction->user_id,
+            'product_id' => $transaction->product_id,
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+            'review_date' => now(),
+        ]);
+
+        return $transaction;
     }
 }

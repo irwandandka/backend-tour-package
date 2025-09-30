@@ -77,6 +77,7 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
             Route::get('/{id}', [BookingController::class, 'show']);
             Route::post('{id}/cancel', [BookingController::class, 'cancel']);
             Route::post('/{id}/update', [BookingController::class, 'update']);
+            Route::post('/{id}/submit-review', [BookingController::class, 'submitReview']);
         });
 
         Route::prefix('/payment')->group(function () {
