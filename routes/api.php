@@ -69,6 +69,7 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
             Route::get('/profile', [UserController::class, 'profile']);
             Route::post('/upload-profile-picture', [UserController::class, 'uploadProfilePicture']);
             Route::post('/review-product/{slug}', [ProductController::class]);
+            Route::post('/save-profile', [UserController::class, 'saveProfile']);
         });
 
         Route::prefix('/booking')->group(function () {
