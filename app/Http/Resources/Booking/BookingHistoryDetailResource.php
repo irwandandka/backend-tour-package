@@ -19,6 +19,7 @@ class BookingHistoryDetailResource extends JsonResource
             "code" => $transaction->code,
             "status" => $transaction->status->name,
             "product" => $transaction->product->name,
+            "slug" => $transaction->product->slug,
             "quantity" => $transaction->quantity,
             "total_amount" => $transaction->total_amount,
             "total_amount_base" => $transaction->total_amount_base,
