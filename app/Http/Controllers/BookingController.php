@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Booking\CreateBookingRequest;
+use App\Http\Requests\Booking\SubmitReviewRequest;
+use App\Http\Requests\Booking\UpdateBookingRequest;
 use App\Http\Resources\Booking\BookingHistoryDetailResource;
 use App\Http\Resources\Booking\BookingHistoryResource;
+use App\Models\Transaction;
 use App\Services\{BookingService, ErrorHandler};
-use Exception;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use Throwable;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class BookingController extends Controller
 {
-    use ValidatesRequests;
+    use AuthorizesRequests;
 
     private $errorHandler;
     private $bookingService;
@@ -27,7 +30,7 @@ class BookingController extends Controller
     }
 
     public function store(
-        Request $request
+        CreateBookingRequest $request
     ) {
         try {
             $result = $this->bookingService->createTransaction($request);
@@ -43,10 +46,12 @@ class BookingController extends Controller
     }
 
     public function show(
-        string $id
+        Transaction $transaction
     ) {
         try {
-            $data = $this->bookingService->getTransaction($id);
+            $this->authorize('view', $transaction);
+
+            $data = $this->bookingService->getTransaction($transaction);
 
             return response()->json([
                 'status' => 'success',
@@ -58,11 +63,13 @@ class BookingController extends Controller
     }
 
     public function cancel(
-        string $id
+        Transaction $transaction
     ) {
         try {
-            return DB::transaction(function () use ($id) {
-                $data = $this->bookingService->cancelBooking($id);
+            $this->authorize('cancel', $transaction);
+
+            return DB::transaction(function () use ($transaction) {
+                $data = $this->bookingService->cancelBooking($transaction);
 
                 return response()->json(new BookingHistoryDetailResource($data));
             });
@@ -72,11 +79,13 @@ class BookingController extends Controller
     }
 
     public function update(
-        Request $request,
-        string $id
+        UpdateBookingRequest $request,
+        Transaction $transaction
     ) {
         try {
-            $result = $this->bookingService->updateBooking($id, $request);
+            $this->authorize('update', $transaction);
+
+            $result = $this->bookingService->updateBooking($transaction, $request);
 
             return response()->json([
                 'status' => 'success',
@@ -103,11 +112,13 @@ class BookingController extends Controller
     }
 
     public function submitReview(
-        Request $request,
-        string $id
+        SubmitReviewRequest $request,
+        Transaction $transaction
     ) {
         try {
-            $result = $this->bookingService->submitReview($request, $id);
+            $this->authorize('review', $transaction);
+
+            $result = $this->bookingService->submitReview($request, $transaction);
 
             return response()->json([
                 'status' => 'success',

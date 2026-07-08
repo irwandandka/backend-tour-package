@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use App\Services\GoogleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\HasApiTokens;
 use App\Services\ErrorHandler;
 use Throwable;
@@ -29,25 +29,14 @@ class AuthController extends Controller
     /**
      * @see SwaggerInfo::register()
      */
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
         try {
-            // Validate the incoming request
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 400);
-            }
-
             // Create the user
             $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
+                'name' => $request->validated('name'),
+                'email' => $request->validated('email'),
+                'password' => Hash::make($request->validated('password')),
             ]);
 
             // Return a success response with the newly created user

@@ -14,7 +14,7 @@ class AllotmentService
             ->allotments
             ->where('period', $date->copy()->format('Ym'))
             ->values()
-            ->sum('day' . $date->copy()->format('d'));
+            ->sum('day' . $date->day);
 
         return $allotments;
     }

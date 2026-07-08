@@ -45,7 +45,7 @@ class AuthTest extends TestCase
             'password' => 'password123',
         ]);
 
-        $response->assertStatus(400);
+        $response->assertStatus(422);
     }
 
     public function test_register_rejects_short_password(): void
@@ -56,7 +56,7 @@ class AuthTest extends TestCase
             'password' => 'short',
         ]);
 
-        $response->assertStatus(400);
+        $response->assertStatus(422);
     }
 
     public function test_login_returns_token_for_valid_credentials(): void

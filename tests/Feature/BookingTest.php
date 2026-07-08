@@ -247,7 +247,7 @@ class BookingTest extends TestCase
                 ],
             ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(422);
     }
 
     public function test_other_user_cannot_review_someone_elses_booking(): void

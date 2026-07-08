@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookingService
@@ -24,20 +23,7 @@ class BookingService
     public function createTransaction(Request $request)
     {
         $user = auth('api')->user();
-
-        $validated = $request->validate([
-            'currency' => 'required',
-            'product_id' => 'required|exists:products,id',
-            'date_from' => 'required|date',
-            'date_to' => 'required|date',
-            'product_details' => 'required|array|min:1',
-            'product_details.*.product_detail' => 'required|exists:product_details,id',
-            'product_details.*.quantity' => 'required|integer|min:1',
-            'product_details.*.quantity_adult' => 'required|integer|min:0',
-            'product_details.*.quantity_child' => 'required|integer|min:0',
-            'product_details.*.quantity_infant' => 'required|integer|min:0',
-            'product_details.*.quantity_senior' => 'required|integer|min:0',
-        ]);
+        $validated = $request->validated();
 
         $statusEntry = Status::where('code', 'entry')->first();
         $bookingCode = generateTransactionCode();
@@ -114,12 +100,9 @@ class BookingService
         return $transaction;
     }
 
-    public function getTransaction(
-        string $id
-    ) {
-        $user = auth('api')->user();
-
-        $transaction = Transaction::with(
+    public function getTransaction(Transaction $transaction)
+    {
+        return $transaction->load(
             [
                 "product",
                 "status",
@@ -128,79 +111,23 @@ class BookingService
                 "transactionDetails.productDetail",
                 "eticket",
             ]
-        )
-            ->where('id', $id)
-            ->first();
-
-        if (!$transaction) {
-            throw new NotFoundHttpException('Transaction not found');
-        }
-
-        if ($transaction->user_id !== $user->id) {
-            throw new AccessDeniedHttpException('You are not authorized to access this transaction');
-        }
-
-        return $transaction;
+        );
     }
 
-    public function cancelBooking(string $id)
+    public function cancelBooking(Transaction $transaction)
     {
-        $user = auth('api')->user();
-
-        $transaction = Transaction::find($id);
-
-        if (!$transaction) {
-            throw new NotFoundHttpException('Transaction not found');
-        }
-
-        if ($transaction->user_id !== $user->id) {
-            throw new AccessDeniedHttpException('You are not authorized to cancel this transaction');
-        }
-
         $transaction->status_id = Status::STATUS_CANCELLED;
         $transaction->save();
 
         return $transaction;
     }
 
-    public function updateBooking(string $id, Request $request)
+    public function updateBooking(Transaction $transaction, Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'phone' => 'required|string',
-            'address' => 'required|string',
-            'postal_code' => 'required|string',
-            'passengers' => 'required|array',
-            'passengers.*.first_name' => 'required|string',
-            'passengers.*.last_name' => 'required|string',
-            'passengers.*.title' => 'required|string',
-            'passengers.*.nationality' => 'string|nullable',
-            'passengers.*.passport_number' => 'string|nullable|unique:passengers,passport_number',
-            'passengers.*.passport_expiry_date' => 'string|nullable|date_format:Y-m-d',
-            'passengers.*.passport_issue_date' => 'string|nullable|date_format:Y-m-d',
-            'passengers.*.passport_issue_country' => 'string|nullable',
-            'passengers.*.birth_place' => 'string|nullable',
-            'passengers.*.birth_date' => 'string|nullable|date_format:Y-m-d',
-        ]);
+        $validated = $request->validated();
 
-        $user = auth('api')->user();
-
-        return DB::transaction(function () use ($validated, $id, $user) {
-            $transaction = Transaction::with([
-                'transactionDetails',
-                'passengers',
-            ])
-                ->where('id', $id)
-                ->first();
-
-            if (!$transaction) {
-                throw new NotFoundHttpException('Transaction not found');
-            }
-
-            if ($transaction->user_id !== $user->id) {
-                throw new AccessDeniedHttpException('You are not authorized to update this transaction');
-            }
+        return DB::transaction(function () use ($validated, $transaction) {
+            $transaction->load(['transactionDetails', 'passengers']);
 
             if ($transaction->passengers->isEmpty()) {
                 $totalPax = $transaction->transactionDetails->sum(function ($detail) {
@@ -208,7 +135,9 @@ class BookingService
                 });
 
                 if (count($validated['passengers']) < $totalPax) {
-                    throw new ValidationException('Total passengers must not be less than ' . $totalPax);
+                    throw ValidationException::withMessages([
+                        'passengers' => 'Total passengers must not be less than ' . $totalPax,
+                    ]);
                 }
 
                 $transaction->customer_name = $validated['name'];
@@ -279,26 +208,9 @@ class BookingService
         return $bookings;
     }
 
-    public function submitReview(
-        Request $request,
-        string $id
-    ) {
-        $validated = $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'required|string',
-        ]);
-
-        $user = auth('api')->user();
-
-        $transaction = Transaction::find($id);
-
-        if (!$transaction) {
-            throw new NotFoundHttpException('Transaction not found');
-        }
-
-        if ($transaction->user_id !== $user->id) {
-            throw new AccessDeniedHttpException('You are not authorized to review this transaction');
-        }
+    public function submitReview(Request $request, Transaction $transaction)
+    {
+        $validated = $request->validated();
 
         Review::create([
             'user_id' => $transaction->user_id,

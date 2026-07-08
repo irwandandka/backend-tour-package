@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Payment\SetPaymentMethodRequest;
 use App\Services\PaymentService;
 use App\Models\{Transaction};
 use App\Services\{ErrorHandler, MidtransService};
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Throwable;
 
 class PaymentController extends Controller
 {
-    use ValidatesRequests;
+    use AuthorizesRequests;
 
     private $errorHandler, $midtransService, $paymentService;
     public function __construct(
@@ -38,10 +39,13 @@ class PaymentController extends Controller
         }
     }
 
-    public function setPaymentMethod(Request $request)
+    public function setPaymentMethod(SetPaymentMethodRequest $request)
     {
         try {
-            $transaction = $this->paymentService->setPaymentMethod($request);
+            $transaction = Transaction::findOrFail($request->validated('transaction_id'));
+            $this->authorize('pay', $transaction);
+
+            $transaction = $this->paymentService->setPaymentMethod($transaction, $request);
 
             return response()->json([
                 'status' => 'success',
@@ -58,6 +62,8 @@ class PaymentController extends Controller
         Request $request,
     ) {
         try {
+            $this->authorize('pay', $transaction);
+
             $result = $this->paymentService->processPayment($transaction, $request);
 
             return response()->json([
@@ -84,9 +90,7 @@ class PaymentController extends Controller
     public function getTransactionStatus(Transaction $transaction)
     {
         try {
-            if ($transaction->user_id !== auth('api')->id()) {
-                return response()->json(['message' => 'Unauthorized'], 403);
-            }
+            $this->authorize('view', $transaction);
 
             return response()->json([
                 'status' => 'success',

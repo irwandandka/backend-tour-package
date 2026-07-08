@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
@@ -26,6 +28,20 @@ class ErrorHandler
             return $this->handleValidationException($e);
         }
 
+        // Policy/Gate authorization failure (mis. $this->authorize())
+        if ($e instanceof AuthorizationException) {
+            return response()->json([
+                'message' => $e->getMessage() ?: 'This action is unauthorized.',
+            ], Response::HTTP_FORBIDDEN);
+        }
+
+        // Route-model-binding atau ::findOrFail() gagal menemukan record
+        if ($e instanceof ModelNotFoundException) {
+            return response()->json([
+                'message' => 'Resource not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
         // Exception HTTP eksplisit (404, 403, dll) harus mempertahankan status code-nya
         if ($e instanceof HttpExceptionInterface) {
             return response()->json([
@@ -33,7 +49,7 @@ class ErrorHandler
             ], $e->getStatusCode());
         }
 
-        // Tangani exception lainnya (seperti QueryException, ModelNotFoundException, dll)
+        // Tangani exception lainnya (seperti QueryException, dll)
         return $this->handleGeneralError($e);
     }
 
