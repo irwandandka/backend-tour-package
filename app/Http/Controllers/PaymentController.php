@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Payment\SetPaymentMethodRequest;
 use App\Models\Transaction;
 use App\Services\ErrorHandler;
-use App\Services\MidtransService;
 use App\Services\PaymentService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -17,17 +16,13 @@ class PaymentController extends Controller
 
     private $errorHandler;
 
-    private $midtransService;
-
     private $paymentService;
 
     public function __construct(
         ErrorHandler $errorHandler,
-        MidtransService $midtransService,
         PaymentService $paymentService
     ) {
         $this->errorHandler = $errorHandler;
-        $this->midtransService = $midtransService;
         $this->paymentService = $paymentService;
     }
 

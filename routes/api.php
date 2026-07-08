@@ -10,7 +10,6 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\TestingController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckAPIKey;
 use Illuminate\Support\Facades\Route;
@@ -18,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
 
     Route::prefix('auth')->group(function () {
-        Route::post('/register', [AuthController::class, 'register']);
-        Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:5,1');
+        Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('check.token.expiration');
 
         // Google OAuth
@@ -48,7 +47,6 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
     });
 
     Route::prefix('/product')->group(function () {
-        Route::get('/test-redis', [ProductController::class, 'testRedis']);
         Route::get('/list', [ProductController::class, 'list']);
         Route::get('/popular-destination', [ProductController::class, 'popularDestination']);
         Route::get('/explore-now', [ProductController::class, 'exploreNow']);
@@ -71,15 +69,10 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
         Route::get('/currency-rates', [CrawlingController::class, 'getCurrencyRates']);
     });
 
-    Route::prefix('/debug')->group(function () {
-        Route::get('/test-invoice/{id}', [TestingController::class, 'testInvoice']);
-    });
-
     Route::middleware(['check.token.expiration'])->group(function () {
         Route::prefix('/user')->group(function () {
             Route::get('/profile', [UserController::class, 'profile']);
             Route::post('/upload-profile-picture', [UserController::class, 'uploadProfilePicture']);
-            Route::post('/review-product/{slug}', [ProductController::class]);
             Route::post('/save-profile', [UserController::class, 'saveProfile']);
         });
 

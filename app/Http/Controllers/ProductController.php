@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Product\PopularDestinationResource;
 use App\Http\Resources\Product\ProductDetailResource;
 use App\Http\Resources\Product\RoomTypeResource;
-use App\Jobs\TestRedisJob;
 use App\Models\City;
 use App\Services\AllotmentService;
 use App\Services\ErrorHandler;
@@ -188,20 +187,6 @@ class ProductController extends Controller
             return response()->json([
                 'status' => 'success',
                 'data' => $availablePeriod,
-            ]);
-        } catch (Throwable $e) {
-            return $this->errorHandler->handle($e);
-        }
-    }
-
-    public function testRedis(Request $request)
-    {
-        try {
-            TestRedisJob::dispatch();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Redis job has been dispatched successfully.',
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
