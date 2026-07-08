@@ -25,6 +25,12 @@ jobs:
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist --no-interaction
 
+      - name: Check code style (Pint)
+        run: ./vendor/bin/pint --test
+
+      - name: Static analysis (Larastan)
+        run: ./vendor/bin/phpstan analyse --memory-limit=1G
+
       - name: Copy .env
         run: cp .env.ci .env  # Pastikan file `.env.ci` sudah ada di repo
 

@@ -1,0 +1,805 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Relation ''country'' is not found in App\\Models\\City model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/CityController.php
+
+		-
+			message: '#^Relation ''region'' is not found in App\\Models\\City model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/CityController.php
+
+		-
+			message: '#^Relation ''cities'' is not found in App\\Models\\Country model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/CountryController.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 2
+			path: app/Http/Controllers/CrawlingController.php
+
+		-
+			message: '#^Relation ''country'' is not found in App\\Models\\City model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/ProductController.php
+
+		-
+			message: '#^Relation ''products'' is not found in App\\Models\\City model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/ProductController.php
+
+		-
+			message: '#^Relation ''countries'' is not found in App\\Models\\Region model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Http/Controllers/RegionController.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Booking\\BookingHistoryResource\:\:\$booking_date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Booking/BookingHistoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Booking\\BookingHistoryResource\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Booking/BookingHistoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Booking\\BookingHistoryResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Booking/BookingHistoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Booking\\BookingHistoryResource\:\:\$image\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Booking/BookingHistoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Booking\\BookingHistoryResource\:\:\$notes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Booking/BookingHistoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Booking\\BookingHistoryResource\:\:\$product\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Booking/BookingHistoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Booking\\BookingHistoryResource\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Booking/BookingHistoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Booking\\BookingHistoryResource\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Booking/BookingHistoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Booking\\BookingHistoryResource\:\:\$total_amount\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Booking/BookingHistoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Booking\\BookingHistoryResource\:\:\$total_amount_base\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Booking/BookingHistoryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CityResource\:\:\$country\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CityResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CityResource\:\:\$latitude\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CityResource\:\:\$longitude\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CityResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CityResource\:\:\$postal_code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CityResource\:\:\$region\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\CityResource\:\:country\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\CityResource\:\:region\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\CityResource\:\:relationLoaded\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Variable \$fields in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Variable \$relations in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/CityResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CountryResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CountryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CountryResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CountryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CountryResource\:\:\$iso_code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CountryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CountryResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CountryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\CountryResource\:\:\$phone_code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/CountryResource.php
+
+		-
+			message: '#^Variable \$fields in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/CountryResource.php
+
+		-
+			message: '#^Variable \$relations in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/CountryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\AvailablePeriodResource\:\:\$booking_date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/AvailablePeriodResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\AvailablePeriodResource\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/AvailablePeriodResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\AvailablePeriodResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/AvailablePeriodResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\AvailablePeriodResource\:\:\$image\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/AvailablePeriodResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\AvailablePeriodResource\:\:\$notes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/AvailablePeriodResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\AvailablePeriodResource\:\:\$product\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/AvailablePeriodResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\AvailablePeriodResource\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/AvailablePeriodResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\AvailablePeriodResource\:\:\$total_amount\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/AvailablePeriodResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\AvailablePeriodResource\:\:\$total_amount_base\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/AvailablePeriodResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\PopularDestinationResource\:\:\$currency\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/PopularDestinationResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\PopularDestinationResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/PopularDestinationResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\PopularDestinationResource\:\:\$location\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/PopularDestinationResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\PopularDestinationResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/PopularDestinationResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\PopularDestinationResource\:\:\$price\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/PopularDestinationResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\PopularDestinationResource\:\:\$reviews_avg_rating\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/PopularDestinationResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\PopularDestinationResource\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/PopularDestinationResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\PopularDestinationResource\:\:\$thumbnail_image\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/PopularDestinationResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\ProductResource\:\:\$booking_date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\ProductResource\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\ProductResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\ProductResource\:\:\$image\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\ProductResource\:\:\$notes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\ProductResource\:\:\$product\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\ProductResource\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\ProductResource\:\:\$total_amount\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\ProductResource\:\:\$total_amount_base\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\RoomTypeResource\:\:\$allotment\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/RoomTypeResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\RoomTypeResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/RoomTypeResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\RoomTypeResource\:\:\$image\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/RoomTypeResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\RoomTypeResource\:\:\$max_adult\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/RoomTypeResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\RoomTypeResource\:\:\$max_pax\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/RoomTypeResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\RoomTypeResource\:\:\$min_adult\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/RoomTypeResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\RoomTypeResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/RoomTypeResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\Product\\RoomTypeResource\:\:\$pricing\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Product/RoomTypeResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$capacity\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$category\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$city\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$date_from\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$date_until\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$duration\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$price\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$thumbnail_image\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\ProductResource\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 2
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:category\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:city\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:formatCreatedAt\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:relationLoaded\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:status\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\ProductResource\:\:user\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Instantiated class App\\Http\\Resources\\CategoryResource not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Variable \$fields in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Variable \$relations in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/ProductResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\RegionResource\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/RegionResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\RegionResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/RegionResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\RegionResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/RegionResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\RegionResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/RegionResource.php
+
+		-
+			message: '#^Variable \$fields in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/RegionResource.php
+
+		-
+			message: '#^Variable \$relations in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/RegionResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\StatusResource\:\:\$code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/StatusResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\StatusResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/StatusResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\StatusResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/StatusResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\StatusResource\:\:formatCreatedAt\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/StatusResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\StatusResource\:\:relationLoaded\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/StatusResource.php
+
+		-
+			message: '#^Variable \$fields in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/StatusResource.php
+
+		-
+			message: '#^Variable \$relations in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/StatusResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$address\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$birth_date\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$city\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$country\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$email_verified_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$gender\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$phone\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$profile_picture_url\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\User\\UserResource\:\:\$username\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/User/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\UserResource\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\UserResource\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Http\\Resources\\UserResource\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\UserResource\:\:formatCreatedAt\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: '#^Call to an undefined method App\\Http\\Resources\\UserResource\:\:relationLoaded\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: '#^Variable \$fields in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: '#^Variable \$relations in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: app/Http/Resources/UserResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\User\:\:\$token_expires_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: '#^Relation ''product_details'' is not found in App\\Models\\Product model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Services/BookingService.php
+
+		-
+			message: '#^Relation ''transactions'' is not found in App\\Models\\User model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: app/Services/BookingService.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 1
+			path: app/Services/ErrorHandler.php
+
+		-
+			message: '#^Relation ''city'' is not found in App\\Models\\Product model\.$#'
+			identifier: larastan.relationExistence
+			count: 3
+			path: app/Services/PackageService.php
+
+		-
+			message: '#^Relation ''product_details'' is not found in App\\Models\\Product model\.$#'
+			identifier: larastan.relationExistence
+			count: 3
+			path: app/Services/PackageService.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 2
+			path: app/Services/TelegramNotificationService.php
+
+		-
+			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
+			identifier: larastan.noEnvCallsOutsideOfConfig
+			count: 1
+			path: app/Services/UserService.php
