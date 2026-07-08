@@ -14,7 +14,9 @@ class GopayPaymentService
     public function __construct()
     {
         $this->serverKey = config('midtrans.server_key');
-        $this->endpoint = config('midtrans.endpoint_sandbox');
+        $this->endpoint = config('midtrans.is_production')
+            ? config('midtrans.endpoint_production')
+            : config('midtrans.endpoint_sandbox');
     }
 
     public function charge(string $orderId, int $amount, string $callbackUrl)
