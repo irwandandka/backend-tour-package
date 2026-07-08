@@ -9,9 +9,9 @@ use App\Models\ProductDetail;
 class PricingService
 {
     private $currencyService;
-    public function __construct()
+    public function __construct(CurrencyService $currencyService)
     {
-        $this->currencyService = new CurrencyService;
+        $this->currencyService = $currencyService;
     }
 
     public function getPricing(ProductDetail $productDetail, $params, Currency $targetCurrency)

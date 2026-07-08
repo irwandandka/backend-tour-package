@@ -16,10 +16,10 @@ class CrawlingController extends Controller
 {
     private $errorHandler;
     private $logService;
-    public function __construct()
+    public function __construct(ErrorHandler $errorHandler, LogService $logService)
     {
-        $this->errorHandler = new ErrorHandler;
-        $this->logService = new LogService;
+        $this->errorHandler = $errorHandler;
+        $this->logService = $logService;
     }
 
     public function getCurrencyRates()

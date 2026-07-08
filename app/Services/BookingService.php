@@ -16,9 +16,9 @@ class BookingService
 {
     protected $pricingService;
 
-    public function __construct()
+    public function __construct(PricingService $pricingService)
     {
-        $this->pricingService = new PricingService;
+        $this->pricingService = $pricingService;
     }
 
     public function createTransaction(Request $request)
@@ -42,12 +42,20 @@ class BookingService
         $statusEntry = Status::where('code', 'entry')->first();
         $bookingCode = generateTransactionCode();
 
+        $currencies = Currency::get();
+        $currency = $currencies->where('code', $validated['currency'])->first();
+
+        if (!$currency) {
+            throw new NotFoundHttpException('Currency not found');
+        }
+
         $transaction = Transaction::create([
             'user_id' => $user->id,
             'product_id' => $validated['product_id'],
             'date_from' => $validated['date_from'],
             'date_to' => $validated['date_to'],
             'status_id' => $statusEntry->id,
+            'currency_id' => $currency->id,
             'code' => $bookingCode,
             'booking_date' => now(),
             'notes' => 'Booking a product',
@@ -67,8 +75,6 @@ class BookingService
         )
             ->where('id', $validated['product_id'])
             ->first();
-
-        $currencies = Currency::get();
 
         $salesTotal = $salesTotalBase = 0;
 
@@ -103,7 +109,6 @@ class BookingService
 
         $transaction->total_amount = $salesTotal;
         $transaction->total_amount_base = $salesTotalBase;
-        $transaction->currency_id = $currencies->where('code', $validated['currency'])->first()->id;
         $transaction->save();
 
         return $transaction;

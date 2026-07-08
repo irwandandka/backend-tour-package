@@ -21,9 +21,10 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
 
     Route::prefix('/city')->group(function () {
         Route::get('/list', [CityController::class, 'list']);
+        // must be registered before /{city} or it gets shadowed by the wildcard route
+        Route::get('/deleted', [CityController::class, 'getDeleted'])->middleware('check.token.expiration');
         Route::get('/{city}', [CityController::class, 'show']);
         Route::delete('/{city}', [CityController::class, 'delete'])->middleware('check.token.expiration');
-        Route::get('/deleted', [CityController::class, 'getDeleted'])->middleware('check.token.expiration');
     });
 
     Route::prefix('/region')->group(function () {

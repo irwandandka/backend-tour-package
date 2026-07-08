@@ -19,7 +19,7 @@ class CountryFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => Str::uuid(), // UUID for Primary Key
+            'id' => (string) Str::uuid(), // UUID for Primary Key
             'name' => $this->faker->country(),
             'iso_code' => strtoupper($this->faker->unique()->lexify('???')), // random ISO Code
             'phone_code' => $this->faker->numerify('+###'),

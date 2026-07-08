@@ -57,12 +57,9 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table
-                ->foreign('payment_method_id')
-                ->references('id')
-                ->on('payment_methods')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            // payment_method_id foreign key is added later in
+            // 2024_11_08_011392_add_payment_method_foreign_to_transactions_table.php
+            // because the payment_methods table migration runs after this one.
 
             $table
                 ->foreign('currency_id')

@@ -8,6 +8,8 @@ use App\Services\GopayPaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{DB, Http, Log};
 use App\Models\{PaymentMethod, Status, Transaction};
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PaymentService
@@ -15,7 +17,7 @@ class PaymentService
     public function listPaymentMethods()
     {
         $paymentMethods = PaymentMethod::where('is_active', true)
-            ->select('id', 'name', 'code', 'description', 'logo')
+            ->select('id', 'name', 'code', 'description')
             ->get();
 
         return $paymentMethods;
@@ -38,11 +40,12 @@ class PaymentService
             ])->find($request->transaction_id);
             $paymentMethod = PaymentMethod::find($request->payment_method);
 
-            if (in_array($transaction->status, [Status::STATUS_COMPLETED, Status::STATUS_PAID, Status::STATUS_EXPIRED, Status::STATUS_ORDERED])) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'You cannot change the payment method for this transaction',
-                ], 400);
+            if ($transaction->user_id !== auth('api')->id()) {
+                throw new AccessDeniedHttpException('You are not authorized to modify this transaction');
+            }
+
+            if (in_array($transaction->status_id, [Status::STATUS_COMPLETED, Status::STATUS_PAID, Status::STATUS_EXPIRED, Status::STATUS_ORDERED])) {
+                throw new BadRequestHttpException('You cannot change the payment method for this transaction');
             }
 
             $transaction->paymentMethod()->associate($paymentMethod);
@@ -60,6 +63,10 @@ class PaymentService
         Request $request
     ) {
         return DB::transaction(function () use ($transaction, $request) {
+            if ($transaction->user_id !== auth('api')->id()) {
+                throw new AccessDeniedHttpException('You are not authorized to pay for this transaction');
+            }
+
             // Implement payment logic here
 
             $result = null;

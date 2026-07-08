@@ -15,6 +15,8 @@ class Transaction extends Model
         'user_id',
         'product_id',
         'status_id',
+        'payment_method_id',
+        'currency_id',
         'code',
         'quantity',
         'customer_name',
@@ -24,8 +26,12 @@ class Transaction extends Model
         'postal_code',
         'total_amount',
         'total_amount_base',
+        'paid_amount',
         'booking_date',
         'notes',
+        'date_from',
+        'date_to',
+        'expired_at',
     ];
 
     public $incrementing = false;

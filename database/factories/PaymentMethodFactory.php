@@ -2,17 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Region;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Region>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PaymentMethod>
  */
-class RegionFactory extends Factory
+class PaymentMethodFactory extends Factory
 {
-    protected $model = Region::class;
-
     /**
      * Define the model's default state.
      *
@@ -22,7 +19,10 @@ class RegionFactory extends Factory
     {
         return [
             'id' => (string) Str::uuid(),
-            'name' => $this->faker->state(),
+            'name' => ucfirst($this->faker->unique()->word()),
+            'code' => $this->faker->unique()->slug(2),
+            'description' => $this->faker->sentence(),
+            'is_active' => true,
         ];
     }
 }

@@ -20,7 +20,7 @@ class CityFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => Str::uuid(),
+            'id' => (string) Str::uuid(),
             'name' => $this->faker->city(),
             'latitude' => number_format($this->faker->latitude(), 8),
             'longitude' => number_format($this->faker->longitude(), 8),

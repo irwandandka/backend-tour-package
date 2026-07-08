@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Currency;
 use Exception;
 
 class CurrencyService
@@ -32,15 +33,19 @@ class CurrencyService
         }
 
         // Coba ambil kurs langsung
-        $directRate = $this->getCurrencyRate($fromCurrency, $toCurrency);
-        if ($directRate) {
+        try {
+            $directRate = $this->getCurrencyRate($fromCurrency, $toCurrency);
+
             return $amount * $directRate;
+        } catch (Exception $e) {
+            // Tidak ada kurs langsung, lanjut coba lewat SGD di bawah
         }
 
-
         // Jika kurs langsung tidak ada, cek apakah bisa melewati SGD
-        $rateToSGD = $this->getCurrencyRate($fromCurrency, 'SGD');
-        $rateFromSGD = $this->getCurrencyRate('SGD', $toCurrency);
+        $currencySGD = Currency::where('code', 'SGD')->firstOrFail();
+
+        $rateToSGD = $this->getCurrencyRate($fromCurrency, $currencySGD);
+        $rateFromSGD = $this->getCurrencyRate($currencySGD, $toCurrency);
 
         if ($rateToSGD && $rateFromSGD) {
             // Konversi melewati SGD
