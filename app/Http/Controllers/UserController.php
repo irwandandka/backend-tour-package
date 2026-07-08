@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
+use App\Http\Resources\User\UserResource;
 use App\Services\ErrorHandler;
 use App\Services\FileUploadService;
-use Throwable;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use App\Http\Resources\User\UserResource;
 use App\Services\UserService;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 class UserController extends Controller
 {
     use ValidatesRequests;
 
     protected $errorHandler;
+
     protected $fileUploadService;
+
     protected $userService;
 
     public function __construct(
@@ -38,7 +39,7 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => new UserResource($userLogin)
+                'data' => new UserResource($userLogin),
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);

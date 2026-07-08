@@ -27,7 +27,7 @@ class CityTest extends TestCase
         $user = User::factory()->create();
         $token = $user->createToken('test')->plainTextToken;
 
-        return $this->headers(['Authorization' => 'Bearer ' . $token]);
+        return $this->headers(['Authorization' => 'Bearer '.$token]);
     }
 
     public function test_list_is_public(): void

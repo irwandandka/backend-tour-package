@@ -23,7 +23,7 @@ class CountryFactory extends Factory
             'name' => $this->faker->country(),
             'iso_code' => strtoupper($this->faker->unique()->lexify('???')), // random ISO Code
             'phone_code' => $this->faker->numerify('+###'),
-            'region_id' => Region::factory()
+            'region_id' => Region::factory(),
         ];
     }
 }

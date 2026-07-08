@@ -26,7 +26,7 @@ class CityFactory extends Factory
             'longitude' => number_format($this->faker->longitude(), 8),
             'postal_code' => $this->faker->postcode(),
             'country_id' => Country::factory(),
-            'region_id' => Region::factory()
+            'region_id' => Region::factory(),
         ];
     }
 }

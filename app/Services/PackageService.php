@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Currency;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Models\Currency;
 
 class PackageService
 {
@@ -31,7 +31,7 @@ class PackageService
             ]
         )
             ->get()
-            ->map(function ($product) use ($validated, $targetCurrency) {
+            ->map(function ($product) use ($validated) {
                 $price = 0;
 
                 return [
@@ -44,7 +44,7 @@ class PackageService
                     'date_until' => Carbon::parse($product->date_until)->format('l, jS F Y'),
                     'price' => formatCurrency($price, $validated['currency']),
                     'capacity' => $product->capacity,
-                    'location' => $product->city->name . ', ' . $product->city->country->name,
+                    'location' => $product->city->name.', '.$product->city->country->name,
                 ];
             });
 
@@ -138,11 +138,11 @@ class PackageService
             });
 
         $product->duration = $product->trip_length > 1
-            ? $product->trip_length . ' Days'
-            : $product->trip_length . ' Day';
+            ? $product->trip_length.' Days'
+            : $product->trip_length.' Day';
 
         if ($product->trip_length > 1) {
-            $product->duration .= ', ' . $product->trip_length - 1 . ' Nights';
+            $product->duration .= ', '.$product->trip_length - 1 .' Nights';
         }
 
         return $product;
@@ -189,7 +189,7 @@ class PackageService
                 $pricingService,
                 $allotmentService
             ) {
-                $roomName = $room->{"name_" . strtolower($validated['lang'])} ?? $room->name_en;
+                $roomName = $room->{'name_'.strtolower($validated['lang'])} ?? $room->name_en;
 
                 $priceList = $pricingService->getListPricing(
                     $room,
@@ -199,15 +199,15 @@ class PackageService
 
                 $allotments = $allotmentService->getAllotment($room, $dateStart);
 
-                return (object)[
-                    "id" => $room->id,
-                    "name" => $roomName,
-                    "image" => $room->activity_image,
-                    "min_adult" => $room->min_adult,
-                    "max_adult" => $room->max_adult,
-                    "max_pax" => $room->max_pax,
-                    "allotment" => $allotments,
-                    "pricing" => $priceList,
+                return (object) [
+                    'id' => $room->id,
+                    'name' => $roomName,
+                    'image' => $room->activity_image,
+                    'min_adult' => $room->min_adult,
+                    'max_adult' => $room->max_adult,
+                    'max_pax' => $room->max_pax,
+                    'allotment' => $allotments,
+                    'pricing' => $priceList,
                 ];
             });
 
@@ -285,7 +285,9 @@ class PackageService
                         true
                     );
 
-                if (!$availableItem) return null;
+                if (! $availableItem) {
+                    return null;
+                }
 
                 $product->price = $pricingService->getPricing(
                     $availableItem,
@@ -298,7 +300,7 @@ class PackageService
                 $cityName = $product->city->name;
                 $countryName = $product->city->country->name;
 
-                $product->location = $cityName . ', ' . $countryName;
+                $product->location = $cityName.', '.$countryName;
 
                 return $product;
             })
@@ -350,7 +352,6 @@ class PackageService
             ->startOfMonth();
         $dateEnd = Carbon::createFromFormat('Ym', $validated['period'])
             ->endOfMonth();
-
 
         $pricingService = app(PricingService::class);
         $allotmentService = app(AllotmentService::class);
@@ -422,7 +423,7 @@ class PackageService
             ->mapWithKeys(function ($allotments, $period) {
                 $total = $allotments->sum(function ($allotment) {
                     return collect(range(1, 31))->sum(function ($day) use ($allotment) {
-                        return $allotment->{'day' . $day};
+                        return $allotment->{'day'.$day};
                     });
                 });
 

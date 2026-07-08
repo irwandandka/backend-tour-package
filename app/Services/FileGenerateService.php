@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
-use App\Models\{ETicket, Invoice, Status, Transaction};
-use Illuminate\Support\Facades\View;
+use App\Models\ETicket;
+use App\Models\Invoice;
+use App\Models\Status;
+use App\Models\Transaction;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use Illuminate\Support\Facades\View;
 
 class FileGenerateService
 {
@@ -103,6 +106,6 @@ class FileGenerateService
             $randomString .= $characters[$index];
         }
 
-        return $prefix . $randomString;
+        return $prefix.$randomString;
     }
 }

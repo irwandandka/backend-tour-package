@@ -21,7 +21,7 @@ class Payment extends Model
         'payment_date',
         'due_date',
         'payment_reference',
-        'notes'
+        'notes',
     ];
 
     public $incrementing = false;

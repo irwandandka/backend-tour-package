@@ -38,7 +38,7 @@ class BookingTest extends TestCase
 
         return array_merge([
             'X-API-KEY' => 'test-api-key',
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
         ], $extra);
     }
 

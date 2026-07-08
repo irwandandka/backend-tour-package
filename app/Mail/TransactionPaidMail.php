@@ -47,7 +47,7 @@ class TransactionPaidMail extends Mailable
 
         return [
             Attachment::fromData(
-                fn() => $pdfContent,
+                fn () => $pdfContent,
                 "E-Ticket-{$this->transaction->code}.pdf"
             )->withMime('application/pdf'),
         ];

@@ -23,7 +23,7 @@ class AllotmentFactory extends Factory
             'product_detail_id' => ProductDetail::factory(),
             'transaction_id' => null,
             'period' => now()->format('Ym'),
-            'code' => 'ALT-' . strtoupper(Str::random(6)),
+            'code' => 'ALT-'.strtoupper(Str::random(6)),
         ];
     }
 }

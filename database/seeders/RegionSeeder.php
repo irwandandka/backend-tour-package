@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Region;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RegionSeeder extends Seeder
@@ -16,31 +15,31 @@ class RegionSeeder extends Seeder
         $regions = [
             [
                 'name' => 'North America',
-                'code' => 'na'
+                'code' => 'na',
             ],
             [
                 'name' => 'South America',
-                'code' => 'sa'
+                'code' => 'sa',
             ],
             [
                 'name' => 'Europe',
-                'code' => 'eu'
+                'code' => 'eu',
             ],
             [
                 'name' => 'Asia',
-                'code' => 'as'
+                'code' => 'as',
             ],
             [
                 'name' => 'Africa',
-                'code' => 'af'
+                'code' => 'af',
             ],
             [
                 'name' => 'Middle East',
-                'code' => 'me'
+                'code' => 'me',
             ],
             [
                 'name' => 'Southeast Asia',
-                'code' => 'sea'
+                'code' => 'sea',
             ],
         ];
         foreach ($regions as $region) {

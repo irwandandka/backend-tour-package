@@ -29,7 +29,7 @@ class TransactionFactory extends Factory
             'status_id' => Status::factory(),
             'payment_method_id' => PaymentMethod::factory(),
             'currency_id' => Currency::factory(),
-            'code' => 'TRX-' . strtoupper(Str::random(8)),
+            'code' => 'TRX-'.strtoupper(Str::random(8)),
             'quantity' => 1,
             'total_amount' => 1000000,
             'total_amount_base' => 1000000,

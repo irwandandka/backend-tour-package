@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\ApiResponseClass;
-use App\Http\Resources\CountryResource;
 use App\Models\Country;
+use App\Services\ErrorHandler;
 use Illuminate\Http\Request;
 use Throwable;
-use App\Services\ErrorHandler;
 
 class CountryController extends Controller
 {
@@ -17,12 +15,13 @@ class CountryController extends Controller
     {
         $this->errorHandler = $errorHandler;
     }
+
     public function list(Request $request)
     {
         try {
             $countries = Country::with(
                 [
-                    'cities'
+                    'cities',
                 ]
             )
                 ->get()
@@ -37,7 +36,7 @@ class CountryController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => $countries
+                'data' => $countries,
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
@@ -64,7 +63,7 @@ class CountryController extends Controller
                             'longitude' => $city->longitude,
                         ];
                     }),
-                ]
+                ],
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);

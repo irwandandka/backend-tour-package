@@ -13,7 +13,7 @@ class AllotmentServiceTest extends TestCase
     private function makeAllotment(string $period, array $days): Allotment
     {
         $allotment = new Allotment(array_merge(['period' => $period, 'code' => 'ALT'], $days));
-        $allotment->id = 'allotment-' . uniqid();
+        $allotment->id = 'allotment-'.uniqid();
 
         return $allotment;
     }
@@ -28,7 +28,7 @@ class AllotmentServiceTest extends TestCase
 
     public function test_sums_allotment_for_matching_period_and_day(): void
     {
-        $service = new AllotmentService();
+        $service = new AllotmentService;
         $detail = $this->makeProductDetail();
 
         $allotment1 = $this->makeAllotment('202603', ['day15' => 5]);
@@ -42,7 +42,7 @@ class AllotmentServiceTest extends TestCase
 
     public function test_ignores_allotment_from_a_different_period(): void
     {
-        $service = new AllotmentService();
+        $service = new AllotmentService;
         $detail = $this->makeProductDetail();
 
         $sameMonth = $this->makeAllotment('202603', ['day15' => 5]);
@@ -56,7 +56,7 @@ class AllotmentServiceTest extends TestCase
 
     public function test_handles_first_and_last_day_of_month_boundaries(): void
     {
-        $service = new AllotmentService();
+        $service = new AllotmentService;
         $detail = $this->makeProductDetail();
 
         $allotment = $this->makeAllotment('202601', ['day1' => 7, 'day31' => 9]);
@@ -68,7 +68,7 @@ class AllotmentServiceTest extends TestCase
 
     public function test_returns_zero_when_no_allotment_for_period(): void
     {
-        $service = new AllotmentService();
+        $service = new AllotmentService;
         $detail = $this->makeProductDetail();
         $detail->setRelation('allotments', collect([]));
 

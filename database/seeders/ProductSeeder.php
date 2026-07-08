@@ -2,18 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
 use App\Models\City;
 use App\Models\Currency;
 use App\Models\Product;
 use App\Models\Status;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
@@ -149,7 +144,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Chiang Mai Nature & Culture',
                 'slug' => 'chiang-mai-nature-culture',
                 'trip_length' => 4,
-                'description' => "Escape to northern Thailand’s serene landscapes and rich traditions. Visit the ancient temples of Doi Suthep, take part in a Thai cooking class, and spend a day at an ethical elephant sanctuary. The journey includes exploring local handicraft villages and enjoying cooler mountain air. Perfect for travelers seeking a mix of culture, nature, and meaningful interactions.",
+                'description' => 'Escape to northern Thailand’s serene landscapes and rich traditions. Visit the ancient temples of Doi Suthep, take part in a Thai cooking class, and spend a day at an ethical elephant sanctuary. The journey includes exploring local handicraft villages and enjoying cooler mountain air. Perfect for travelers seeking a mix of culture, nature, and meaningful interactions.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -162,7 +157,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Hanoi & Halong Bay Discovery',
                 'slug' => 'hanoi-halong-bay-discovery',
                 'trip_length' => 4,
-                'description' => "Begin your journey in Vietnam’s historic capital, Hanoi, with visits to Ho Chi Minh Mausoleum, the Old Quarter, and Temple of Literature. Then embark on a luxury overnight cruise in Halong Bay, surrounded by towering limestone karsts and tranquil emerald waters. Includes kayaking, cave exploration, and seafood feasts onboard. A must for travelers who want to see the best of northern Vietnam.",
+                'description' => 'Begin your journey in Vietnam’s historic capital, Hanoi, with visits to Ho Chi Minh Mausoleum, the Old Quarter, and Temple of Literature. Then embark on a luxury overnight cruise in Halong Bay, surrounded by towering limestone karsts and tranquil emerald waters. Includes kayaking, cave exploration, and seafood feasts onboard. A must for travelers who want to see the best of northern Vietnam.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -188,7 +183,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Kuala Lumpur Urban Discovery',
                 'slug' => 'kuala-lumpur-urban-discovery',
                 'trip_length' => 3,
-                'description' => "Discover Malaysia’s capital with a mix of modern marvels and cultural heritage. Snap photos at the Petronas Towers, explore the Batu Caves, and stroll through the colonial-era buildings around Merdeka Square. Savor local flavors at Jalan Alor night market and visit museums and art galleries. Great for travelers who love urban energy with cultural depth.",
+                'description' => 'Discover Malaysia’s capital with a mix of modern marvels and cultural heritage. Snap photos at the Petronas Towers, explore the Batu Caves, and stroll through the colonial-era buildings around Merdeka Square. Savor local flavors at Jalan Alor night market and visit museums and art galleries. Great for travelers who love urban energy with cultural depth.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -214,7 +209,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Rome Ancient Wonders',
                 'slug' => 'rome-ancient-wonders',
                 'trip_length' => 4,
-                'description' => "Step back in time and explore the heart of ancient Rome. This tour includes visits to the iconic Colosseum, the Roman Forum, and the Pantheon, where you’ll immerse yourself in the rich history of the Roman Empire. Continue your journey to the Vatican City to see St. Peter’s Basilica and the breathtaking Sistine Chapel. Perfect for history enthusiasts and those looking to discover the ancient roots of Western civilization.",
+                'description' => 'Step back in time and explore the heart of ancient Rome. This tour includes visits to the iconic Colosseum, the Roman Forum, and the Pantheon, where you’ll immerse yourself in the rich history of the Roman Empire. Continue your journey to the Vatican City to see St. Peter’s Basilica and the breathtaking Sistine Chapel. Perfect for history enthusiasts and those looking to discover the ancient roots of Western civilization.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -227,7 +222,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Rome City & Culinary Delights',
                 'slug' => 'rome-city-culinary-delights',
                 'trip_length' => 3,
-                'description' => "Indulge in Rome’s culinary delights while exploring its majestic cityscape. This tour takes you through the historic city center, from the Trevi Fountain to the Spanish Steps. In the evenings, enjoy exclusive food experiences, including a traditional Roman cooking class, wine tasting, and a pizza-making workshop. A true immersion into both Rome’s history and its gastronomic heritage.",
+                'description' => 'Indulge in Rome’s culinary delights while exploring its majestic cityscape. This tour takes you through the historic city center, from the Trevi Fountain to the Spanish Steps. In the evenings, enjoy exclusive food experiences, including a traditional Roman cooking class, wine tasting, and a pizza-making workshop. A true immersion into both Rome’s history and its gastronomic heritage.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -240,7 +235,7 @@ class ProductSeeder extends Seeder
                 'name' => 'London Landmarks & Royal History',
                 'slug' => 'london-landmarks-royal-history',
                 'trip_length' => 3,
-                'description' => "Discover the charm and grandeur of London, starting with the iconic Big Ben, the Houses of Parliament, and the Tower of London. Visit the famous Buckingham Palace and witness the Changing of the Guard ceremony. This tour also includes a cruise along the River Thames and a visit to the British Museum. Ideal for first-time visitors and anyone interested in Britain’s royal heritage and cultural history.",
+                'description' => 'Discover the charm and grandeur of London, starting with the iconic Big Ben, the Houses of Parliament, and the Tower of London. Visit the famous Buckingham Palace and witness the Changing of the Guard ceremony. This tour also includes a cruise along the River Thames and a visit to the British Museum. Ideal for first-time visitors and anyone interested in Britain’s royal heritage and cultural history.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -266,7 +261,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Lisbon City Highlights',
                 'slug' => 'lisbon-city-highlights',
                 'trip_length' => 3,
-                'description' => "Experience the charm of Lisbon, a city filled with colorful streets, historic landmarks, and delicious food. This tour includes a visit to the iconic Belem Tower, Jerónimos Monastery, and the charming Alfama district. Enjoy a tram ride through the hills of the city and explore the vibrant Baixa and Chiado neighborhoods. A perfect blend of Lisbon’s rich history and modern-day energy.",
+                'description' => 'Experience the charm of Lisbon, a city filled with colorful streets, historic landmarks, and delicious food. This tour includes a visit to the iconic Belem Tower, Jerónimos Monastery, and the charming Alfama district. Enjoy a tram ride through the hills of the city and explore the vibrant Baixa and Chiado neighborhoods. A perfect blend of Lisbon’s rich history and modern-day energy.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -292,7 +287,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Riyadh City & Heritage Exploration',
                 'slug' => 'riyadh-city-heritage-exploration',
                 'trip_length' => 3,
-                'description' => "Discover the modern and ancient marvels of Riyadh, the capital of Saudi Arabia. Begin with a visit to the National Museum to delve into the country’s rich history. Explore the Al-Masmak Fortress, a symbol of Riyadh’s past, before heading to the Kingdom Centre Tower for panoramic city views. In the evening, experience the local souks and sample authentic Saudi cuisine. Perfect for those interested in a blend of culture, history, and modernity.",
+                'description' => 'Discover the modern and ancient marvels of Riyadh, the capital of Saudi Arabia. Begin with a visit to the National Museum to delve into the country’s rich history. Explore the Al-Masmak Fortress, a symbol of Riyadh’s past, before heading to the Kingdom Centre Tower for panoramic city views. In the evening, experience the local souks and sample authentic Saudi cuisine. Perfect for those interested in a blend of culture, history, and modernity.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -318,7 +313,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Cairo & The Pyramids of Giza',
                 'slug' => 'cairo-pyramids-giza',
                 'trip_length' => 3,
-                'description' => "A must-see tour for anyone visiting Cairo! This journey includes a visit to the legendary Pyramids of Giza and the iconic Sphinx. Explore the Egyptian Museum, where you’ll find the treasures of King Tutankhamun and countless artifacts from ancient Egypt. Enjoy a boat ride along the Nile River at sunset, and delve into the rich culture of Egypt through its vibrant markets and restaurants. Ideal for history lovers and those seeking to understand ancient Egypt’s legacy.",
+                'description' => 'A must-see tour for anyone visiting Cairo! This journey includes a visit to the legendary Pyramids of Giza and the iconic Sphinx. Explore the Egyptian Museum, where you’ll find the treasures of King Tutankhamun and countless artifacts from ancient Egypt. Enjoy a boat ride along the Nile River at sunset, and delve into the rich culture of Egypt through its vibrant markets and restaurants. Ideal for history lovers and those seeking to understand ancient Egypt’s legacy.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -331,7 +326,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Cairo & Alexandria Discovery',
                 'slug' => 'cairo-alexandria-discovery',
                 'trip_length' => 4,
-                'description' => "Explore two of Egypt’s most iconic cities. Start in Cairo, visiting the Pyramids of Giza and the Egyptian Museum, before traveling to Alexandria on the Mediterranean coast. In Alexandria, visit the historic Bibliotheca Alexandrina, the Catacombs of Kom El Shoqafa, and the Citadel of Qaitbay. This tour offers a perfect mix of Cairo’s ancient wonders and Alexandria’s Mediterranean charm.",
+                'description' => 'Explore two of Egypt’s most iconic cities. Start in Cairo, visiting the Pyramids of Giza and the Egyptian Museum, before traveling to Alexandria on the Mediterranean coast. In Alexandria, visit the historic Bibliotheca Alexandrina, the Catacombs of Kom El Shoqafa, and the Citadel of Qaitbay. This tour offers a perfect mix of Cairo’s ancient wonders and Alexandria’s Mediterranean charm.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -344,7 +339,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Kuwait City Heritage & Modern Marvels',
                 'slug' => 'kuwait-city-heritage-modern-marvels',
                 'trip_length' => 3,
-                'description' => "Explore the contrasts of Kuwait City, where modern architecture blends with rich history. Visit the Grand Mosque, the Tareq Rajab Museum, and the Kuwait Towers, which offer stunning views of the Arabian Gulf. Stroll through the vibrant souks and shop for traditional Kuwaiti crafts. In the evenings, experience the city’s modern shopping malls and waterfront dining options. Ideal for travelers interested in both culture and modern-day attractions.",
+                'description' => 'Explore the contrasts of Kuwait City, where modern architecture blends with rich history. Visit the Grand Mosque, the Tareq Rajab Museum, and the Kuwait Towers, which offer stunning views of the Arabian Gulf. Stroll through the vibrant souks and shop for traditional Kuwaiti crafts. In the evenings, experience the city’s modern shopping malls and waterfront dining options. Ideal for travelers interested in both culture and modern-day attractions.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,
@@ -357,7 +352,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Kuwait City & Desert Adventure',
                 'slug' => 'kuwait-city-desert-adventure',
                 'trip_length' => 4,
-                'description' => "For those seeking adventure, this tour combines Kuwait City’s cultural attractions with a thrilling desert experience. Explore the city’s landmarks, including the Kuwait National Museum and the historic Kuwait Towers. Then, head to the desert for a safari in the sand dunes, followed by a traditional Bedouin-style dinner under the stars. This tour offers a unique combination of urban exploration and thrilling desert landscapes.",
+                'description' => 'For those seeking adventure, this tour combines Kuwait City’s cultural attractions with a thrilling desert experience. Explore the city’s landmarks, including the Kuwait National Museum and the historic Kuwait Towers. Then, head to the desert for a safari in the sand dunes, followed by a traditional Bedouin-style dinner under the stars. This tour offers a unique combination of urban exploration and thrilling desert landscapes.',
                 'date_from' => '2025-05-01',
                 'date_until' => '2025-10-31',
                 'user_id' => $user->id,

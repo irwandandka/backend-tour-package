@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
 use App\Models\PaymentMethod;
+use Illuminate\Support\Facades\Http;
 
 class GopayPaymentService
 {
-    private $serverKey, $endpoint;
+    private $serverKey;
+
+    private $endpoint;
+
     public function __construct()
     {
         $this->serverKey = config('midtrans.server_key');
@@ -29,7 +32,7 @@ class GopayPaymentService
         ];
 
         $response = Http::withBasicAuth($this->serverKey, '')
-            ->post($this->endpoint . 'charge', $body);
+            ->post($this->endpoint.'charge', $body);
 
         return $response->json();
     }

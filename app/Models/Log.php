@@ -21,7 +21,7 @@ class Log extends Model
         'old_data',
         'new_data',
         'ip_address',
-        'user_agent'
+        'user_agent',
     ];
 
     public $incrementing = false;

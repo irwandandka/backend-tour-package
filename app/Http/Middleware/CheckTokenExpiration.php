@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\PersonalAccessToken;
-use Symfony\Component\HttpFoundation\Response;
 
 class CheckTokenExpiration
 {
@@ -19,10 +18,10 @@ class CheckTokenExpiration
         $accessToken = $request->bearerToken();
 
         // Token nggak ada
-        if (!$accessToken) {
+        if (! $accessToken) {
             return response()->json([
                 'status' => 'error',
-                'code'   => 'token_missing',
+                'code' => 'token_missing',
                 'message' => 'Authorization token is required',
             ], 401);
         }
@@ -30,10 +29,10 @@ class CheckTokenExpiration
         // Cari token di DB
         $token = PersonalAccessToken::findToken($accessToken);
 
-        if (!$token) {
+        if (! $token) {
             return response()->json([
                 'status' => 'error',
-                'code'   => 'token_invalid',
+                'code' => 'token_invalid',
                 'message' => 'Authorization token is invalid',
             ], 401);
         }
@@ -45,7 +44,7 @@ class CheckTokenExpiration
 
             return response()->json([
                 'status' => 'error',
-                'code'   => 'token_expired',
+                'code' => 'token_expired',
                 'message' => 'Authorization token has expired',
             ], 401);
         }

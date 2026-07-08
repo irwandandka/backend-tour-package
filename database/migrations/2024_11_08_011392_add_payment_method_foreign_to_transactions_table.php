@@ -26,7 +26,7 @@ return new class extends Migration
             ->where('CONSTRAINT_NAME', 'transactions_payment_method_id_foreign')
             ->exists();
 
-        if (!$constraintExists) {
+        if (! $constraintExists) {
             Schema::table('transactions', function (Blueprint $table) {
                 $table
                     ->foreign('payment_method_id')

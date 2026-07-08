@@ -8,7 +8,8 @@ use App\Http\Requests\Booking\UpdateBookingRequest;
 use App\Http\Resources\Booking\BookingHistoryDetailResource;
 use App\Http\Resources\Booking\BookingHistoryResource;
 use App\Models\Transaction;
-use App\Services\{BookingService, ErrorHandler};
+use App\Services\BookingService;
+use App\Services\ErrorHandler;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,7 @@ class BookingController extends Controller
     use AuthorizesRequests;
 
     private $errorHandler;
+
     private $bookingService;
 
     public function __construct(

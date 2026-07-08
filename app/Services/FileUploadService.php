@@ -2,14 +2,15 @@
 
 namespace App\Services;
 
-use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
 
 class FileUploadService
 {
     public function getFilePath(string $fileUrl): string
     {
         $parsedUrl = parse_url($fileUrl);
+
         return ltrim($parsedUrl['path'], '/');
     }
 
@@ -19,10 +20,10 @@ class FileUploadService
         bool $generateWebP = false
     ): array {
         // Upload original
-        $originalName = time() . '_' . $file->getClientOriginalName();
+        $originalName = time().'_'.$file->getClientOriginalName();
 
         if ($path) {
-            $originalPath = $path . '/' . $originalName;
+            $originalPath = $path.'/'.$originalName;
         } else {
             $originalPath = $originalName;
         }
@@ -31,8 +32,8 @@ class FileUploadService
 
         if ($generateWebP) {
             // Convert ke WebP
-            $webpName = pathinfo($originalName, PATHINFO_FILENAME) . '.webp';
-            $webpPath = $path . '/' . $webpName;
+            $webpName = pathinfo($originalName, PATHINFO_FILENAME).'.webp';
+            $webpPath = $path.'/'.$webpName;
 
             // Buat driver
             $manager = ImageManager::gd();
@@ -54,14 +55,13 @@ class FileUploadService
             $result['originalFilename'] = $originalName;
         }
 
-
         return $result;
     }
 
     public function uploadFile(string $filePath, string $fileDir): array
     {
         $fileName = basename($filePath);
-        $storagePath = $fileDir ? ($fileDir . '/' . $fileName) : $fileName;
+        $storagePath = $fileDir ? ($fileDir.'/'.$fileName) : $fileName;
 
         // Upload file ke MinIO
         Storage::disk('minio')->put($storagePath, file_get_contents($filePath));

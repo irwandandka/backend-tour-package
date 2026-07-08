@@ -1,9 +1,19 @@
 <?php
 
-use App\Http\Controllers\{AuthController, BaseController, BookingController, CityController, CountryController, CrawlingController, NotificationController, PaymentController, ProductController, RegionController, SearchController, TestingController, UserController};
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BaseController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CrawlingController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RegionController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TestingController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckAPIKey;
 use Illuminate\Support\Facades\Route;
-
 
 Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
 

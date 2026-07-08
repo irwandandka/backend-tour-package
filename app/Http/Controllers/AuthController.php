@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
+use App\Services\ErrorHandler;
 use App\Services\GoogleService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
-use App\Services\ErrorHandler;
-use Throwable;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 use Laravel\Sanctum\PersonalAccessToken;
+use Throwable;
 
 class AuthController extends Controller
 {
     private $errorHandler;
+
     protected $googleService;
 
     public function __construct(GoogleService $googleService, ErrorHandler $errorHandler)
@@ -59,7 +59,7 @@ class AuthController extends Controller
 
             // Check if the credentials are valid
             $user = User::where('email', $credentials['email'])->first();
-            if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            if (! $user || ! Hash::check($credentials['password'], $user->password)) {
                 return response()->json(['message' => 'Invalid login credentials'], 401);
             }
 
@@ -77,8 +77,8 @@ class AuthController extends Controller
                     'email' => $user->email,
                     'name' => $user->name,
                     'username' => $user->username,
-                    'profile_picture_url' => $user->profile_picture_url
-                ]
+                    'profile_picture_url' => $user->profile_picture_url,
+                ],
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
@@ -108,7 +108,7 @@ class AuthController extends Controller
         try {
             $redirectUri = $request->query('redirect_uri');
 
-            if (!$redirectUri) {
+            if (! $redirectUri) {
                 return response()->json(['message' => 'redirect_uri is required'], 400);
             }
 
@@ -129,7 +129,7 @@ class AuthController extends Controller
             $code = $request->input('code');
             $redirectUri = $request->input('redirect_uri');
 
-            if (!$redirectUri) {
+            if (! $redirectUri) {
                 return response()->json(['message' => 'redirect_uri is required'], 400);
             }
 
@@ -158,7 +158,7 @@ class AuthController extends Controller
                     'id' => $user->id,
                     'email' => $user->email,
                     'name' => $user->name,
-                ]
+                ],
             ]);
         } catch (\Throwable $e) {
             return $this->errorHandler->handle($e);

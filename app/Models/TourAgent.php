@@ -16,7 +16,7 @@ class TourAgent extends Model
         'email',
         'phone_number',
         'address',
-        'status_id'
+        'status_id',
     ];
 
     public $incrementing = false;

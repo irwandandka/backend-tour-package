@@ -10,7 +10,7 @@ use Laravel\Scout\Searchable;
 
 class City extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, Searchable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -19,7 +19,7 @@ class City extends Model
         'region_id',
         'postal_code',
         'latitude',
-        'longitude'
+        'longitude',
     ];
 
     public function toSearchableArray()

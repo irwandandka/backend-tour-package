@@ -22,7 +22,7 @@ class CheckAPIKey
             return $next($request);
         }
 
-        if (empty($expectedApiKey) || !is_string($apiKey) || !hash_equals($expectedApiKey, $apiKey)) {
+        if (empty($expectedApiKey) || ! is_string($apiKey) || ! hash_equals($expectedApiKey, $apiKey)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Region;
-use Illuminate\Http\Request;
 use App\Services\ErrorHandler;
+use Illuminate\Http\Request;
 use Throwable;
 
 class RegionController extends Controller
@@ -24,7 +24,7 @@ class RegionController extends Controller
         try {
             $regions = Region::with(
                 [
-                    'countries'
+                    'countries',
                 ]
             )
                 ->whereIn('code', ['as', 'eu', 'sea', 'me'])
@@ -39,7 +39,7 @@ class RegionController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => $regions
+                'data' => $regions,
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
@@ -68,7 +68,7 @@ class RegionController extends Controller
                             'phone_code' => $country->phone_code,
                         ];
                     }),
-                ]
+                ],
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);

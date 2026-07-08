@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Product;
 
-use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductDetailResource extends JsonResource
@@ -23,7 +22,7 @@ class ProductDetailResource extends JsonResource
             'duration' => $product->duration,
             'price' => formatCurrency($product->price, $product->currency),
             'rating' => round($product->reviews->avg('rating'), 1),
-            'location' => $product->city->name . ', ' . $product->city->country->name,
+            'location' => $product->city->name.', '.$product->city->country->name,
             'itineraries' => $product->itineraries,
             'reviews' => $product->reviews,
         ];

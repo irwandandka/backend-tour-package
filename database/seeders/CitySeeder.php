@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Region;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -154,7 +153,7 @@ class CitySeeder extends Seeder
                 'postal_code' => '13001',
                 'latitude' => 29.3759,
                 'longitude' => 47.9774,
-            ]
+            ],
         ];
 
         DB::transaction(function () use ($cities) {

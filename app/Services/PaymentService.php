@@ -4,10 +4,13 @@ namespace App\Services;
 
 use App\Events\TransactionOrdered;
 use App\Events\TransactionPaid;
-use App\Services\GopayPaymentService;
+use App\Models\PaymentMethod;
+use App\Models\Status;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{DB, Http, Log};
-use App\Models\{PaymentMethod, Status, Transaction};
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -68,7 +71,7 @@ class PaymentService
                     break;
                 case PaymentMethod::ID_BCA_VA:
                     break;
-                // Add other payment methods here
+                    // Add other payment methods here
                 default:
                     throw new \Exception('Unsupported payment method');
             }
@@ -88,7 +91,7 @@ class PaymentService
         $response = $gopay->charge($orderId, $amount, $callbackUrl);
         Log::channel('transaction')->info('Midtrans RAW charge response:', $response);
 
-        if (!isset($response['status_code']) || $response['status_code'] != '201') {
+        if (! isset($response['status_code']) || $response['status_code'] != '201') {
             $errorMessage = $response['status_message'] ?? 'Failed to create Midtrans transaction.';
             throw new \Exception($errorMessage);
         }
@@ -97,7 +100,7 @@ class PaymentService
         $deepLinkAction = $actions->firstWhere('name', 'deeplink-redirect');
         $deepLinkUrl = $deepLinkAction['url'] ?? null;
 
-        if (!$deepLinkUrl) {
+        if (! $deepLinkUrl) {
             throw new \Exception('GoPay deep link URL not found in Midtrans response.');
         }
 
@@ -107,12 +110,11 @@ class PaymentService
 
         // Kembalikan URL deep link ke frontend
         return [
-            'order_id'       => $transaction->id,
-            'status'         => $response['transaction_status'] ?? 'pending',
-            'deep_link_url'  => $deepLinkUrl, // <-- Kirim URL ini ke frontend
+            'order_id' => $transaction->id,
+            'status' => $response['transaction_status'] ?? 'pending',
+            'deep_link_url' => $deepLinkUrl, // <-- Kirim URL ini ke frontend
         ];
     }
-
 
     // Skema dengan QRcode
     // private function payWithGopay(Transaction $transaction, Request $request)
@@ -179,13 +181,13 @@ class PaymentService
         Log::channel('transaction')->info('Midtrans callback received:', $payload);
 
         $orderId = $payload['order_id'] ?? null;
-        if (!$orderId) {
+        if (! $orderId) {
             return response()->json(['message' => 'Order ID not found'], 400);
         }
 
         // Cari transaksi di database Anda
         $transaction = Transaction::find($orderId);
-        if (!$transaction) {
+        if (! $transaction) {
             throw new NotFoundHttpException('Transaction not found in local DB');
         }
 
@@ -238,7 +240,8 @@ class PaymentService
 
             return response()->json(['message' => 'Callback processed successfully']);
         } catch (\Throwable $e) {
-            Log::channel('transaction')->error('Error in Midtrans callback handler: ' . $e->getMessage());
+            Log::channel('transaction')->error('Error in Midtrans callback handler: '.$e->getMessage());
+
             return response()->json(['message' => 'An error occurred'], 500);
         }
     }
@@ -258,6 +261,7 @@ class PaymentService
         // update paid_amount
         $transaction->paid_amount = $transaction->total_amount;
         $transaction->save();
+
         return [];
     }
 }

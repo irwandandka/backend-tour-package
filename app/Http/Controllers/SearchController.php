@@ -7,10 +7,9 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\Product;
 use App\Models\Region;
-use Throwable;
-use Illuminate\Http\Request;
 use App\Services\ErrorHandler;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
+use Throwable;
 
 class SearchController extends Controller
 {
@@ -44,7 +43,7 @@ class SearchController extends Controller
                 return [
                     'id' => $city->id,
                     'name' => $city->name,
-                    'type' => 'City'
+                    'type' => 'City',
                 ];
             });
 
@@ -52,7 +51,7 @@ class SearchController extends Controller
                 return [
                     'id' => $country->id,
                     'name' => $country->name,
-                    'type' => 'Country'
+                    'type' => 'Country',
                 ];
             });
 
@@ -60,7 +59,7 @@ class SearchController extends Controller
                 return [
                     'id' => $region->id,
                     'name' => $region->name,
-                    'type' => 'Region'
+                    'type' => 'Region',
                 ];
             });
 

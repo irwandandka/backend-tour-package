@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use Illuminate\Http\Request;
-use App\Services\ErrorHandler;
 use App\Models\Currency;
+use App\Services\ErrorHandler;
+use Illuminate\Http\Request;
 use Throwable;
 
 class BaseController extends Controller
@@ -48,7 +47,7 @@ class BaseController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => $languages
+                'data' => $languages,
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);

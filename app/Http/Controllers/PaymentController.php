@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Payment\SetPaymentMethodRequest;
+use App\Models\Transaction;
+use App\Services\ErrorHandler;
+use App\Services\MidtransService;
 use App\Services\PaymentService;
-use App\Models\{Transaction};
-use App\Services\{ErrorHandler, MidtransService};
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Throwable;
@@ -14,7 +15,12 @@ class PaymentController extends Controller
 {
     use AuthorizesRequests;
 
-    private $errorHandler, $midtransService, $paymentService;
+    private $errorHandler;
+
+    private $midtransService;
+
+    private $paymentService;
+
     public function __construct(
         ErrorHandler $errorHandler,
         MidtransService $midtransService,

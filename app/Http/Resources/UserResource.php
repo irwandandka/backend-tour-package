@@ -40,7 +40,7 @@ class UserResource extends JsonResource
         foreach ($allowedRelations as $relation) {
             if (in_array($relation, $relations) || empty($relations)) {
                 // Dynamically determine whether the relation is one-to-many or belongsTo
-                $resourceClassName = 'App\Http\Resources\\' . ucwords($relation) . 'Resource';
+                $resourceClassName = 'App\Http\Resources\\'.ucwords($relation).'Resource';
 
                 if ($this->relationLoaded($relation)) {
                     // Check the type of relationship dynamically

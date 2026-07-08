@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Country;
 use App\Models\Region;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CountrySeeder extends Seeder
@@ -99,7 +98,7 @@ class CountrySeeder extends Seeder
                 'iso_code' => 'KW',
                 'phone_code' => '+965',
                 'region_id' => $regions->where('code', 'me')->first()->id,
-            ]
+            ],
         ];
         foreach ($countries as $country) {
             Country::create($country);

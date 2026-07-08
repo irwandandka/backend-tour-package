@@ -23,7 +23,7 @@ class ProductDetail extends Model
         'is_active',
         'is_featured',
         'activity_image',
-        'product_id'
+        'product_id',
     ];
 
     public $incrementing = false;

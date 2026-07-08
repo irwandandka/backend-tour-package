@@ -12,12 +12,9 @@ class PaginationHelper
      * Paginate a collection manually.
      *
      * @param  \Illuminate\Support\Collection|array  $items
-     * @param  int  $perPage
-     * @param  int|null  $page
-     * @param  array  $options
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public static function paginate($items, int $perPage = 10, int $page = null, array $options = [])
+    public static function paginate($items, int $perPage = 10, ?int $page = null, array $options = [])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
 

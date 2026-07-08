@@ -2,13 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\Traits\JsonResourceTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Traits\JsonResourceTrait;
 
 class CityResource extends JsonResource
 {
-
     use JsonResourceTrait;
 
     /**
@@ -44,7 +43,7 @@ class CityResource extends JsonResource
         foreach ($allowedRelations as $relation) {
             if (in_array($relation, $relations) || empty($relations)) {
                 // Dynamically determine whether the relation is one-to-many or belongsTo
-                $resourceClassName = 'App\Http\Resources\\' . ucwords($relation) . 'Resource';
+                $resourceClassName = 'App\Http\Resources\\'.ucwords($relation).'Resource';
 
                 if ($this->relationLoaded($relation)) {
                     // Check the type of relationship dynamically

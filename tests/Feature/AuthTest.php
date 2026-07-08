@@ -105,11 +105,11 @@ class AuthTest extends TestCase
         $user = User::factory()->create();
         $token = $user->createToken('test')->plainTextToken;
 
-        $this->withHeaders($this->headers(['Authorization' => 'Bearer ' . $token]))
+        $this->withHeaders($this->headers(['Authorization' => 'Bearer '.$token]))
             ->postJson('/api/v1/auth/logout')
             ->assertOk();
 
-        $this->withHeaders($this->headers(['Authorization' => 'Bearer ' . $token]))
+        $this->withHeaders($this->headers(['Authorization' => 'Bearer '.$token]))
             ->getJson('/api/v1/user/profile')
             ->assertStatus(401);
     }
@@ -136,7 +136,7 @@ class AuthTest extends TestCase
         $token = $user->createToken('test');
         $token->accessToken->forceFill(['expires_at' => now()->subDay()])->save();
 
-        $this->withHeaders($this->headers(['Authorization' => 'Bearer ' . $token->plainTextToken]))
+        $this->withHeaders($this->headers(['Authorization' => 'Bearer '.$token->plainTextToken]))
             ->getJson('/api/v1/user/profile')
             ->assertStatus(401)
             ->assertJsonPath('code', 'token_expired');
@@ -147,7 +147,7 @@ class AuthTest extends TestCase
         $user = User::factory()->create();
         $token = $user->createToken('test')->plainTextToken;
 
-        $this->withHeaders($this->headers(['Authorization' => 'Bearer ' . $token]))
+        $this->withHeaders($this->headers(['Authorization' => 'Bearer '.$token]))
             ->getJson('/api/v1/user/profile')
             ->assertOk()
             ->assertJsonPath('data.id', $user->id);

@@ -13,7 +13,7 @@ class Country extends Model
     use HasFactory, Searchable, SoftDeletes;
 
     protected $fillable = [
-        'name', 'iso_code', 'phone_code', 'region_id'
+        'name', 'iso_code', 'phone_code', 'region_id',
     ];
 
     public function toSearchableArray()

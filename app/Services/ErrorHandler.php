@@ -5,17 +5,16 @@ namespace App\Services;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
-use Throwable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Throwable;
 
 class ErrorHandler
 {
     /**
      * Handle the exception and return the appropriate response.
      *
-     * @param  Throwable  $e
      * @return \Illuminate\Http\JsonResponse
      */
     public function handle(Throwable $e)
@@ -56,7 +55,6 @@ class ErrorHandler
     /**
      * Handle ValidationException.
      *
-     * @param ValidationException $e
      * @return \Illuminate\Http\JsonResponse
      */
     protected function handleValidationException(ValidationException $e)
@@ -70,7 +68,6 @@ class ErrorHandler
     /**
      * Handle general errors.
      *
-     * @param Throwable $e
      * @return \Illuminate\Http\JsonResponse
      */
     protected function handleGeneralError(Throwable $e)
@@ -85,7 +82,7 @@ class ErrorHandler
     private function logError(Throwable $throwable)
     {
         Log::channel('system-error')->error($throwable->getMessage());
-        Log::channel('system-error')->error("File " . $throwable->getFile());
-        Log::channel('system-error')->error("Line " . $throwable->getLine());
+        Log::channel('system-error')->error('File '.$throwable->getFile());
+        Log::channel('system-error')->error('Line '.$throwable->getLine());
     }
 }

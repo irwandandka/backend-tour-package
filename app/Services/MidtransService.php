@@ -2,12 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Payment;
-use App\Models\Transaction;
 use Midtrans\Config;
 use Midtrans\Snap;
 use Throwable;
-use Illuminate\Http\Request;
 
 class MidtransService
 {

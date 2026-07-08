@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Google\Client as GoogleClient;
 use Google\Service\Oauth2;
-use App\Models\User;
 
 class GoogleService
 {
@@ -12,7 +12,7 @@ class GoogleService
 
     public function __construct()
     {
-        $this->client = new GoogleClient();
+        $this->client = new GoogleClient;
         $this->client->setClientId(config('services.google.client_id'));
         $this->client->setClientSecret(config('services.google.client_secret'));
         $this->client->setRedirectUri(config('services.google.redirect_uri'));
@@ -23,6 +23,7 @@ class GoogleService
     public function getAuthUrl(string $redirectUri): string
     {
         $this->client->setRedirectUri($redirectUri);
+
         return $this->client->createAuthUrl();
     }
 
@@ -32,7 +33,7 @@ class GoogleService
         $accessToken = $this->client->fetchAccessTokenWithAuthCode($code);
 
         if (isset($accessToken['error'])) {
-            throw new \Exception('Error fetching access token: ' . $accessToken['error_description']);
+            throw new \Exception('Error fetching access token: '.$accessToken['error_description']);
         }
 
         $this->client->setAccessToken($accessToken);

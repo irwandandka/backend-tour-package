@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Currency;
-use App\Models\Status;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +13,7 @@ class CurrencySeeder extends Seeder
      */
     public function run(): void
     {
-        $currencies =  [
+        $currencies = [
             [
                 'name' => 'Indonesian Rupiah',
                 'code' => 'IDR',

@@ -53,6 +53,6 @@ class CurrencyService
         }
 
         // Jika tidak ada kurs langsung dan tidak bisa melewati SGD, lempar error
-        throw new Exception("Exchange rate not available for conversion.");
+        throw new Exception('Exchange rate not available for conversion.');
     }
 }

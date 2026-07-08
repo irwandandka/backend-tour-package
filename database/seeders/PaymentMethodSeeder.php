@@ -16,7 +16,7 @@ class PaymentMethodSeeder extends Seeder
             [
                 'name' => 'Bank Transfer',
                 'description' => 'Transfer antar bank via BCA',
-                'is_active' => true
+                'is_active' => true,
             ],
         ];
 

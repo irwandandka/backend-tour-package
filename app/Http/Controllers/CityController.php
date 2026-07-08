@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Services\ErrorHandler;
 use Illuminate\Http\Request;
 use Throwable;
-use App\Services\ErrorHandler;
 
 class CityController extends Controller
 {
@@ -30,7 +30,7 @@ class CityController extends Controller
             $cities = City::with(
                 [
                     'country',
-                    'region'
+                    'region',
                 ]
             )
                 ->when(isset($validate['country']), function ($query) use ($validate) {
@@ -51,7 +51,7 @@ class CityController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => $cities
+                'data' => $cities,
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
@@ -73,7 +73,7 @@ class CityController extends Controller
                     'name' => $city->name,
                     'country' => $city->country->name,
                     'region' => $city->region->name,
-                ]
+                ],
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
@@ -90,7 +90,7 @@ class CityController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'City deleted successfully'
+                'message' => 'City deleted successfully',
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);
@@ -116,7 +116,7 @@ class CityController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => $deletedCities
+                'data' => $deletedCities,
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);

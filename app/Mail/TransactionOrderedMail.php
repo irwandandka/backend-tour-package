@@ -61,7 +61,7 @@ class TransactionOrderedMail extends Mailable
 
         return [
             Attachment::fromData(
-                fn() => $pdfContent,
+                fn () => $pdfContent,
                 "Invoice-{$this->transaction->code}.pdf"
             )->withMime('application/pdf'),
         ];

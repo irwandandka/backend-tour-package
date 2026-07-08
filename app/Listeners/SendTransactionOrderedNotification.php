@@ -6,8 +6,6 @@ use App\Events\TransactionOrdered;
 use App\Mail\TransactionOrderedMail;
 use App\Services\FileGenerateService;
 use App\Services\TelegramNotificationService;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
 class SendTransactionOrderedNotification

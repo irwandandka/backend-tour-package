@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Status;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class StatusSeeder extends Seeder
@@ -16,52 +15,52 @@ class StatusSeeder extends Seeder
         $statuses = [
             [
                 'name' => 'Active',
-                'code' => 'active'
+                'code' => 'active',
             ],
             [
                 'name' => 'Inactive',
-                'code' => 'inactive'
+                'code' => 'inactive',
             ],
             [
                 'name' => 'Pending',
-                'code' => 'pending'
+                'code' => 'pending',
             ],
             [
                 'name' => 'Confirmed',
-                'code' => 'confirm'
+                'code' => 'confirm',
             ],
             [
                 'name' => 'Paid',
-                'code' => 'paid'
+                'code' => 'paid',
             ],
             [
                 'name' => 'Cancelled',
-                'code' => 'cancel'
+                'code' => 'cancel',
             ],
             [
                 'name' => 'Expired',
-                'code' => 'expire'
+                'code' => 'expire',
             ],
             [
                 'name' => 'Available',
-                'code' => 'available'
+                'code' => 'available',
             ],
             [
                 'name' => 'Unavailable',
-                'code' => 'unavailable'
+                'code' => 'unavailable',
             ],
             [
                 'name' => 'Failed',
-                'code' => 'fail'
+                'code' => 'fail',
             ],
             [
                 'name' => 'Refunded',
-                'code' => 'refund'
+                'code' => 'refund',
             ],
             [
                 'name' => 'Entry',
-                'code' => 'entry'
-            ]
+                'code' => 'entry',
+            ],
         ];
 
         foreach ($statuses as $status) {

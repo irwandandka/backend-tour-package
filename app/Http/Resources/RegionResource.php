@@ -8,7 +8,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class RegionResource extends JsonResource
 {
-
     use JsonResourceTrait;
 
     /**

@@ -6,10 +6,8 @@ use App\Models\Product;
 use App\Models\Review;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Ramsey\Uuid\Uuid;
 
 class ReviewSeeder extends Seeder
 {
@@ -196,7 +194,7 @@ class ReviewSeeder extends Seeder
                 'product_id' => $products->where('slug', 'lisbon-city-highlights')->first()->id,
                 'user_id' => $users->where('email', 'irwndandka@gmail.com')->first()->id,
                 'comment' => 'A great way to explore Lisbon! The tram ride was fun, and the local food was delicious. I would recommend this tour to anyone visiting Portugal.',
-            ]
+            ],
         ];
 
         DB::transaction(function () use ($reviews) {

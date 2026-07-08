@@ -9,6 +9,7 @@ use App\Models\ProductDetail;
 class PricingService
 {
     private $currencyService;
+
     public function __construct(CurrencyService $currencyService)
     {
         $this->currencyService = $currencyService;
@@ -26,7 +27,9 @@ class PricingService
             ->where('level', 1)
             ->first();
 
-        if (!$productPrice) return 0;
+        if (! $productPrice) {
+            return 0;
+        }
 
         if ($purchaseCurrency->code === $params['currency']) {
             $purchasePrice = $productPrice->purchase_adult;
@@ -63,7 +66,9 @@ class PricingService
             ->sortBy('level')
             ->values();
 
-        if (!$productPrices) return [];
+        if (! $productPrices) {
+            return [];
+        }
 
         $productPrices = $productPrices
             ->map(function ($productPrice) use (
@@ -146,7 +151,9 @@ class PricingService
                     ->where('level', $level)
                     ->first();
 
-                if (!$productPrice) break;
+                if (! $productPrice) {
+                    break;
+                }
 
                 // Target Currency
                 $purchasePrice += $this->currencyService->convert(

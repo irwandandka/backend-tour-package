@@ -28,8 +28,12 @@ class TelegramNotificationService
     public function sendErrorToProgrammer($request, $error, $user)
     {
         // Check instance from
-        if (!$request instanceof Request) return;
-        if (!$error instanceof Throwable) return;
+        if (! $request instanceof Request) {
+            return;
+        }
+        if (! $error instanceof Throwable) {
+            return;
+        }
 
         // Get the error detail
         $errorMessage = $error->getMessage();
@@ -47,7 +51,9 @@ class TelegramNotificationService
         $formattedMessage .= "<strong>Full URL:</strong> {$fullUrl}\n";
         $formattedMessage .= "<strong>Request From:</strong> {$requestFrom}\n";
         $formattedMessage .= "<strong>Client IP:</strong> {$clientIP}\n";
-        if ($user) $formattedMessage .= "<strong>User Login:</strong> {$user->UserName}";
+        if ($user) {
+            $formattedMessage .= "<strong>User Login:</strong> {$user->UserName}";
+        }
 
         $chatId = env('TELEGRAM_BOT_CHAT_ID');
         $token = env('TELEGRAM_BOT_TOKEN');

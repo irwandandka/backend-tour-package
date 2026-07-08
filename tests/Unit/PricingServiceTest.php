@@ -23,7 +23,7 @@ class PricingServiceTest extends TestCase
     private function makeProductPrice(int $level, array $prices): ProductPrice
     {
         $price = new ProductPrice($prices);
-        $price->id = 'price-' . $level;
+        $price->id = 'price-'.$level;
         $price->level = $level;
 
         return $price;

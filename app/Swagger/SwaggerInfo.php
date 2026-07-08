@@ -9,20 +9,21 @@ class SwaggerInfo
      *     title="API Products",
      *     version="1.0.0",
      *     description="API for managing tour package products.",
+     *
      *     @OA\Contact(
      *         email="irwndandka@gmail.com"
      *     ),
+     *
      *     @OA\License(
      *         name="MIT",
      *         url="https://opensource.org/licenses/MIT"
      *     )
      * )
-     * 
+     *
      * * @OA\Server(
      *     url="https://apilaravel.irwandandka.my.id",
      *     description="Production server for the API"
      * )
-     * 
      */
     public static function init()
     {
@@ -34,20 +35,26 @@ class SwaggerInfo
      *      path="/auth/register",
      *      summary="Register a new user",
      *      tags={"Auth"},
+     *
      *      @OA\RequestBody(
      *          required=true,
+     *
      *          @OA\JsonContent(
      *              required={"name","email","password"},
+     *
      *              @OA\Property(property="name", type="string", example="John Doe"),
      *              @OA\Property(property="email", type="string", format="email", example="
      *                  [email protected]"),
      *              @OA\Property(property="password", type="string", format="password", example="password"),
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=201,
      *          description="User registered successfully!",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="message", type="string", example="User registered successfully!"),
      *              @OA\Property(property="user", type="object"),
      *                  @OA\Property(property="id", type="integer"),
@@ -56,18 +63,23 @@ class SwaggerInfo
      *             )
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=400,
      *          description="Bad request",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="name", type="array", @OA\Items(type="string")),
      *              @OA\Property(property="email", type="array", @OA\Items(type="string")),
      *              @OA\Property(property="password", type="array", @OA\Items(type="string")),
      *          )
      *      )
      * )
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Throwable
      */
     public function register()
@@ -82,34 +94,45 @@ class SwaggerInfo
      *      description="Login",
      *      operationId="login",
      *      tags={"Auth"},
+     *
      *          @OA\RequestBody(
      *              required=true,
      *              description="Login",
+     *
      *              @OA\JsonContent(
      *                  required={"email","password"},
+     *
      *                  @OA\Property(property="email", type="string", format="email", example="
      *                      [email protected]"),
      *                  @OA\Property(property="password", type="string", format="password", example="password"),
      *              )
      *          ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *              @OA\JsonContent(
+     *
      *                  @OA\Property(property="access_token", type="string", example="Bearer token"),
      *                  @OA\Property(property="token_type", type="string", example="Bearer"),
      *              )
      *          ),
+     *
      *      @OA\Response(
      *          response=401,
      *          description="Invalid login credentials",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="message", type="string", example="Invalid login credentials"),
      *          )
      *      )
      * )
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Throwable
      */
     public function login()
@@ -125,28 +148,36 @@ class SwaggerInfo
      *      operationId="profile",
      *      tags={"User"},
      *      security={{"sanctum": {}}},
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="success"),
      *              @OA\Property(property="data", type="object"),
      *                  @OA\Property(property="id", type="integer"),
      *                  @OA\Property(property="name", type="string"),
      *                  @OA\Property(property="email", type="string"),
      *             )
-     *          ) 
+     *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=401,
      *          description="Unauthenticated",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="message", type="string", example="Unauthenticated.")
      *          )
      *      )
      * )
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      */
     public function profile()
@@ -161,10 +192,13 @@ class SwaggerInfo
      *      description="Redirect to Google OAuth",
      *      operationId="redirectToGoogle",
      *      tags={"Auth"},
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="url",
      *                  type="string",
@@ -173,7 +207,9 @@ class SwaggerInfo
      *          )
      *      )
      * )
+     *
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      */
     public function redirectToGoogle()
@@ -188,19 +224,24 @@ class SwaggerInfo
      *      description="Google OAuth Callback",
      *      operationId="handleGoogleCallback",
      *      tags={"Auth"},
+     *
      *      @OA\Parameter(
      *          name="code",
      *          in="query",
      *          description="Google OAuth Code",
      *          required=true,
+     *
      *          @OA\Schema(
      *              type="string"
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="token",
      *                  type="string",
@@ -233,8 +274,10 @@ class SwaggerInfo
      *          )
      *      )
      * )
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      * @throws \Google\Exception
      * @throws \Google\Service\Exception
@@ -252,10 +295,13 @@ class SwaggerInfo
      *      operationId="logout",
      *      tags={"Auth"},
      *      security={{"sanctum": {}}},
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="message",
      *                  type="string",
@@ -278,26 +324,34 @@ class SwaggerInfo
      *      description="Get languages",
      *      operationId="languages",
      *      security={{"bearerAuth": {}}},
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="success"),
      *              @OA\Property(property="data", type="array",
+     *
      *                  @OA\Items(
+     *
      *                      @OA\Property(property="name", type="string", example="English"),
      *                      @OA\Property(property="code", type="string", example="en"),
      *                  )
      *              )
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=401,
      *          description="Unauthorized"
      *      )
      * )
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      */
     public function languages()
@@ -313,13 +367,18 @@ class SwaggerInfo
      *      description="Get currencies",
      *      operationId="currencies",
      *      security={{"bearerAuth": {}}},
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="success"),
      *              @OA\Property(property="data", type="array",
+     *
      *                  @OA\Items(
+     *
      *                      @OA\Property(property="id", type="integer", example=1),
      *                      @OA\Property(property="name", type="string", example="US Dollar"),
      *                      @OA\Property(property="code", type="string", example="USD"),
@@ -329,13 +388,16 @@ class SwaggerInfo
      *              )
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=401,
      *          description="Unauthorized"
      *      )
      * )
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      */
     public function currencies()
@@ -350,13 +412,17 @@ class SwaggerInfo
      *      description="List all cities",
      *      operationId="listCities",
      *      tags={"Cities"},
+     *
      *      @OA\Response(
      *          response=200,
      *          description="List of cities",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(
      *                  type="object",
+     *
      *                  @OA\Property(property="id", type="integer"),
      *                  @OA\Property(property="name", type="string"),
      *                  @OA\Property(property="country", type="string"),
@@ -365,8 +431,10 @@ class SwaggerInfo
      *          )
      *      )
      * )
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      */
     public function cities()
@@ -381,20 +449,25 @@ class SwaggerInfo
      *      description="Get city by ID",
      *      operationId="showCity",
      *      tags={"Cities"},
+     *
      *      @OA\Parameter(
      *          name="city",
      *          in="path",
      *          required=true,
      *          description="City ID",
+     *
      *          @OA\Schema(
      *              type="integer"
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="City detail",
+     *
      *          @OA\JsonContent(
      *              type="object",
+     *
      *              @OA\Property(property="id", type="integer"),
      *              @OA\Property(property="name", type="string"),
      *              @OA\Property(property="country", type="string"),
@@ -402,8 +475,10 @@ class SwaggerInfo
      *          )
      *      )
      * )
-     * @param City $city
+     *
+     * @param  City  $city
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      */
     public function showCity()
@@ -418,26 +493,33 @@ class SwaggerInfo
      *  description="Delete city by ID",
      * operationId="deleteCity",
      * tags={"Cities"},
+     *
      * @OA\Parameter(
      *    name="city",
      *  in="path",
      * required=true,
      * description="City ID",
+     *
      * @OA\Schema(
      *   type="integer"
      * )
      * ),
+     *
      * @OA\Response(
      *   response=200,
      * description="City deleted successfully",
+     *
      * @OA\JsonContent(
+     *
      *  @OA\Property(property="status", type="string"),
      * @OA\Property(property="message", type="string"),
      * )
      * )
      * )
-     * @param City $city
+     *
+     * @param  City  $city
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      */
     public function deleteCity()
@@ -452,13 +534,17 @@ class SwaggerInfo
      *      description="List all deleted cities",
      *      operationId="getDeletedCities",
      *      tags={"Cities"},
+     *
      *      @OA\Response(
      *          response=200,
      *          description="List of deleted cities",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(
      *                  type="object",
+     *
      *                  @OA\Property(property="id", type="integer"),
      *                  @OA\Property(property="name", type="string"),
      *                  @OA\Property(property="country", type="string"),
@@ -468,7 +554,9 @@ class SwaggerInfo
      *          )
      *      )
      * )
+     *
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      */
     public function getDeletedCities()
@@ -483,12 +571,16 @@ class SwaggerInfo
      *      description="List all regions",
      *      operationId="list",
      *      tags={"Regions"},
+     *
      *      @OA\Response(
      *          response=200,
      *          description="List of regions",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(
+     *
      *                  @OA\Property(property="id", type="integer", example="1"),
      *                  @OA\Property(property="name", type="string", example="Asia"),
      *                  @OA\Property(property="code", type="string", example="AS"),
@@ -496,8 +588,10 @@ class SwaggerInfo
      *          )
      *      )
      * )
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      */
     public function regions()
@@ -512,25 +606,32 @@ class SwaggerInfo
      *      description="Show region",
      *      operationId="show",
      *      tags={"Regions"},
+     *
      *      @OA\Parameter(
      *          name="region",
      *          in="path",
      *          required=true,
      *          description="Region ID",
+     *
      *          @OA\Schema(
      *              type="integer"
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Region detail",
+     *
      *          @OA\JsonContent(
      *              type="object",
+     *
      *              @OA\Property(property="id", type="integer", example="1"),
      *              @OA\Property(property="name", type="string", example="Asia"),
      *              @OA\Property(property="code", type="string", example="AS"),
      *              @OA\Property(property="countries", type="array",
+     *
      *                  @OA\Items(
+     *
      *                      @OA\Property(property="id", type="integer", example="1"),
      *                      @OA\Property(property="name", type="string", example="Indonesia"),
      *                      @OA\Property(property="iso_code", type="string", example="ID"),
@@ -540,8 +641,10 @@ class SwaggerInfo
      *          )
      *      )
      * )
-     * @param Region $region
+     *
+     * @param  Region  $region
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws Throwable
      */
     public function regionShow()
@@ -555,15 +658,19 @@ class SwaggerInfo
      *      tags={"Tour Packages"},
      *      summary="Retrieve a list of cities.",
      *      description="Returns a list of cities which has the highest reviews of their tour packages.",
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successfully retrieved the list of cities",
+     *
      *          @OA\JsonContent(
      *              type="object"
      *          )
      *      )
      * )
+     *
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Throwable
      */
     public static function exploreNow()
@@ -577,11 +684,14 @@ class SwaggerInfo
      *     tags={"Tour Packages"},
      *     summary="Retrieve a list of all tour packages",
      *     description="Returns a list of available tour packages.",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successfully retrieved the list of products",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="success",
      *                 type="boolean",
@@ -592,8 +702,10 @@ class SwaggerInfo
      *                 property="data",
      *                 type="array",
      *                 description="List of tour packages.",
+     *
      *                 @OA\Items(
      *                     type="object",
+     *
      *                     @OA\Property(
      *                         property="id",
      *                         type="string",
@@ -656,13 +768,16 @@ class SwaggerInfo
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=500,
      *         description="Internal server error."
      *     )
      * )
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Throwable
      */
     public static function list()
@@ -676,21 +791,26 @@ class SwaggerInfo
      *     tags={"Tour Packages"},
      *     summary="Get a single tour package by slug",
      *     description="Retrieve detailed information about a specific tour package using the package's slug.",
+     *
      *     @OA\Parameter(
      *         name="slug",
      *         in="path",
      *         required=true,
      *         description="The slug of the tour package",
+     *
      *         @OA\Schema(
      *             type="string",
      *             example="tokyo-highlights"
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successfully retrieved the product details",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="status",
      *                 type="string",
@@ -762,8 +882,10 @@ class SwaggerInfo
      *                     property="reviews",
      *                     type="array",
      *                     description="List of reviews for the tour package.",
+     *
      *                     @OA\Items(
      *                         type="object",
+     *
      *                         @OA\Property(
      *                             property="id",
      *                             type="string",
@@ -802,8 +924,10 @@ class SwaggerInfo
      *                     property="product_details",
      *                     type="array",
      *                     description="List of product details for each day of the tour.",
+     *
      *                     @OA\Items(
      *                         type="object",
+     *
      *                         @OA\Property(
      *                             property="id",
      *                             type="string",
@@ -859,6 +983,7 @@ class SwaggerInfo
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Product not found."
@@ -868,9 +993,11 @@ class SwaggerInfo
      *         description="Internal server error."
      *     )
      * )
-     * @param Request $request
-     * @param string $slug
+     *
+     * @param  Request  $request
+     * @param  string  $slug
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Throwable
      */
     public static function show()
@@ -883,11 +1010,14 @@ class SwaggerInfo
      *      path="/product/popular-destination",
      *      summary="Get popular destinations",
      *      tags={"Tour Packages"},
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Success",
+     *
      *          @OA\JsonContent(
      *              type="object",
+     *
      *              @OA\Property(
      *                  property="status",
      *                  type="string",
@@ -896,8 +1026,10 @@ class SwaggerInfo
      *              @OA\Property(
      *                  property="data",
      *                  type="array",
+     *
      *                  @OA\Items(
      *                      type="object",
+     *
      *                      @OA\Property(
      *                          property="id",
      *                          type="integer",
@@ -929,7 +1061,9 @@ class SwaggerInfo
      *          )
      *      )
      * )
+     *
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Throwable
      */
     public static function popularDestination()
@@ -945,10 +1079,13 @@ class SwaggerInfo
      *      description="Booking a product",
      *      operationId="booking",
      *      security={{"bearerAuth":{}}},
+     *
      *      @OA\RequestBody(
      *          required=true,
+     *
      *          @OA\JsonContent(
      *              required={"currency", "product_id", "date_from", "date_to", "product_details"},
+     *
      *              @OA\Property(property="currency", type="string", example="USD"),
      *              @OA\Property(property="product_id", type="integer", example=1),
      *              @OA\Property(property="date_from", type="string", format="date", example="2023-10-01"),
@@ -962,10 +1099,13 @@ class SwaggerInfo
      *              @OA\Property(property="quantity_senior", type="integer", example=0),
      *          )),
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Booking success",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="success"),
      *              @OA\Property(property="message", type="string", example="Booking success"),
      *              @OA\Property(property="data", type="object",
@@ -992,70 +1132,103 @@ class SwaggerInfo
      *              )),
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=422,
      *          description="Validation error",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="error"),
      *              @OA\Property(property="message", type="string", example="Validation error"),
      *              @OA\Property(property="errors", type="object",
      *                  @OA\Property(property="currency", type="array",
+     *
      *                      @OA\Items(type="string", example="The selected currency is invalid.")
      *                  ),
+     *
      *                  @OA\Property(property="product_id", type="array",
+     *
      *                      @OA\Items(type="string", example="The selected product id is invalid.")
      *                  ),
+     *
      *                  @OA\Property(property="date_from", type="array",
+     *
      *                      @OA\Items(type="string", example="The date from field is required.")
      *                  ),
+     *
      *                  @OA\Property(property="date_to", type="array",
+     *
      *                      @OA\Items(type="string", example="The date to field is required.")
      *                  ),
+     *
      *                  @OA\Property(property="product_details", type="array",
+     *
      *                      @OA\Items(type="string", example="The product details field is required.")
      *                  ),
+     *
      *                  @OA\Property(property="product_details.*.product_detail", type="array",
+     *
      *                      @OA\Items(type="string", example="The product detail field is required.")
      *                  ),
+     *
      *                  @OA\Property(property="product_details.*.quantity", type="array",
+     *
      *                      @OA\Items(type="string", example="The quantity field is required.")
      *                  ),
+     *
      *                  @OA\Property(property="product_details.*.quantity_adult", type="array",
+     *
      *                      @OA\Items(type="string", example="The quantity adult field is required.")
      *                  ),
+     *
      *                  @OA\Property(property="product_details.*.quantity_child", type="array",
+     *
      *                      @OA\Items(type="string", example="The quantity child field is required.")
      *                  ),
+     *
      *                  @OA\Property(property="product_details.*.quantity_infant", type="array",
+     *
      *                      @OA\Items(type="string", example="The quantity infant field is required.")
      *                  ),
+     *
      *                  @OA\Property(property="product_details.*.quantity_senior", type="array",
+     *
      *                      @OA\Items(type="string", example="The quantity senior field is required.")
      *                  ),
      *              ),
      *          ),
+     *
      *          @OA\Response(
      *              response=500,
      *              description="Internal server error",
+     *
      *              @OA\JsonContent(
+     *
      *                  @OA\Property(property="status", type="string", example="error"),
      *                  @OA\Property(property="message", type="string", example="Internal server error"),
      *                  @OA\Property(property="errors", type="string", example="Error message")
      *              ),
      *          ),
+     *
      *          @OA\Response(
      *              response=401,
      *              description="Unauthorized",
+     *
      *              @OA\JsonContent(
+     *
      *                  @OA\Property(property="status", type="string", example="error"),
      *                  @OA\Property(property="message", type="string", example="Unauthorized"),
      *                  @OA\Property(property="errors", type="string", example="Unauthorized")
      *              ),
      *          ),
+     *
      *          @OA\Response(
      *              response=403,
      *              description="Forbidden",
+     *
      *              @OA\JsonContent(
+     *
      *                  @OA\Property(property="status", type="string", example="error"),
      *                  @OA\Property(property="message", type="string", example="Forbidden"),
      *                  @OA\Property(property="errors", type="string", example="Forbidden")
@@ -1073,17 +1246,22 @@ class SwaggerInfo
      *      description="Get booking detail",
      *      operationId="getBookingDetail",
      *      security={{"bearerAuth":{}}},
+     *
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
      *          required=true,
+     *
      *          @OA\Schema(type="string"),
      *              description="Booking ID"
      *          ),
+     *
      *          @OA\Response(
      *              response=200,
      *              description="Booking detail",
+     *
      *              @OA\JsonContent(
+     *
      *                  @OA\Property(property="status", type="string", example="success"),
      *                  @OA\Property(property="message", type="string", example="Transaction detail"),
      *                  @OA\Property(property="data", type="object",
@@ -1112,37 +1290,49 @@ class SwaggerInfo
      *                  ),
      *              ),
      *          ),
+     *
      *          @OA\Response(
      *              response=404,
      *              description="Transaction not found",
+     *
      *              @OA\JsonContent(
+     *
      *                  @OA\Property(property="status", type="string", example="error"),
      *                  @OA\Property(property="message", type="string", example="Transaction not found"),
      *                  @OA\Property(property="errors", type="string", example="Transaction not found")
      *              ),
      *          ),
+     *
      *          @OA\Response(
      *              response=500,
      *              description="Internal server error",
+     *
      *              @OA\JsonContent(
+     *
      *                  @OA\Property(property="status", type="string", example="error"),
      *                  @OA\Property(property="message", type="string", example="Internal server error"),
      *                  @OA\Property(property="errors", type="string", example="Error message")
      *              ),
      *          ),
+     *
      *          @OA\Response(
      *              response=401,
      *              description="Unauthorized",
+     *
      *              @OA\JsonContent(
+     *
      *                  @OA\Property(property="status", type="string", example="error"),
      *                  @OA\Property(property="message", type="string", example="Unauthorized"),
      *                  @OA\Property(property="errors", type="string", example="Unauthorized")
      *              ),
      *          ),
+     *
      *          @OA\Response(
      *              response=403,
      *              description="Forbidden",
+     *
      *              @OA\JsonContent(
+     *
      *                  @OA\Property(property="status", type="string", example="error"),
      *                  @OA\Property(property="message", type="string", example="Forbidden"),
      *                  @OA\Property(property="errors", type="string", example="Forbidden")
@@ -1160,43 +1350,57 @@ class SwaggerInfo
      *   description="Cancel booking",
      *   operationId="cancelBooking",
      *  security={{"bearerAuth":{}}},
+     *
      *  @OA\Parameter(
      *       name="id",
      *      in="path",
      *      required=true,
+     *
      *     @OA\Schema(type="string"),
      *     description="Booking ID"
      *    ),
+     *
      *   @OA\Response(
      *       response=200,
      *      description="Booking canceled",
+     *
      *     @OA\JsonContent(
+     *
      *           @OA\Property(property="status", type="string", example="success"),
      *          @OA\Property(property="message", type="string", example="Booking canceled"),
      *         ),
      *      ),
+     *
      *     @OA\Response(
      *          response=404,
      *         description="Transaction not found",
+     *
      *        @OA\JsonContent(
+     *
      *           @OA\Property(property="status", type="string", example="error"),
      *          @OA\Property(property="message", type="string", example="Transaction not found"),
      *         @OA\Property(property="errors", type="string", example="Transaction not found")
      *        ),
      *     ),
+     *
      *    @OA\Response(
      *         response=500,
      *        description="Internal server error",
+     *
      *       @OA\JsonContent(
+     *
      *          @OA\Property(property="status", type="string", example="error"),
      *         @OA\Property(property="message", type="string", example="Internal server error"),
      *        @OA\Property(property="errors", type="string", example="Error message")
      *       ),
      *     ),
+     *
      *   @OA\Response(
      *        response=401,
      *       description="Unauthorized",
+     *
      *      @OA\JsonContent(
+     *
      *         @OA\Property(property="status", type="string", example="error"),
      *        @OA\Property(property="message", type="string", example="Unauthorized"),
      *       @OA\Property(property="errors", type="string", example="Unauthorized")

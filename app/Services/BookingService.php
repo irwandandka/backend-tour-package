@@ -2,13 +2,20 @@
 
 namespace App\Services;
 
-use App\Models\{Currency, Passenger, Review, Product, Status, Transaction, TransactionDetail, User};
+use App\Models\Currency;
+use App\Models\Passenger;
+use App\Models\Product;
+use App\Models\Review;
+use App\Models\Status;
+use App\Models\Transaction;
+use App\Models\TransactionDetail;
+use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookingService
@@ -31,7 +38,7 @@ class BookingService
         $currencies = Currency::get();
         $currency = $currencies->where('code', $validated['currency'])->first();
 
-        if (!$currency) {
+        if (! $currency) {
             throw new NotFoundHttpException('Currency not found');
         }
 
@@ -47,7 +54,7 @@ class BookingService
             'notes' => 'Booking a product',
         ]);
 
-        if (!$transaction) {
+        if (! $transaction) {
             throw new Exception('Failed to create transaction');
         }
 
@@ -104,12 +111,12 @@ class BookingService
     {
         return $transaction->load(
             [
-                "product",
-                "status",
-                "transactionDetails",
-                "transactionDetails.product",
-                "transactionDetails.productDetail",
-                "eticket",
+                'product',
+                'status',
+                'transactionDetails',
+                'transactionDetails.product',
+                'transactionDetails.productDetail',
+                'eticket',
             ]
         );
     }
@@ -136,7 +143,7 @@ class BookingService
 
                 if (count($validated['passengers']) < $totalPax) {
                     throw ValidationException::withMessages([
-                        'passengers' => 'Total passengers must not be less than ' . $totalPax,
+                        'passengers' => 'Total passengers must not be less than '.$totalPax,
                     ]);
                 }
 
@@ -153,7 +160,7 @@ class BookingService
                     return array_merge($passenger, [
                         'id' => Str::uuid(),
                         'created_at' => Carbon::now(),
-                        'transaction_id' => $transaction->id
+                        'transaction_id' => $transaction->id,
                     ]);
                 }, $paramPassengers);
 
@@ -171,18 +178,18 @@ class BookingService
 
         $userData = User::with(
             [
-                "transactions" => function ($query) use ($request) {
+                'transactions' => function ($query) use ($request) {
                     if ($request->has('status')) {
                         $query->whereHas('status', function ($q) use ($request) {
                             $q->where('code', $request->get('status'));
                         });
                     }
                 },
-                "transactions.product",
-                "transactions.status",
-                "transactions.transactionDetails",
-                "transactions.transactionDetails.product",
-                "transactions.transactionDetails.productDetail",
+                'transactions.product',
+                'transactions.status',
+                'transactions.transactionDetails',
+                'transactions.transactionDetails.product',
+                'transactions.transactionDetails.productDetail',
             ]
         )
             ->where('id', $user->id)
@@ -193,18 +200,19 @@ class BookingService
             ->sortByDesc('created_at')
             ->map(function ($transaction) {
                 return (object) [
-                    "id" => $transaction->id,
-                    "code" => $transaction->code,
-                    "status" => $transaction->status->name,
-                    "product" => $transaction->product->name,
-                    "slug" => $transaction->product->slug,
-                    "image" => $transaction->product->thumbnail_image,
-                    "total_amount" => $transaction->total_amount,
-                    "total_amount_base" => $transaction->total_amount_base,
-                    "booking_date" => Carbon::parse($transaction->booking_date)->format("l, jS F Y"),
-                    "notes" => $transaction->notes,
+                    'id' => $transaction->id,
+                    'code' => $transaction->code,
+                    'status' => $transaction->status->name,
+                    'product' => $transaction->product->name,
+                    'slug' => $transaction->product->slug,
+                    'image' => $transaction->product->thumbnail_image,
+                    'total_amount' => $transaction->total_amount,
+                    'total_amount_base' => $transaction->total_amount_base,
+                    'booking_date' => Carbon::parse($transaction->booking_date)->format('l, jS F Y'),
+                    'notes' => $transaction->notes,
                 ];
             });
+
         return $bookings;
     }
 

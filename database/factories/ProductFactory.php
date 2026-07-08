@@ -26,7 +26,7 @@ class ProductFactory extends Factory
         return [
             'id' => (string) Str::uuid(),
             'name' => $name,
-            'slug' => Str::slug($name) . '-' . Str::random(6),
+            'slug' => Str::slug($name).'-'.Str::random(6),
             'description' => $this->faker->paragraph(),
             'thumbnail_image' => null,
             'trip_length' => $this->faker->numberBetween(1, 10),

@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\TestRedisJob;
-use App\Models\{City};
-use App\Services\{AllotmentService, ErrorHandler, PackageService, PricingService};
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\Http\Resources\Product\PopularDestinationResource;
 use App\Http\Resources\Product\ProductDetailResource;
 use App\Http\Resources\Product\RoomTypeResource;
-use App\Http\Resources\Product\PopularDestinationResource;
+use App\Jobs\TestRedisJob;
+use App\Models\City;
+use App\Services\AllotmentService;
+use App\Services\ErrorHandler;
+use App\Services\PackageService;
+use App\Services\PricingService;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -17,14 +20,15 @@ class ProductController extends Controller
     /**
      * @see SwaggerInfo::init()
      */
-
     use ValidatesRequests;
 
-    protected
-        $errorHandler,
-        $pricingService,
-        $packageService,
-        $allotmentService;
+    protected $errorHandler;
+
+    protected $pricingService;
+
+    protected $packageService;
+
+    protected $allotmentService;
 
     public function __construct(
         ErrorHandler $errorHandler,
@@ -48,7 +52,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => $products
+                'data' => $products,
             ]);
         } catch (Throwable $e) {
             return $this->errorHandler->handle($e);

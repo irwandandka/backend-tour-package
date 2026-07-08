@@ -6,8 +6,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Services\FileUploadService;
-use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
@@ -51,7 +49,7 @@ class UserService
 
                 if (isset($parsed['path'])) {
                     // Buang leading slash, misal "/profile_pictures/abc.webp" -> "profile_pictures/abc.webp"
-                    $oldPath = ltrim($parsed['path'], '/' . env('MINIO_BUCKET'));
+                    $oldPath = ltrim($parsed['path'], '/'.env('MINIO_BUCKET'));
                     $fileUploadService->deleteFile($oldPath);
                 }
             }

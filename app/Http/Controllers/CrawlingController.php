@@ -7,7 +7,6 @@ use App\Models\ExchangeRate;
 use App\Services\ErrorHandler;
 use App\Services\LogService;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Throwable;
@@ -15,7 +14,9 @@ use Throwable;
 class CrawlingController extends Controller
 {
     private $errorHandler;
+
     private $logService;
+
     public function __construct(ErrorHandler $errorHandler, LogService $logService)
     {
         $this->errorHandler = $errorHandler;
@@ -52,7 +53,9 @@ class CrawlingController extends Controller
                         $currencySGD = Currency::where('code', 'SGD')->first();
                         $targetCurrency = Currency::where('code', $currency)->first();
 
-                        if (!$targetCurrency) continue;
+                        if (! $targetCurrency) {
+                            continue;
+                        }
 
                         // Simpan kurs ke database
                         ExchangeRate::updateOrCreate(
