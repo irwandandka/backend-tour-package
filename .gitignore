@@ -19,6 +19,7 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+.DS_Store
 /stubs
 /storage/debugbar
 product-data.sql

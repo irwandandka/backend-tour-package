@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -25,9 +26,11 @@ class ErrorHandler
             return $this->handleValidationException($e);
         }
 
-        // Jika ini adalah error umum
-        if ($e instanceof \Error) {
-            return $this->handleGeneralError($e);
+        // Exception HTTP eksplisit (404, 403, dll) harus mempertahankan status code-nya
+        if ($e instanceof HttpExceptionInterface) {
+            return response()->json([
+                'message' => $e->getMessage() ?: 'An error occurred',
+            ], $e->getStatusCode());
         }
 
         // Tangani exception lainnya (seperti QueryException, ModelNotFoundException, dll)
@@ -65,14 +68,6 @@ class ErrorHandler
 
     private function logError(Throwable $throwable)
     {
-        $origin = request()->header('origin') ?? request()->header('host');
-
-        if ($origin) {
-            if (str_contains($origin, 'localhost') || str_contains($origin, '127.0.0.1')) {
-                dd($throwable);
-            }
-        }
-
         Log::channel('system-error')->error($throwable->getMessage());
         Log::channel('system-error')->error("File " . $throwable->getFile());
         Log::channel('system-error')->error("Line " . $throwable->getLine());

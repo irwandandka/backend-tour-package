@@ -70,44 +70,6 @@ class PaymentController extends Controller
         }
     }
 
-    // public function handleNotification(Request $request)
-    // {
-    //     $notification = new Notification();
-    //     $transaction_status = $notification->transaction_status;
-    //     $order_id = $notification->order_id;
-
-    //     $statuses = Status::get();
-
-    //     if ($transaction_status == 'settlement') {
-    //         $statusPaid = $statuses->where('code', 'paid')->first();
-    //         Transaction::where('id', $order_id)->update(['status' => $statusPaid->id]);
-    //     } elseif ($transaction_status == 'pending') {
-    //         $statusPending = $statuses->where('code', 'pending')->first();
-    //         Transaction::where('id', $order_id)->update(['status' => $statusPending->id]);
-    //     } elseif ($transaction_status == 'deny' || $transaction_status == 'expire' || $transaction_status == 'cancel') {
-    //         $statusCancel = $statuses->where('code', 'cancel')->first();
-    //         Transaction::where('id', $order_id)->update(['status' => $statusCancel->id]);
-    //     }
-
-    //     return response()->json(['message' => 'Notification processed']);
-    // }
-
-    // public function payWithGopay(Transaction $transaction, Request $request)
-    // {
-    //     try {
-    //         $response = $this->paymentService->processPayment($transaction, $request);
-
-    //         return response()->json([
-    //             'order_id'   => $transaction->order_id,
-    //             'status'     => $response['transaction_status'] ?? 'unknown',
-    //             'gopay_url'  => $response['actions'][1]['url'] ?? null, // deeplink
-    //             'qr_base64'  => $response['qr_base64'] ?? null, // untuk ditampilkan langsung di FE
-    //         ]);
-    //     } catch (Throwable $e) {
-    //         return $this->errorHandler->handle($e);
-    //     }
-    // }
-
     public function handleCallbackGopay(Request $request)
     {
         try {

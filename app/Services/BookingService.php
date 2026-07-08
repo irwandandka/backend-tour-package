@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookingService
 {
@@ -110,6 +112,8 @@ class BookingService
     public function getTransaction(
         string $id
     ) {
+        $user = auth('api')->user();
+
         $transaction = Transaction::with(
             [
                 "product",
@@ -124,7 +128,11 @@ class BookingService
             ->first();
 
         if (!$transaction) {
-            throw new Exception('Transaction not found');
+            throw new NotFoundHttpException('Transaction not found');
+        }
+
+        if ($transaction->user_id !== $user->id) {
+            throw new AccessDeniedHttpException('You are not authorized to access this transaction');
         }
 
         return $transaction;
@@ -132,10 +140,16 @@ class BookingService
 
     public function cancelBooking(string $id)
     {
+        $user = auth('api')->user();
+
         $transaction = Transaction::find($id);
 
         if (!$transaction) {
-            throw new Exception('Transaction not found');
+            throw new NotFoundHttpException('Transaction not found');
+        }
+
+        if ($transaction->user_id !== $user->id) {
+            throw new AccessDeniedHttpException('You are not authorized to cancel this transaction');
         }
 
         $transaction->status_id = Status::STATUS_CANCELLED;
@@ -165,7 +179,9 @@ class BookingService
             'passengers.*.birth_date' => 'string|nullable|date_format:Y-m-d',
         ]);
 
-        return DB::transaction(function () use ($validated, $id) {
+        $user = auth('api')->user();
+
+        return DB::transaction(function () use ($validated, $id, $user) {
             $transaction = Transaction::with([
                 'transactionDetails',
                 'passengers',
@@ -174,7 +190,11 @@ class BookingService
                 ->first();
 
             if (!$transaction) {
-                throw new Exception('Transaction not found');
+                throw new NotFoundHttpException('Transaction not found');
+            }
+
+            if ($transaction->user_id !== $user->id) {
+                throw new AccessDeniedHttpException('You are not authorized to update this transaction');
             }
 
             if ($transaction->passengers->isEmpty()) {
@@ -263,10 +283,16 @@ class BookingService
             'comment' => 'required|string',
         ]);
 
+        $user = auth('api')->user();
+
         $transaction = Transaction::find($id);
 
         if (!$transaction) {
-            throw new Exception('Transaction not found');
+            throw new NotFoundHttpException('Transaction not found');
+        }
+
+        if ($transaction->user_id !== $user->id) {
+            throw new AccessDeniedHttpException('You are not authorized to review this transaction');
         }
 
         Review::create([

@@ -16,12 +16,13 @@ class CheckAPIKey
     public function handle(Request $request, Closure $next): Response
     {
         $apiKey = $request->header('X-API-KEY');
+        $expectedApiKey = config('services.internal.api_key');
 
         if ($request->is('api/v1/auth/google/callback')) {
             return $next($request);
         }
 
-        if ($apiKey !== env('API_KEY')) {
+        if (empty($expectedApiKey) || !is_string($apiKey) || !hash_equals($expectedApiKey, $apiKey)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 

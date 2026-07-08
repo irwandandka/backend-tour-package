@@ -45,4 +45,8 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET_DESKTOP'),
         'redirect_uri' => '',
     ],
+
+    'internal' => [
+        'api_key' => env('API_KEY'),
+    ],
 ];

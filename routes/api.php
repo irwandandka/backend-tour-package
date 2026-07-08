@@ -22,8 +22,8 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
     Route::prefix('/city')->group(function () {
         Route::get('/list', [CityController::class, 'list']);
         Route::get('/{city}', [CityController::class, 'show']);
-        Route::delete('/{city}', [CityController::class, 'delete']);
-        Route::get('/deleted', [CityController::class, 'getDeleted']);
+        Route::delete('/{city}', [CityController::class, 'delete'])->middleware('check.token.expiration');
+        Route::get('/deleted', [CityController::class, 'getDeleted'])->middleware('check.token.expiration');
     });
 
     Route::prefix('/region')->group(function () {
@@ -89,13 +89,10 @@ Route::prefix('v1')->middleware(CheckAPIKey::class)->group(function () {
 
             Route::post('/set-payment-method', [PaymentController::class, 'setPaymentMethod']);
 
-            // Gopay Payment
-            Route::post('/gopay/{transaction}', [PaymentController::class, 'payWithGopay']);
             Route::match(['get', 'post'], '/midtrans/callback', [PaymentController::class, 'handleCallbackGopay'])->name('midtrans.callback')
                 ->withoutMiddleware(['check.token.expiration', CheckAPIKey::class]);
 
             Route::post('/{transaction}', [PaymentController::class, 'pay']);
-            Route::post('/midtrans/notification', [PaymentController::class, 'handleNotification']);
         });
     });
 });

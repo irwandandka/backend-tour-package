@@ -273,9 +273,4 @@ class PaymentService
         $transaction->save();
         return [];
     }
-
-    public function handleNotification(array $notificationData)
-    {
-        // Implement notification handling logic here
-    }
 }
