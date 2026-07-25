@@ -18,6 +18,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement('ALTER TABLE transactions ALTER COLUMN payment_method_id DROP NOT NULL');
+
+            return;
+        }
+
         DB::statement('ALTER TABLE transactions MODIFY payment_method_id CHAR(36) NULL');
     }
 
@@ -26,6 +32,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (DB::getDriverName() === 'pgsql') {
+            DB::statement('ALTER TABLE transactions ALTER COLUMN payment_method_id SET NOT NULL');
+
+            return;
+        }
+
         DB::statement('ALTER TABLE transactions MODIFY payment_method_id CHAR(36) NOT NULL');
     }
 };
