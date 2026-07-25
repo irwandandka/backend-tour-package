@@ -20,10 +20,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $constraintExists = DB::table('information_schema.TABLE_CONSTRAINTS')
-            ->where('CONSTRAINT_SCHEMA', DB::getDatabaseName())
-            ->where('TABLE_NAME', 'transactions')
-            ->where('CONSTRAINT_NAME', 'transactions_payment_method_id_foreign')
+        $constraintExists = DB::table('information_schema.table_constraints')
+            ->where('constraint_schema', DB::getDatabaseName())
+            ->where('table_name', 'transactions')
+            ->where('constraint_name', 'transactions_payment_method_id_foreign')
             ->exists();
 
         if (! $constraintExists) {
