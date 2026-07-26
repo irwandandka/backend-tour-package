@@ -44,7 +44,7 @@ node {
                 sh './vendor/bin/pint --test'
             }
             stage('Static analysis (Larastan)') {
-                sh './vendor/bin/phpstan analyse --no-progress'
+                sh './vendor/bin/phpstan analyse --no-progress --memory-limit=1G'
             }
             stage('Test') {
                 withEnv([
