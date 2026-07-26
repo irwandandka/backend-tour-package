@@ -7,8 +7,12 @@
 node {
     checkout scm
 
+    // No --network-alias here: the default bridge network Jenkins' docker
+    // run uses doesn't support network-scoped aliases. --link below
+    // already gives the linked container the ci-postgres hostname via
+    // legacy Docker linking, which works fine on the default bridge.
     def pg = docker.image('postgres:15-alpine').run(
-        '-e POSTGRES_USER=laravel_dev -e POSTGRES_PASSWORD=laravel_dev -e POSTGRES_DB=laravel_dev --network-alias=ci-postgres'
+        '-e POSTGRES_USER=laravel_dev -e POSTGRES_PASSWORD=laravel_dev -e POSTGRES_DB=laravel_dev'
     )
 
     try {
