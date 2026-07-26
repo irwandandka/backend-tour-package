@@ -16,7 +16,10 @@ node {
     )
 
     try {
-        docker.image('php:8.2-cli').inside("--link ${pg.id}:ci-postgres") {
+        // -u root: Jenkins' docker agent otherwise runs as uid 1000, which
+        // can't apt-get install or write into /usr/src/php for the
+        // docker-php-ext-install step below.
+        docker.image('php:8.2-cli').inside("--link ${pg.id}:ci-postgres -u root") {
             stage('System deps') {
                 sh '''
                     apt-get update && apt-get install -y \
