@@ -29,12 +29,15 @@ node {
                 '''
             }
             stage('Install') {
-                // --no-scripts: composer.json's post-autoload-dump calls
-                // `artisan filament:upgrade`, a leftover reference to a
-                // package that isn't in require/require-dev - it crashes
-                // composer install otherwise. package:discover (the hook
-                // that's actually needed) is run manually below instead.
-                sh 'composer install --no-dev --optimize-autoloader --no-interaction --no-scripts'
+                // No --no-dev: pint/phpstan/phpunit below are all
+                // require-dev packages, and this pipeline needs to run
+                // them. --no-scripts: composer.json's post-autoload-dump
+                // calls `artisan filament:upgrade`, a leftover reference
+                // to a package that isn't in require/require-dev - it
+                // crashes composer install otherwise. package:discover
+                // (the hook that's actually needed) is run manually below
+                // instead.
+                sh 'composer install --optimize-autoloader --no-interaction --no-scripts'
                 sh 'php artisan package:discover --ansi'
             }
             stage('Lint (Pint)') {
